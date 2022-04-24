@@ -1,0 +1,4 @@
+enum GameEvent {
+  minesCleared,
+  mineStepped,
+}
