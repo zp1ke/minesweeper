@@ -8,6 +8,7 @@ class Board {
   final int size;
   final List<List<Cell>> _cells;
 
+  var _active = false;
   var _minesCount = 0;
   var _minesCleared = 0;
   var _safeCellsCleared = 0;
@@ -25,6 +26,7 @@ class Board {
 
   void setMines(int minesCount) {
     _clear();
+    _active = true;
     _minesCount = minesCount;
     final random = Random();
     for (var mineIndex = 0; mineIndex < minesCount; mineIndex++) {
@@ -42,6 +44,8 @@ class Board {
     }
   }
 
+  bool get isActive => _active;
+
   Cell? cellAt({required int rowIndex, required int columnIndex}) {
     if (rowIndex >= 0 &&
         rowIndex < size &&
@@ -53,6 +57,7 @@ class Board {
   }
 
   void _clear() {
+    _active = false;
     _minesCount = 0;
     _minesCleared = 0;
     _safeCellsCleared = 0;
@@ -105,6 +110,7 @@ class Board {
       _unexploredCount--;
 
       if (cell.mined && !cell.cleared) {
+        _active = false;
         throw GameOverEvent(event: GameEvent.mineStepped);
       }
       if (cell.minesAround == 0) {
@@ -121,6 +127,7 @@ class Board {
 
   void _checkWin() {
     if (_hasMinesCleared && _hasNotSafeCellsCleared) {
+      _active = false;
       throw GameOverEvent(event: GameEvent.minesCleared);
     }
   }
