@@ -13,7 +13,8 @@ class BoardScreen extends StatefulWidget {
 
 class _BoardScreen extends State<BoardScreen> {
   final _data = BoardData()
-    ..boardSize = 9
+    ..rowsSize = 9
+    ..columnsSize = 9
     ..minesCount = 10;
   final _eventHandler = EventHandler();
 

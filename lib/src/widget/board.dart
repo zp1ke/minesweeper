@@ -30,7 +30,7 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   @override
   void initState() {
     super.initState();
-    _board = Board(size: widget.boardData.boardSize)
+    _board = Board(boardData: widget.boardData)
       ..setMines(widget.boardData.minesCount);
     widget.eventHandler.addListener(this);
   }
@@ -55,7 +55,7 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
 
   List<Widget> _rows(BuildContext context, {required double width}) {
     final rows = <Widget>[];
-    for (var rowIndex = 0; rowIndex < _board.size; rowIndex++) {
+    for (var rowIndex = 0; rowIndex < _board.rowsSize; rowIndex++) {
       rows.add(_row(context, rowIndex, width));
     }
     return rows;
@@ -64,8 +64,8 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   Widget _row(BuildContext context, int rowIndex, double width) {
     final cells = <Widget>[];
     final cellSize =
-        width / _board.size - (_cellMargin * _board.size + _cellMargin);
-    for (var columnIndex = 0; columnIndex < _board.size; columnIndex++) {
+        width / _board.rowsSize - (_cellMargin * _board.rowsSize + _cellMargin);
+    for (var columnIndex = 0; columnIndex < _board.columnsSize; columnIndex++) {
       final cell = _board.cellAt(rowIndex: rowIndex, columnIndex: columnIndex);
       cells.add(cell != null ? _cell(context, cell, cellSize) : Container());
     }

@@ -1,4 +1,5 @@
 class BoardData {
-  var boardSize = 9;
+  var rowsSize = 9;
+  var columnsSize = 9;
   var minesCount = 10;
 }

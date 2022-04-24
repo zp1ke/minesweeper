@@ -1,11 +1,13 @@
 import 'dart:math';
 
 import 'package:minesweeper/src/exception/game_over.dart';
+import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/cell.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 
 class Board {
-  final int size;
+  final int rowsSize;
+  final int columnsSize;
   final List<List<Cell>> _cells;
 
   var _active = false;
@@ -14,10 +16,13 @@ class Board {
   var _safeCellsCleared = 0;
   var _unexploredCount = 0;
 
-  Board({required this.size}) : _cells = [] {
-    for (var rowIndex = 0; rowIndex < size; rowIndex++) {
+  Board({required BoardData boardData})
+      : rowsSize = boardData.rowsSize,
+        columnsSize = boardData.columnsSize,
+        _cells = [] {
+    for (var rowIndex = 0; rowIndex < rowsSize; rowIndex++) {
       var row = <Cell>[];
-      for (var columnIndex = 0; columnIndex < size; columnIndex++) {
+      for (var columnIndex = 0; columnIndex < columnsSize; columnIndex++) {
         row.add(Cell(rowIndex: rowIndex, columnIndex: columnIndex));
       }
       _cells.add(row);
@@ -32,8 +37,8 @@ class Board {
     for (var mineIndex = 0; mineIndex < minesCount; mineIndex++) {
       Cell? cell;
       do {
-        final rowIndex = random.nextInt(size);
-        final columnIndex = random.nextInt(size);
+        final rowIndex = random.nextInt(rowsSize);
+        final columnIndex = random.nextInt(columnsSize);
         cell = cellAt(rowIndex: rowIndex, columnIndex: columnIndex);
       } while (cell == null || cell.mined);
       cell.mined = true;
@@ -48,9 +53,9 @@ class Board {
 
   Cell? cellAt({required int rowIndex, required int columnIndex}) {
     if (rowIndex >= 0 &&
-        rowIndex < size &&
+        rowIndex < rowsSize &&
         columnIndex >= 0 &&
-        columnIndex < size) {
+        columnIndex < columnsSize) {
       return _cells[rowIndex][columnIndex];
     }
     return null;
@@ -61,9 +66,9 @@ class Board {
     _minesCount = 0;
     _minesCleared = 0;
     _safeCellsCleared = 0;
-    _unexploredCount = size * size;
-    for (var rowIndex = 0; rowIndex < size; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < size; columnIndex++) {
+    _unexploredCount = rowsSize * columnsSize;
+    for (var rowIndex = 0; rowIndex < rowsSize; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < columnsSize; columnIndex++) {
         _cells[rowIndex][columnIndex].clear();
       }
     }
