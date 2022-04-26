@@ -16,6 +16,8 @@ class Board {
   var _safeCellsCleared = 0;
   var _unexploredCount = 0;
 
+  int get minesLeft => _minesCount - _minesCleared;
+
   Board({required BoardData boardData})
       : rowsSize = boardData.rowsSize,
         columnsSize = boardData.columnsSize,
