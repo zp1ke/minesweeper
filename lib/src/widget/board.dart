@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:minesweeper/src/event/handler.dart';
 import 'package:minesweeper/src/event/listener.dart';
@@ -23,7 +22,7 @@ class BoardWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _BoardWidgetState();
+  _BoardWidgetState createState() => _BoardWidgetState();
 }
 
 class _BoardWidgetState extends State<BoardWidget> implements EventListener {
@@ -34,6 +33,9 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
 
   var _secondsStartedMs = 0;
   var _secondsElapsed = 0;
+
+  bool? _winner;
+  String? _message;
 
   @override
   void initState() {
@@ -49,7 +51,8 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
     _secondsStartedMs = DateTime.now().millisecondsSinceEpoch;
     _secondsElapsed = 0;
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      final elapsed = (DateTime.now().millisecondsSinceEpoch - _secondsStartedMs) / 1000;
+      final elapsed =
+          (DateTime.now().millisecondsSinceEpoch - _secondsStartedMs) / 1000;
       setState(() {
         _secondsElapsed = elapsed.toInt();
       });
@@ -66,27 +69,47 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
           mainAxisSize: MainAxisSize.max,
           children: [
             _header(),
+            if (_message != null) _messageLabel(),
             ..._rows(context, width: constraints.maxWidth),
           ],
         ),
       );
 
   Widget _header() => Padding(
-    padding: const EdgeInsets.all(10.0), //todo: apptheme
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        const Spacer(),
-        const Icon(Icons.schedule_sharp, size: 14.0,), //todo: apptheme
-        Text(' ${_secondsElapsed.secondsFormatted()}'),
-        const Spacer(),
-        const Icon(Icons.ac_unit_sharp, size: 14.0,), //todo: apptheme
-        Text(' ${_board.minesLeft}'),
-        const Spacer(),
-      ],
-    ),
-  );
+        padding: const EdgeInsets.all(10.0), //todo: apptheme
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const Spacer(),
+            const Icon(
+              Icons.schedule_sharp,
+              size: 14.0,
+            ), //todo: apptheme
+            Text(' ${_secondsElapsed.secondsFormatted()}'),
+            const Spacer(),
+            const Icon(
+              Icons.ac_unit_sharp,
+              size: 14.0,
+            ), //todo: apptheme
+            Text(' ${_board.minesLeft}'),
+            const Spacer(),
+          ],
+        ),
+      );
+
+  Widget _messageLabel() => Container(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        color: (_winner ?? false) ? Colors.green : Colors.red, //todo: apptheme
+        child: Center(
+          child: Text(
+            _message!,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      );
 
   List<Widget> _rows(BuildContext context, {required double width}) {
     final rows = <Widget>[];
@@ -130,26 +153,20 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
           ),
         ),
         onTap: _board.isActive
-            ? () {
-                final config = AppConfig.of(context);
-                if (config.exploreOnTap) {
-                  _explore(cell);
-                } else {
-                  _toggleClear(cell);
-                }
-              }
+            ? () => _onCellTap(cell, !AppConfig().exploreOnTap)
             : null,
         onLongPress: _board.isActive
-            ? () {
-                final config = AppConfig.of(context);
-                if (config.exploreOnTap) {
-                  _toggleClear(cell);
-                } else {
-                  _explore(cell);
-                }
-              }
+            ? () => _onCellTap(cell, AppConfig().exploreOnTap)
             : null,
       );
+
+  void _onCellTap(Cell cell, bool toggle) {
+    if (toggle) {
+      _toggleClear(cell);
+    } else {
+      _explore(cell);
+    }
+  }
 
   Color _cellColor(Cell cell) {
     if (cell.explored) {
@@ -214,7 +231,13 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   void _onEvent(GameOverEvent event) {
     _timer?.cancel();
     _timer = null;
-    print('GameOverEvent = ${event.event.name}');
+    _winner = event.winner;
+    if (event.winner) {
+      _message = 'You win!'; // todo: l10n
+    } else {
+      _message = event.event.name; // todo: l10n
+    }
+    setState(() {});
   }
 
   @override
@@ -222,6 +245,8 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
     if (event == GameEvent.boardReload && data is BoardData) {
       setState(() {
         _board.setMines(data.minesCount);
+        _winner = null;
+        _message = null;
         _clearTimer();
       });
     }
