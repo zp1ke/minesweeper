@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper/src/event/handler.dart';
+import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/widget/board.dart';
@@ -21,7 +22,7 @@ class _BoardScreen extends State<BoardScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('MineSweeper'), //todo: l10n
+          title: Text(L10n.of(context).appTitle),
           actions: [
             _reloadAction(),
           ],

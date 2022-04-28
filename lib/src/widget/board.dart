@@ -5,6 +5,8 @@ import 'package:minesweeper/src/event/handler.dart';
 import 'package:minesweeper/src/event/listener.dart';
 import 'package:minesweeper/src/exception/game_over.dart';
 import 'package:minesweeper/src/extension/datetime.dart';
+import 'package:minesweeper/src/extension/game_event.dart';
+import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board.dart';
 import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/cell.dart';
@@ -69,7 +71,7 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
           mainAxisSize: MainAxisSize.max,
           children: [
             _header(),
-            if (_message != null) _messageLabel(),
+            _messageLabel(),
             ..._rows(context, width: constraints.maxWidth),
           ],
         ),
@@ -98,18 +100,30 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
         ),
       );
 
-  Widget _messageLabel() => Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        color: (_winner ?? false) ? Colors.green : Colors.red, //todo: apptheme
-        child: Center(
-          child: Text(
-            _message!,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-            ),
+  Widget _messageLabel() {
+    final theme = Theme.of(context);
+    var backgroundColor = theme.disabledColor;
+    var textColor = theme.colorScheme.onBackground;
+    if (_winner != null) {
+      //todo: apptheme
+      backgroundColor = _winner! ? Colors.green : theme.colorScheme.error;
+      textColor = _winner! ? Colors.white : theme.colorScheme.onError;
+    }
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      margin: const EdgeInsets.only(bottom: 4.0), // todo: apptheme
+      color: backgroundColor,
+      child: Center(
+        child: Text(
+          _message ?? ' ',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: textColor,
           ),
         ),
-      );
+      ),
+    );
+  }
 
   List<Widget> _rows(BuildContext context, {required double width}) {
     final rows = <Widget>[];
@@ -232,10 +246,11 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
     _timer?.cancel();
     _timer = null;
     _winner = event.winner;
+    final l10n = L10n.of(context);
     if (event.winner) {
-      _message = 'You win!'; // todo: l10n
+      _message = l10n.youWin;
     } else {
-      _message = event.event.name; // todo: l10n
+      _message = gameEventLabel(event.event, l10n);
     }
     setState(() {});
   }

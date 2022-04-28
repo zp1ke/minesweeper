@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "appTitle": "MineSweeper",
+  "eventMinesCleared": "All mines cleared!",
+  "eventMineStepped": "You stepped on a mine :(",
+  "youWin": "You win!"
+}
