@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:minesweeper/constant.dart';
 import 'package:minesweeper/src/event/handler.dart';
 import 'package:minesweeper/src/event/listener.dart';
 import 'package:minesweeper/src/exception/game_over.dart';

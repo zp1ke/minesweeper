@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper/constant.dart';
 import 'package:minesweeper/src/model/cell.dart';
 
 const _margin = 0.4;
+const flagPng = 'asset/png/flag.png';
+const minePng = 'asset/png/mine.png';
 
 class CellWidget extends StatelessWidget {
   final Cell cell;
