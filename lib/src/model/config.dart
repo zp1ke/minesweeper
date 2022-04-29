@@ -6,7 +6,7 @@ class AppConfig {
   var exploreOnTap = true;
   var boardData = BoardData();
   var themeMode = ThemeMode.dark;
-  var flexScheme = FlexScheme.rosewood;
+  var flexScheme = FlexScheme.hippieBlue;
 
   AppConfig._();
 

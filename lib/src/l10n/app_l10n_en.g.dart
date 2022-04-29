@@ -17,5 +17,8 @@ class L10nEn extends L10n {
   String get eventMineStepped => 'You stepped on a mine :(';
 
   @override
+  String get settings => 'Settings';
+
+  @override
   String get youWin => 'You win!';
 }

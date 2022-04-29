@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/config.dart';
-import 'package:minesweeper/src/screen/board.dart';
+import 'package:minesweeper/src/screen/home.dart';
 import 'package:minesweeper/theme.dart';
 
 void main() {
@@ -21,6 +21,6 @@ class App extends StatelessWidget {
         theme: lightTheme(),
         darkTheme: darkTheme(),
         themeMode: AppConfig().themeMode,
-        home: BoardScreen(),
+        home: const HomeScreen(),
       );
 }

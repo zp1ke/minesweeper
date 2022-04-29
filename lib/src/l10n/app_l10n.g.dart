@@ -110,6 +110,12 @@ abstract class L10n {
   /// **'You stepped on a mine :('**
   String get eventMineStepped;
 
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
   /// No description provided for @youWin.
   ///
   /// In en, this message translates to:
