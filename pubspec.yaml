@@ -23,5 +23,7 @@ dev_dependencies:
   flutter_lints: any
 
 flutter:
+  assets:
+    - asset/png/
   generate: true
   uses-material-design: true

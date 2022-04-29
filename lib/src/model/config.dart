@@ -1,5 +1,8 @@
+import 'package:minesweeper/src/model/board_data.dart';
+
 class AppConfig {
   var exploreOnTap = true;
+  var boardData = BoardData();
 
   AppConfig._();
 

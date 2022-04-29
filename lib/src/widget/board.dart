@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:minesweeper/constant.dart';
 import 'package:minesweeper/src/event/handler.dart';
 import 'package:minesweeper/src/event/listener.dart';
 import 'package:minesweeper/src/exception/game_over.dart';
@@ -8,18 +9,16 @@ import 'package:minesweeper/src/extension/datetime.dart';
 import 'package:minesweeper/src/extension/game_event.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board.dart';
-import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/cell.dart';
 import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/model/game_event.dart';
+import 'package:minesweeper/src/widget/cell.dart';
 
 class BoardWidget extends StatefulWidget {
-  final BoardData boardData;
   final EventHandler eventHandler;
 
   const BoardWidget({
     Key? key,
-    required this.boardData,
     required this.eventHandler,
   }) : super(key: key);
 
@@ -27,9 +26,9 @@ class BoardWidget extends StatefulWidget {
   _BoardWidgetState createState() => _BoardWidgetState();
 }
 
-class _BoardWidgetState extends State<BoardWidget> implements EventListener {
-  final _cellMargin = 0.4;
+const _margin = 0.4;
 
+class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   late Board _board;
   Timer? _timer;
 
@@ -42,8 +41,8 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   @override
   void initState() {
     super.initState();
-    _board = Board(boardData: widget.boardData)
-      ..setMines(widget.boardData.minesCount);
+    _board = Board(boardData: AppConfig().boardData)
+      ..setMines(AppConfig().boardData.minesCount);
     widget.eventHandler.addListener(this);
     Future.delayed(Duration.zero, _clearTimer);
   }
@@ -77,28 +76,52 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
         ),
       );
 
-  Widget _header() => Padding(
-        padding: const EdgeInsets.all(10.0), //todo: apptheme
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const Spacer(),
-            const Icon(
-              Icons.schedule_sharp,
-              size: 14.0,
-            ), //todo: apptheme
-            Text(' ${_secondsElapsed.secondsFormatted()}'),
-            const Spacer(),
-            const Icon(
-              Icons.ac_unit_sharp,
-              size: 14.0,
-            ), //todo: apptheme
-            Text(' ${_board.minesLeft}'),
-            const Spacer(),
-          ],
-        ),
-      );
+  Widget _header() {
+    final theme = Theme.of(context);
+    var timeColor = theme.primaryColor;
+    if (_secondsElapsed > 60) {
+      timeColor = Colors.orange; //todo: apptheme
+      if (_secondsElapsed > 120) {
+        timeColor = theme.errorColor;
+      }
+    }
+    return Padding(
+      padding: const EdgeInsets.all(10.0), //todo: apptheme
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const Spacer(),
+          Icon(
+            Icons.schedule_sharp,
+            size: 14.0, //todo: apptheme
+            color: timeColor,
+          ),
+          Text(
+            ' ${_secondsElapsed.secondsFormatted()}',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: timeColor,
+            ),
+          ),
+          const Spacer(),
+          Image.asset(
+            minePng,
+            color: theme.errorColor,
+            width: 14.0, //todo: apptheme
+            fit: BoxFit.contain,
+          ),
+          Text(
+            ' ${_board.minesLeft}',
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
 
   Widget _messageLabel() {
     final theme = Theme.of(context);
@@ -136,13 +159,13 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   Widget _row(BuildContext context, int rowIndex, double width) {
     final cells = <Widget>[];
     final cellSize =
-        width / _board.rowsSize - (_cellMargin * _board.rowsSize + _cellMargin);
+        width / _board.rowsSize - (_margin * _board.rowsSize + _margin);
     for (var columnIndex = 0; columnIndex < _board.columnsSize; columnIndex++) {
       final cell = _board.cellAt(rowIndex: rowIndex, columnIndex: columnIndex);
       cells.add(cell != null ? _cell(context, cell, cellSize) : Container());
     }
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: _cellMargin * 4),
+      padding: const EdgeInsets.symmetric(vertical: _margin * 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
@@ -151,21 +174,9 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
     );
   }
 
-  Widget _cell(BuildContext context, Cell cell, double size) => InkWell(
-        child: Container(
-          width: size,
-          height: size,
-          margin: EdgeInsets.symmetric(horizontal: _cellMargin),
-          decoration: BoxDecoration(
-            color: _cellColor(cell),
-            borderRadius: BorderRadius.all(
-              Radius.circular(_cellMargin * 4),
-            ),
-          ),
-          child: Center(
-            child: _cellContent(context, cell),
-          ),
-        ),
+  Widget _cell(BuildContext context, Cell cell, double size) => CellWidget(
+        cell: cell,
+        size: size,
         onTap: _board.isActive
             ? () => _onCellTap(cell, !AppConfig().exploreOnTap)
             : null,
@@ -180,48 +191,6 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
     } else {
       _explore(cell);
     }
-  }
-
-  Color _cellColor(Cell cell) {
-    if (cell.explored) {
-      if (cell.mined) {
-        return Colors.deepOrange; // todo: apptheme
-      }
-      return Colors.grey; // todo: apptheme
-    }
-    if (cell.cleared) {
-      return Colors.lightBlue; // todo: apptheme
-    }
-    return Colors.blueGrey; // todo: apptheme
-  }
-
-  Widget? _cellContent(BuildContext context, Cell cell) {
-    if (cell.explored) {
-      if (cell.mined) {
-        return const Text('X');
-      }
-      if (cell.minesAround > 0) {
-        var textColor = Colors.blue; //todo: theme
-        if (cell.minesAround == 2) {
-          textColor = Colors.yellow; //todo: theme
-        } else if (cell.minesAround == 3) {
-          textColor = Colors.orange; //todo: theme
-        } else if (cell.minesAround == 4) {
-          textColor = Colors.deepPurple; //todo: theme
-        }
-        return Text(
-          '${cell.minesAround}',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: textColor,
-          ),
-        );
-      }
-    }
-    if (cell.cleared) {
-      return const Text('*');
-    }
-    return null;
   }
 
   void _explore(Cell cell) {
@@ -256,10 +225,11 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   }
 
   @override
-  void onEvent(GameEvent event, Object data) {
-    if (event == GameEvent.boardReload && data is BoardData) {
+  void onEvent(GameEvent event) {
+    if (event == GameEvent.boardReload) {
       setState(() {
-        _board.setMines(data.minesCount);
+        _board = Board(boardData: AppConfig().boardData)
+          ..setMines(AppConfig().boardData.minesCount);
         _winner = null;
         _message = null;
         _clearTimer();

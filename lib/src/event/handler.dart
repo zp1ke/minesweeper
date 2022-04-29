@@ -8,9 +8,9 @@ class EventHandler {
 
   void removeListener(EventListener listener) => _listeners.remove(listener);
 
-  void trigger(GameEvent event, Object data) {
+  void trigger(GameEvent event) {
     for (var listener in _listeners) {
-      listener.onEvent(event, data);
+      listener.onEvent(event);
     }
   }
 }
