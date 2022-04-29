@@ -4,6 +4,7 @@ import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/model/nav_item.dart';
 import 'package:minesweeper/src/widget/board.dart';
+import 'package:minesweeper/src/widget/settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       NavItem(
         title: l10n.settings,
-        body: Container(),
+        body: const SettingsWidget(),
         icon: Icons.settings_sharp,
       ),
     ]);

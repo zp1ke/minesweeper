@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minesweeper/src/event/handler.dart';
 import 'package:minesweeper/src/event/listener.dart';
+import 'package:minesweeper/src/event/provider.dart';
 import 'package:minesweeper/src/exception/game_over.dart';
 import 'package:minesweeper/src/extension/datetime.dart';
 import 'package:minesweeper/src/extension/game_event.dart';
@@ -13,7 +15,7 @@ import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/widget/cell.dart';
 
-class BoardWidget extends StatefulWidget {
+class BoardWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;
 
   const BoardWidget({
@@ -27,7 +29,8 @@ class BoardWidget extends StatefulWidget {
 
 const _margin = 0.4;
 
-class _BoardWidgetState extends State<BoardWidget> implements EventListener {
+class _BoardWidgetState extends ConsumerState<BoardWidget>
+    implements EventListener {
   late Board _board;
   Timer? _timer;
 
@@ -37,11 +40,13 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   bool? _winner;
   String? _message;
 
+  AppConfig get _config => ref.read(configProvider).config;
+
   @override
   void initState() {
     super.initState();
-    _board = Board(boardData: AppConfig().boardData)
-      ..setMines(AppConfig().boardData.minesCount);
+    _board = Board(boardData: _config.boardData)
+      ..setMines(_config.boardData.minesCount);
     widget.eventHandler.addListener(this);
     Future.delayed(Duration.zero, _clearTimer);
   }
@@ -177,10 +182,10 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
         cell: cell,
         size: size,
         onTap: _board.isActive
-            ? () => _onCellTap(cell, !AppConfig().exploreOnTap)
+            ? () => _onCellTap(cell, !_config.exploreOnTap)
             : null,
         onLongPress: _board.isActive
-            ? () => _onCellTap(cell, AppConfig().exploreOnTap)
+            ? () => _onCellTap(cell, _config.exploreOnTap)
             : null,
       );
 
@@ -227,8 +232,8 @@ class _BoardWidgetState extends State<BoardWidget> implements EventListener {
   void onEvent(GameEvent event) {
     if (event == GameEvent.boardReload) {
       setState(() {
-        _board = Board(boardData: AppConfig().boardData)
-          ..setMines(AppConfig().boardData.minesCount);
+        _board = Board(boardData: _config.boardData)
+          ..setMines(_config.boardData.minesCount);
         _winner = null;
         _message = null;
         _clearTimer();
