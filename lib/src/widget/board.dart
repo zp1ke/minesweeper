@@ -13,7 +13,7 @@ import 'package:minesweeper/src/model/board.dart';
 import 'package:minesweeper/src/model/cell.dart';
 import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/model/game_event.dart';
-import 'package:minesweeper/src/widget/cell.dart';
+import 'package:minesweeper/src/widget/atom/cell.dart';
 
 class BoardWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;

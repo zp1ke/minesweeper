@@ -11,6 +11,9 @@ class L10nEn extends L10n {
   String get appTitle => 'MineSweeper';
 
   @override
+  String get columnsSize => 'Columns size';
+
+  @override
   String get dark => 'Dark';
 
   @override
@@ -20,7 +23,19 @@ class L10nEn extends L10n {
   String get eventMineStepped => 'You stepped on a mine :(';
 
   @override
+  String get exploreOnTap => 'ExploreOnTap';
+
+  @override
+  String get exploreOnTapDescription => 'Tapping a cell will explore it and long pressing a cell will mark it as clear.';
+
+  @override
   String get light => 'Light';
+
+  @override
+  String get minesCount => 'Mines count';
+
+  @override
+  String get rowsSize => 'Rows size';
 
   @override
   String get settings => 'Settings';
@@ -30,6 +45,9 @@ class L10nEn extends L10n {
 
   @override
   String get themeMode => 'Theme mode';
+
+  @override
+  String get toggleOnTapDescription => 'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
 
   @override
   String get youWin => 'You win!';

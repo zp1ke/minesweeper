@@ -63,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: _navItem?.actions,
           ),
           body: _body(),
-          extendBody: true,
           bottomNavigationBar: _navItem != null
               ? NavBar(
                   selectedIndex: _selectedIndex,

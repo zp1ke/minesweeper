@@ -98,6 +98,12 @@ abstract class L10n {
   /// **'MineSweeper'**
   String get appTitle;
 
+  /// No description provided for @columnsSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Columns size'**
+  String get columnsSize;
+
   /// No description provided for @dark.
   ///
   /// In en, this message translates to:
@@ -116,11 +122,35 @@ abstract class L10n {
   /// **'You stepped on a mine :('**
   String get eventMineStepped;
 
+  /// No description provided for @exploreOnTap.
+  ///
+  /// In en, this message translates to:
+  /// **'ExploreOnTap'**
+  String get exploreOnTap;
+
+  /// No description provided for @exploreOnTapDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tapping a cell will explore it and long pressing a cell will mark it as clear.'**
+  String get exploreOnTapDescription;
+
   /// No description provided for @light.
   ///
   /// In en, this message translates to:
   /// **'Light'**
   String get light;
+
+  /// No description provided for @minesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Mines count'**
+  String get minesCount;
+
+  /// No description provided for @rowsSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Rows size'**
+  String get rowsSize;
 
   /// No description provided for @settings.
   ///
@@ -139,6 +169,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Theme mode'**
   String get themeMode;
+
+  /// No description provided for @toggleOnTapDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tapping a cell will mark it as clear and long pressing a cell will explore it.'**
+  String get toggleOnTapDescription;
 
   /// No description provided for @youWin.
   ///
