@@ -98,6 +98,12 @@ abstract class L10n {
   /// **'MineSweeper'**
   String get appTitle;
 
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
   /// No description provided for @eventMinesCleared.
   ///
   /// In en, this message translates to:
@@ -110,11 +116,29 @@ abstract class L10n {
   /// **'You stepped on a mine :('**
   String get eventMineStepped;
 
+  /// No description provided for @light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light;
+
   /// No description provided for @settings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
+
+  /// No description provided for @themeMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme mode'**
+  String get themeMode;
 
   /// No description provided for @youWin.
   ///

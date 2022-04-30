@@ -1,8 +1,12 @@
 {
   "@@locale": "en",
   "appTitle": "MineSweeper",
+  "dark": "Dark",
   "eventMinesCleared": "All mines cleared!",
   "eventMineStepped": "You stepped on a mine :(",
+  "light": "Light",
   "settings": "Settings",
+  "system": "System",
+  "themeMode": "Theme mode",
   "youWin": "You win!"
 }
