@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minesweeper/src/event/provider.dart';
+import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/screen/home.dart';
 import 'package:minesweeper/theme.dart';

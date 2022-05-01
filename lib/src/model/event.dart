@@ -1,5 +1,8 @@
-import 'package:minesweeper/src/event/listener.dart';
 import 'package:minesweeper/src/model/game_event.dart';
+
+abstract class EventListener {
+  void onEvent(GameEvent event);
+}
 
 class EventHandler {
   final _listeners = <EventListener>{};

@@ -19,6 +19,7 @@ dependencies:
   flutter_riverpod: any
   google_nav_bar: any
   intl: any
+  shared_preferences: any
 
 dev_dependencies:
   flutter_test:
