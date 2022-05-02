@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
@@ -26,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, _createItems);
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      FlutterNativeSplash.remove();
+    });
   }
 
   void _createItems() {

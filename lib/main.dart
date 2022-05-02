@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
@@ -6,7 +7,8 @@ import 'package:minesweeper/src/screen/home.dart';
 import 'package:minesweeper/theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await AppProvider.create();
   runApp(const ProviderScope(
     child: App(),

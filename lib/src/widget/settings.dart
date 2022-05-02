@@ -181,8 +181,11 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
         onTap: () {
           showAboutDialog(
             context: context,
-            applicationIcon: const FlutterLogo(),
-            //todo
+            applicationIcon: Image.asset(
+              'asset/png/logo.png',
+              width: 24,
+              fit: BoxFit.contain,
+            ),
             applicationName: l10n.appTitle,
             applicationVersion: _packageInfo?.version,
             applicationLegalese: '©${DateTime.now().year} h4j4x',

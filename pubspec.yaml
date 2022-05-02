@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: any
   flex_color_scheme: any
+  flutter_native_splash: any
   flutter_riverpod: any
   google_nav_bar: any
   intl: any
@@ -32,3 +33,9 @@ flutter:
     - asset/png/
   generate: true
   uses-material-design: true
+
+flutter_native_splash:
+  color: "#eab676"
+  image: asset/png/logo.png
+  color_dark: "#e28743"
+  image_dark: asset/png/logo.png
