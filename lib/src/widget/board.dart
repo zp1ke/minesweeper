@@ -13,6 +13,7 @@ import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/widget/atom/cell.dart';
+import 'package:minesweeper/theme.dart';
 
 class BoardWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;
@@ -27,6 +28,8 @@ class BoardWidget extends ConsumerStatefulWidget {
 }
 
 const _margin = 0.4;
+const _padding = 4.0;
+const _iconSize = 14.0;
 
 class _BoardWidgetState extends ConsumerState<BoardWidget>
     implements EventListener {
@@ -81,15 +84,15 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
 
   Widget _header() {
     final theme = Theme.of(context);
-    var timeColor = theme.primaryColor;
+    var timeColor = theme.colorScheme.primary;
     if (_secondsElapsed > 60) {
-      timeColor = Colors.orange; //todo: apptheme
+      timeColor = theme.colorScheme.warning;
       if (_secondsElapsed > 120) {
-        timeColor = theme.errorColor;
+        timeColor = theme.colorScheme.secondary;
       }
     }
     return Padding(
-      padding: const EdgeInsets.all(10.0), //todo: apptheme
+      padding: const EdgeInsets.all(10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -97,7 +100,7 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
           const Spacer(),
           Icon(
             Icons.schedule_sharp,
-            size: 14.0, //todo: apptheme
+            size: _iconSize,
             color: timeColor,
           ),
           Text(
@@ -111,7 +114,7 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
           Image.asset(
             minePng,
             color: theme.errorColor,
-            width: 14.0, //todo: apptheme
+            width: _iconSize,
             fit: BoxFit.contain,
           ),
           Text(
@@ -131,13 +134,17 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
     var backgroundColor = theme.disabledColor;
     var textColor = theme.colorScheme.onBackground;
     if (_winner != null) {
-      //todo: apptheme
-      backgroundColor = _winner! ? Colors.green : theme.colorScheme.error;
-      textColor = _winner! ? Colors.white : theme.colorScheme.onError;
+      backgroundColor =
+          _winner! ? theme.colorScheme.success : theme.colorScheme.error;
+      textColor =
+          _winner! ? theme.colorScheme.onSuccess : theme.colorScheme.onError;
     }
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-      margin: const EdgeInsets.only(bottom: 4.0), // todo: apptheme
+      padding: const EdgeInsets.symmetric(
+        vertical: _padding,
+        horizontal: _padding * 2,
+      ),
+      margin: const EdgeInsets.only(bottom: _padding),
       color: backgroundColor,
       child: Center(
         child: Text(

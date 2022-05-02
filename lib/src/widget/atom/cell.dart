@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper/src/model/cell.dart';
+import 'package:minesweeper/theme.dart';
 
 const _margin = 0.4;
 const flagPng = 'asset/png/flag.png';
@@ -20,51 +21,56 @@ class CellWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => InkWell(
-        child: Container(
-          width: size,
-          height: size,
-          margin: const EdgeInsets.symmetric(horizontal: _margin),
-          decoration: BoxDecoration(
-            color: _backgroundColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(_margin * 4),
-            ),
-          ),
-          child: Center(
-            child: _content(context),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return InkWell(
+      child: Container(
+        width: size,
+        height: size,
+        margin: const EdgeInsets.symmetric(horizontal: _margin),
+        decoration: BoxDecoration(
+          color: _backgroundColor(theme),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(_margin * 4),
           ),
         ),
-        onTap: onTap,
-        onLongPress: onLongPress,
-      );
-
-  Color get _backgroundColor {
-    if (cell.explored) {
-      if (cell.mined) {
-        return Colors.deepOrange; // todo: apptheme
-      }
-      return Colors.grey; // todo: apptheme
-    }
-    if (cell.cleared) {
-      return Colors.lightBlue; // todo: apptheme
-    }
-    return Colors.blueGrey; // todo: apptheme
+        child: Center(
+          child: _content(theme),
+        ),
+      ),
+      onTap: onTap,
+      onLongPress: onLongPress,
+    );
   }
 
-  Widget? _content(BuildContext context) {
+  Color _backgroundColor(ThemeData theme) {
+    if (cell.explored) {
+      if (cell.mined) {
+        return theme.colorScheme.error;
+      }
+      return theme.disabledColor;
+    }
+    if (cell.cleared) {
+      return theme.colorScheme.primary;
+    }
+    return theme.brightness == Brightness.dark
+        ? theme.colorScheme.primaryContainer
+        : theme.colorScheme.secondaryContainer;
+  }
+
+  Widget? _content(ThemeData theme) {
     if (cell.explored) {
       if (cell.mined) {
         return _image(minePng, size);
       }
       if (cell.minesAround > 0) {
-        var textColor = Colors.blue; //todo: theme
+        var textColor = theme.colorScheme.onPrimary;
         if (cell.minesAround == 2) {
-          textColor = Colors.yellow; //todo: theme
+          textColor = theme.colorScheme.primary;
         } else if (cell.minesAround == 3) {
-          textColor = Colors.orange; //todo: theme
-        } else if (cell.minesAround == 4) {
-          textColor = Colors.deepPurple; //todo: theme
+          textColor = theme.colorScheme.warning;
+        } else if (cell.minesAround >= 4) {
+          textColor = theme.colorScheme.error;
         }
         return Text(
           '${cell.minesAround}',
