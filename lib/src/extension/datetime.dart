@@ -3,7 +3,8 @@ extension AppInt on int {
     final seconds = this % 60;
     final minutes = (this / 60) % 60;
     final hours = this / 60 / 60;
-    final time = '${_twoDigits(minutes.toInt())}:${_twoDigits(seconds.toInt())}';
+    final time =
+        '${_twoDigits(minutes.toInt())}:${_twoDigits(seconds.toInt())}';
     if (hours > 0.99) {
       return '${_twoDigits(hours.toInt())}:$time';
     }

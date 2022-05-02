@@ -7,6 +7,7 @@ String gameEventLabel(GameEvent event, L10n l10n) {
       return l10n.eventMinesCleared;
     case GameEvent.mineStepped:
       return l10n.eventMineStepped;
-    default: return '';
+    default:
+      return '';
   }
 }

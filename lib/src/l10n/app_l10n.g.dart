@@ -125,7 +125,7 @@ abstract class L10n {
   /// No description provided for @exploreOnTap.
   ///
   /// In en, this message translates to:
-  /// **'ExploreOnTap'**
+  /// **'Explore on tap'**
   String get exploreOnTap;
 
   /// No description provided for @exploreOnTapDescription.

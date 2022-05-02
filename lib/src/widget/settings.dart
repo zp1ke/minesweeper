@@ -11,7 +11,7 @@ class SettingsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final configState = ref.watch(configProvider);
+    final configState = ref.watch(AppProvider().configProvider);
     final theme = Theme.of(context);
     final l10n = L10n.of(context);
     final items = [
@@ -93,12 +93,14 @@ class SettingsWidget extends ConsumerWidget {
                 : l10n.toggleOnTapDescription,
             textAlign: TextAlign.justify),
         onChanged: (value) {
-          ref.read(configProvider.notifier).changeExploreOnTap(value ?? false);
+          ref
+              .read(AppProvider().configProvider.notifier)
+              .changeExploreOnTap(value ?? false);
         },
       );
 
   void _onBoardData(BoardData boardData, WidgetRef ref) {
-    ref.read(configProvider.notifier).changeBoardData(boardData);
+    ref.read(AppProvider().configProvider.notifier).changeBoardData(boardData);
   }
 
   Widget _themeModeSystemField(
@@ -147,6 +149,6 @@ class SettingsWidget extends ConsumerWidget {
   }
 
   void _onThemeMode(ThemeMode mode, WidgetRef ref) {
-    ref.read(configProvider.notifier).changeThemeMode(mode);
+    ref.read(AppProvider().configProvider.notifier).changeThemeMode(mode);
   }
 }

@@ -21,23 +21,23 @@ class CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-    child: Container(
-      width: size,
-      height: size,
-      margin: const EdgeInsets.symmetric(horizontal: _margin),
-      decoration: BoxDecoration(
-        color: _backgroundColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(_margin * 4),
+        child: Container(
+          width: size,
+          height: size,
+          margin: const EdgeInsets.symmetric(horizontal: _margin),
+          decoration: BoxDecoration(
+            color: _backgroundColor,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(_margin * 4),
+            ),
+          ),
+          child: Center(
+            child: _content(context),
+          ),
         ),
-      ),
-      child: Center(
-        child: _content(context),
-      ),
-    ),
-    onTap: onTap,
-    onLongPress: onLongPress,
-  );
+        onTap: onTap,
+        onLongPress: onLongPress,
+      );
 
   Color get _backgroundColor {
     if (cell.explored) {
@@ -82,10 +82,10 @@ class CellWidget extends StatelessWidget {
   }
 
   Widget _image(String name, double size) => Center(
-    child: Image.asset(
-      name,
-      width: size - (_margin * 8),
-      fit: BoxFit.contain,
-    ),
-  );
+        child: Image.asset(
+          name,
+          width: size - (_margin * 8),
+          fit: BoxFit.contain,
+        ),
+      );
 }

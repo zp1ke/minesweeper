@@ -39,10 +39,10 @@ class NavBar extends StatelessWidget {
             tabs: navItems
                 .map(
                   (item) => GButton(
-                icon: item.icon,
-                text: item.title,
-              ),
-            )
+                    icon: item.icon,
+                    text: item.title,
+                  ),
+                )
                 .toList(),
             selectedIndex: selectedIndex,
             onTabChange: onChangeIndex,

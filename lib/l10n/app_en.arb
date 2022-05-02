@@ -5,7 +5,7 @@
   "dark": "Dark",
   "eventMinesCleared": "All mines cleared!",
   "eventMineStepped": "You stepped on a mine :(",
-  "exploreOnTap": "ExploreOnTap",
+  "exploreOnTap": "Explore on tap",
   "exploreOnTapDescription": "Tapping a cell will explore it and long pressing a cell will mark it as clear.",
   "light": "Light",
   "minesCount": "Mines count",

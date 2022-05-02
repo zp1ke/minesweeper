@@ -5,8 +5,9 @@ import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/screen/home.dart';
 import 'package:minesweeper/theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppProvider.create();
   runApp(const ProviderScope(
     child: App(),
   ));
@@ -17,7 +18,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final configState = ref.watch(configProvider);
+    final configState = ref.watch(AppProvider().configProvider);
     return MaterialApp(
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,

@@ -34,10 +34,10 @@ class BoardData {
   }
 
   Map<String, Object> toMap() => {
-    _rowsSizeKey: rowsSize,
-    _columnsSizeKey: columnsSize,
-    _minesCountKey: minesCount,
-  };
+        _rowsSizeKey: rowsSize,
+        _columnsSizeKey: columnsSize,
+        _minesCountKey: minesCount,
+      };
 
   @override
   bool operator ==(Object other) =>

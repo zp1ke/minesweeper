@@ -23,7 +23,7 @@ class L10nEn extends L10n {
   String get eventMineStepped => 'You stepped on a mine :(';
 
   @override
-  String get exploreOnTap => 'ExploreOnTap';
+  String get exploreOnTap => 'Explore on tap';
 
   @override
   String get exploreOnTapDescription => 'Tapping a cell will explore it and long pressing a cell will mark it as clear.';

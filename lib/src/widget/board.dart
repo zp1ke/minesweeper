@@ -39,7 +39,7 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
   bool? _winner;
   String? _message;
 
-  AppConfig get _config => ref.read(configProvider).config;
+  AppConfig get _config => ref.read(AppProvider().configProvider).config;
 
   @override
   void initState() {
