@@ -5,6 +5,9 @@ class L10nEn extends L10n {
   L10nEn([String locale = 'en']) : super(locale);
 
   @override
+  String get about => 'About';
+
+  @override
   String get appTitle => 'MineSweeper';
 
   @override
@@ -47,6 +50,9 @@ class L10nEn extends L10n {
   @override
   String get toggleOnTapDescription =>
       'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
+
+  @override
+  String get version => 'Version';
 
   @override
   String get youWin => 'You win!';

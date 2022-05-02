@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "about": "About",
   "appTitle": "MineSweeper",
   "columnsSize": "Columns size",
   "dark": "Dark",
@@ -14,5 +15,6 @@
   "system": "System",
   "themeMode": "Theme mode",
   "toggleOnTapDescription": "Tapping a cell will mark it as clear and long pressing a cell will explore it.",
+  "version": "Version",
   "youWin": "You win!"
 }

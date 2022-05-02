@@ -5,12 +5,32 @@ import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/widget/atom/number_picker.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class SettingsWidget extends ConsumerWidget {
+class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _SettingsWidgetState createState() => _SettingsWidgetState();
+}
+
+class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
+  PackageInfo? _packageInfo;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Future.delayed(Duration.zero, () {
+      PackageInfo.fromPlatform().then((value) {
+        setState(() {
+          _packageInfo = value;
+        });
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final configState = ref.watch(AppProvider().configProvider);
     final theme = Theme.of(context);
     final l10n = L10n.of(context);
@@ -22,6 +42,7 @@ class SettingsWidget extends ConsumerWidget {
       _themeModeSystemField(configState.config, theme, l10n, ref),
       if (configState.config.themeMode != ThemeMode.system)
         _themeModeField(configState.config, l10n, ref),
+      _aboutItem(context, l10n),
     ];
     return ListView.separated(
       itemCount: items.length,
@@ -151,4 +172,21 @@ class SettingsWidget extends ConsumerWidget {
   void _onThemeMode(ThemeMode mode, WidgetRef ref) {
     ref.read(AppProvider().configProvider.notifier).changeThemeMode(mode);
   }
+
+  Widget _aboutItem(BuildContext context, L10n l10n) => ListTile(
+        leading: const Icon(Icons.info_outlined),
+        title: Text(_packageInfo?.version != null
+            ? '${l10n.version}: ${_packageInfo!.version}'
+            : l10n.about),
+        onTap: () {
+          showAboutDialog(
+            context: context,
+            applicationIcon: const FlutterLogo(),
+            //todo
+            applicationName: l10n.appTitle,
+            applicationVersion: _packageInfo?.version,
+            applicationLegalese: '©${DateTime.now().year} h4j4x',
+          );
+        },
+      );
 }

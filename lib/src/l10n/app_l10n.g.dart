@@ -91,6 +91,12 @@ abstract class L10n {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
@@ -174,6 +180,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Tapping a cell will mark it as clear and long pressing a cell will explore it.'**
   String get toggleOnTapDescription;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
 
   /// No description provided for @youWin.
   ///
