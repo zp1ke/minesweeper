@@ -9,7 +9,7 @@ const _exploreOnTapKey = 'exploreOnTap';
 const _boardDataKey = 'boardData';
 const _themeModeKey = 'themeMode';
 const _flexSchemeKey = 'flexScheme';
-const _defaultFlexScheme = FlexScheme.hippieBlue;
+const _defaultFlexScheme = FlexScheme.redWine;
 
 class AppConfig {
   SharedPreferences? _prefs;

@@ -1,0 +1,20 @@
+{
+  "@@locale": "es",
+  "about": "Acerca de",
+  "appTitle": "Barre esa mina",
+  "columnsSize": "Columnas",
+  "dark": "Oscuro",
+  "eventMinesCleared": "¡Todas las minas despejadas!",
+  "eventMineStepped": "Haz pisado una mina :(",
+  "exploreOnTap": "Explorar con tap",
+  "exploreOnTapDescription": "Haciendo Tap en una celda la explorará y presionando unos segundos la marcará como despejada.",
+  "light": "Claro",
+  "minesCount": "Cantidad de minas",
+  "rowsSize": "Filas",
+  "settings": "Ajustes",
+  "system": "Sistema",
+  "themeMode": "Modo de tema",
+  "toggleOnTapDescription": "Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.",
+  "version": "Versión",
+  "youWin": "¡Haz ganado!"
+}

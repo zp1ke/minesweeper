@@ -11,7 +11,7 @@ class L10nEn extends L10n {
   String get about => 'About';
 
   @override
-  String get appTitle => 'MineSweeper';
+  String get appTitle => 'Sweep that Mine';
 
   @override
   String get columnsSize => 'Columns size';

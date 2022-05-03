@@ -77,18 +77,18 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
           children: [
             _header(),
             _messageLabel(),
-            ..._rows(context, width: constraints.maxWidth),
+            ..._rows(context, width: constraints.maxWidth - _margin),
           ],
         ),
       );
 
   Widget _header() {
     final theme = Theme.of(context);
-    var timeColor = theme.colorScheme.primary;
+    var timeColor = theme.colorScheme.success;
     if (_secondsElapsed > 60) {
       timeColor = theme.colorScheme.warning;
       if (_secondsElapsed > 120) {
-        timeColor = theme.colorScheme.secondary;
+        timeColor = theme.colorScheme.error;
       }
     }
     return Padding(
@@ -169,13 +169,16 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
   Widget _row(BuildContext context, int rowIndex, double width) {
     final cells = <Widget>[];
     final cellSize =
-        width / _board.rowsSize - (_margin * _board.rowsSize + _margin);
+        width / _board.columnsSize - (_margin * _board.columnsSize + _margin);
     for (var columnIndex = 0; columnIndex < _board.columnsSize; columnIndex++) {
       final cell = _board.cellAt(rowIndex: rowIndex, columnIndex: columnIndex);
       cells.add(cell != null ? _cell(context, cell, cellSize) : Container());
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: _margin * 4),
+      padding: const EdgeInsets.symmetric(
+        vertical: _margin * 4,
+        horizontal: .0,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,

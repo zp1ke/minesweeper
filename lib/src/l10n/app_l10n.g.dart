@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_l10n_en.g.dart';
+import 'app_l10n_es.g.dart';
 
 /// Callers can lookup localized strings with an instance of L10n returned
 /// by `L10n.of(context)`.
@@ -89,7 +90,8 @@ abstract class L10n {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('en')
+    Locale('en'),
+    Locale('es')
   ];
 
   /// No description provided for @about.
@@ -101,7 +103,7 @@ abstract class L10n {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'MineSweeper'**
+  /// **'Sweep that Mine'**
   String get appTitle;
 
   /// No description provided for @columnsSize.
@@ -204,7 +206,7 @@ class _L10nDelegate extends LocalizationsDelegate<L10n> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_L10nDelegate old) => false;
@@ -216,6 +218,7 @@ L10n lookupL10n(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return L10nEn();
+    case 'es': return L10nEs();
   }
 
   throw FlutterError(

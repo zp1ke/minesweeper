@@ -25,8 +25,8 @@ class AppConfigState extends ChangeNotifier {
 
   void _save() {
     if (config.dirty) {
+      config.save();
       notifyListeners();
     }
-    config.save();
   }
 }

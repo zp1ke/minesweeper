@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "about": "About",
-  "appTitle": "MineSweeper",
+  "appTitle": "Sweep that Mine",
   "columnsSize": "Columns size",
   "dark": "Dark",
   "eventMinesCleared": "All mines cleared!",
