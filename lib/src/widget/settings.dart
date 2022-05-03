@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/widget/atom/number_picker.dart';
+import 'package:minesweeper/src/widget/atom/text_detail.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsWidget extends ConsumerStatefulWidget {
@@ -148,14 +150,14 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
       );
 
   Widget _themeModeField(AppConfig config, L10n l10n, WidgetRef ref) {
-    var icon = Icons.light_mode_sharp;
+    var icon = FontAwesomeIcons.sun;
     var title = l10n.light;
     if (config.themeMode == ThemeMode.dark) {
-      icon = Icons.dark_mode_sharp;
+      icon = FontAwesomeIcons.moon;
       title = l10n.dark;
     }
     return ListTile(
-      leading: Icon(icon),
+      leading: FaIcon(icon),
       title: Text('${l10n.themeMode}: $title'),
       trailing: Switch(
         value: config.themeMode == ThemeMode.light,
@@ -174,7 +176,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   }
 
   Widget _aboutItem(BuildContext context, L10n l10n) => ListTile(
-        leading: const Icon(Icons.info_outlined),
+        leading: const FaIcon(FontAwesomeIcons.circleInfo),
         title: Text(_packageInfo?.version != null
             ? '${l10n.version}: ${_packageInfo!.version}'
             : l10n.about),

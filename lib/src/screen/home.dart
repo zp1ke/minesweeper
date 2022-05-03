@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
@@ -40,20 +41,20 @@ class _HomeScreenState extends State<HomeScreen> {
         body: BoardWidget(
           eventHandler: _eventHandler,
         ),
-        icon: Icons.border_all_sharp,
+        icon: FontAwesomeIcons.chessBoard,
         actions: [
           IconButton(
             onPressed: () {
               _eventHandler.trigger(GameEvent.boardReload);
             },
-            icon: const Icon(Icons.refresh_sharp),
+            icon: const FaIcon(FontAwesomeIcons.rotateLeft),
           ),
         ],
       ),
       NavItem(
         title: l10n.settings,
         body: const SettingsWidget(),
-        icon: Icons.settings_sharp,
+        icon: FontAwesomeIcons.sliders,
       ),
     ]);
     _onNav(0);

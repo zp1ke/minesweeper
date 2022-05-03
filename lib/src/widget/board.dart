@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/exception/game_over.dart';
 import 'package:minesweeper/src/extension/datetime.dart';
@@ -85,10 +86,13 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
   Widget _header() {
     final theme = Theme.of(context);
     var timeColor = theme.colorScheme.success;
+    var timeIcon = FontAwesomeIcons.hourglassStart;
     if (_secondsElapsed > 60) {
       timeColor = theme.colorScheme.warning;
+      timeIcon = FontAwesomeIcons.hourglass;
       if (_secondsElapsed > 120) {
         timeColor = theme.colorScheme.error;
+        timeIcon = FontAwesomeIcons.hourglassEnd;
       }
     }
     return Padding(
@@ -98,10 +102,10 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
         mainAxisSize: MainAxisSize.max,
         children: [
           const Spacer(),
-          Icon(
-            Icons.schedule_sharp,
-            size: _iconSize,
+          FaIcon(
+            timeIcon,
             color: timeColor,
+            size: _iconSize,
           ),
           Text(
             ' ${_secondsElapsed.secondsFormatted()}',
@@ -111,11 +115,10 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
             ),
           ),
           const Spacer(),
-          Image.asset(
-            minePng,
+          FaIcon(
+            FontAwesomeIcons.bomb,
             color: theme.errorColor,
-            width: _iconSize,
-            fit: BoxFit.contain,
+            size: _iconSize,
           ),
           Text(
             ' ${_board.minesLeft}',
