@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/src/model/cell.dart';
 import 'package:minesweeper/theme.dart';
 
 const _margin = 0.4;
-const flagPng = 'asset/png/flag.png';
-const minePng = 'asset/png/mine.png';
 
 class CellWidget extends StatelessWidget {
   final Cell cell;
@@ -61,7 +60,7 @@ class CellWidget extends StatelessWidget {
   Widget? _content(ThemeData theme) {
     if (cell.explored) {
       if (cell.mined) {
-        return _image(minePng, size);
+        return _image(FontAwesomeIcons.bomb, theme.colorScheme.onError);
       }
       if (cell.minesAround > 0) {
         var textColor = theme.colorScheme.onPrimary;
@@ -82,16 +81,15 @@ class CellWidget extends StatelessWidget {
       }
     }
     if (cell.cleared) {
-      return _image(flagPng, size);
+      return _image(FontAwesomeIcons.solidFlag, theme.colorScheme.onPrimary);
     }
     return null;
   }
 
-  Widget _image(String name, double size) => Center(
-        child: Image.asset(
-          name,
-          width: size - (_margin * 8),
-          fit: BoxFit.contain,
+  Widget _image(IconData icon, Color color) => Center(
+        child: FaIcon(
+          icon,
+          color: color,
         ),
       );
 }

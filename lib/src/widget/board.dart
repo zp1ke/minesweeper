@@ -134,8 +134,8 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
 
   Widget _messageLabel() {
     final theme = Theme.of(context);
-    var backgroundColor = theme.disabledColor;
-    var textColor = theme.colorScheme.onBackground;
+    var backgroundColor = Colors.transparent;
+    var textColor = Colors.transparent;
     if (_winner != null) {
       backgroundColor =
           _winner! ? theme.colorScheme.success : theme.colorScheme.error;

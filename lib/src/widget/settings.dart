@@ -6,7 +6,6 @@ import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/widget/atom/number_picker.dart';
-import 'package:minesweeper/src/widget/atom/text_detail.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsWidget extends ConsumerStatefulWidget {
