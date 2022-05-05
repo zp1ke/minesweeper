@@ -1,5 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:minesweeper/src/model/config.dart';
 
 extension AppColorScheme on ColorScheme {
@@ -18,8 +19,16 @@ extension AppColorScheme on ColorScheme {
       brightness == Brightness.light ? Colors.white : Colors.white54;
 }
 
-ThemeData lightTheme(AppConfig config) =>
-    FlexThemeData.light(scheme: config.flexScheme);
+String? _fontFamily() => GoogleFonts.varelaRound().fontFamily;
 
-ThemeData darkTheme(AppConfig config) =>
-    FlexThemeData.dark(scheme: config.flexScheme);
+ThemeData lightTheme(AppConfig config) => FlexThemeData.light(
+      scheme: config.flexScheme,
+      fontFamily: _fontFamily(),
+      visualDensity: VisualDensity.standard,
+    );
+
+ThemeData darkTheme(AppConfig config) => FlexThemeData.dark(
+      scheme: config.flexScheme,
+      fontFamily: _fontFamily(),
+      visualDensity: VisualDensity.standard,
+    );

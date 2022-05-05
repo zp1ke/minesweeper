@@ -42,8 +42,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
       _exploreOnTapField(configState.config, l10n, ref),
       _themeModeSystemField(configState.config, theme, l10n, ref),
       if (configState.config.themeMode != ThemeMode.system)
-        _themeModeField(configState.config, l10n, ref),
-      _aboutItem(context, l10n),
+        _themeModeField(configState.config, theme, l10n, ref),
+      _aboutItem(context, theme, l10n),
     ];
     return ListView.separated(
       itemCount: items.length,
@@ -148,7 +148,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
         },
       );
 
-  Widget _themeModeField(AppConfig config, L10n l10n, WidgetRef ref) {
+  Widget _themeModeField(
+      AppConfig config, ThemeData theme, L10n l10n, WidgetRef ref) {
     var icon = FontAwesomeIcons.sun;
     var title = l10n.light;
     if (config.themeMode == ThemeMode.dark) {
@@ -156,7 +157,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
       title = l10n.dark;
     }
     return ListTile(
-      leading: FaIcon(icon),
+      leading: FaIcon(
+        icon,
+        color: theme.primaryColor,
+      ),
       title: Text('${l10n.themeMode}: $title'),
       trailing: Switch(
         value: config.themeMode == ThemeMode.light,
@@ -174,11 +178,19 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
     ref.read(AppProvider().configProvider.notifier).changeThemeMode(mode);
   }
 
-  Widget _aboutItem(BuildContext context, L10n l10n) => ListTile(
-        leading: const FaIcon(FontAwesomeIcons.circleInfo),
+  Widget _aboutItem(BuildContext context, ThemeData theme, L10n l10n) =>
+      ListTile(
+        leading: FaIcon(
+          FontAwesomeIcons.circleInfo,
+          color: theme.primaryColor,
+        ),
         title: Text(_packageInfo?.version != null
             ? '${l10n.version}: ${_packageInfo!.version}'
             : l10n.about),
+        trailing: FaIcon(
+          FontAwesomeIcons.arrowRight,
+          color: theme.primaryColor,
+        ),
         onTap: () {
           showAboutDialog(
             context: context,
