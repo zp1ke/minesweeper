@@ -20,6 +20,11 @@ void main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(const ProviderScope(
     child: App(),
   ));
