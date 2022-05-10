@@ -1,3 +1,5 @@
 # Minesweeper
+
 MineSweeper Game
-![This app is available on Google Play](/asset/android/google-play-badge.png?raw=true "This app is available on Google Play")
+
+<img src="asset/android/google-play-badge.png" alt="This app is available on Google Play" title="This app is available on Google Play" width="200"/>
