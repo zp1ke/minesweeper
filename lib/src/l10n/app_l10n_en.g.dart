@@ -14,7 +14,13 @@ class L10nEn extends L10n {
   String get appTitle => 'Sweep that Mine';
 
   @override
+  String get cancel => 'Cancel';
+
+  @override
   String get columnsSize => 'Columns size';
+
+  @override
+  String get confirmToSubmitScore => 'Do you want to submit your score?';
 
   @override
   String get dark => 'Dark';
@@ -38,10 +44,16 @@ class L10nEn extends L10n {
   String get minesCount => 'Mines count';
 
   @override
+  String get ok => 'OK';
+
+  @override
   String get rowsSize => 'Rows size';
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get submitScore => 'Submit score';
 
   @override
   String get system => 'System';

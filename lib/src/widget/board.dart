@@ -13,6 +13,7 @@ import 'package:minesweeper/src/model/cell.dart';
 import 'package:minesweeper/src/model/config.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
+import 'package:minesweeper/src/service/gaming.dart';
 import 'package:minesweeper/src/widget/atom/cell.dart';
 import 'package:minesweeper/theme.dart';
 
@@ -39,6 +40,7 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
 
   var _secondsStartedMs = 0;
   var _secondsElapsed = 0;
+  var _loading = false;
 
   bool? _winner;
   String? _message;
@@ -71,20 +73,38 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
   }
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) => Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            _header(),
-            _messageLabel(),
-            ..._rows(context, width: constraints.maxWidth - _margin),
-          ],
-        ),
-      );
-
-  Widget _header() {
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final content = LayoutBuilder(
+      builder: (context, constraints) => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          _header(theme),
+          _messageLabel(),
+          ..._rows(context, width: constraints.maxWidth - _margin),
+        ],
+      ),
+    );
+    if (_loading) {
+      return Stack(
+        children: [
+          content,
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: theme.canvasColor.withOpacity(.8),
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ],
+      );
+    }
+    return content;
+  }
+
+  Widget _header(ThemeData theme) {
     var timeColor = theme.colorScheme.success;
     var timeIcon = FontAwesomeIcons.hourglassStart;
     if (_secondsElapsed > 60) {
@@ -234,6 +254,7 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
     final l10n = L10n.of(context);
     if (event.winner) {
       _message = l10n.youWin;
+      _showScoreDialog();
     } else {
       _message = gameEventLabel(event.event, l10n);
     }
@@ -258,5 +279,43 @@ class _BoardWidgetState extends ConsumerState<BoardWidget>
     widget.eventHandler.removeListener(this);
     _timer?.cancel();
     super.dispose();
+  }
+
+  void _showScoreDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        final l10n = L10n.of(context);
+        return AlertDialog(
+          title: Text(l10n.submitScore),
+          content: Text(l10n.confirmToSubmitScore),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _submitScore();
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.ok),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.cancel),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void _submitScore() async {
+    setState(() {
+      _loading = true;
+    });
+    await GamingService().saveScore(_secondsElapsed, _config.boardData);
+    setState(() {
+      _loading = false;
+    });
   }
 }

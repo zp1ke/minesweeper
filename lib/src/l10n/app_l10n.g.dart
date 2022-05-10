@@ -106,11 +106,23 @@ abstract class L10n {
   /// **'Sweep that Mine'**
   String get appTitle;
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @columnsSize.
   ///
   /// In en, this message translates to:
   /// **'Columns size'**
   String get columnsSize;
+
+  /// No description provided for @confirmToSubmitScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to submit your score?'**
+  String get confirmToSubmitScore;
 
   /// No description provided for @dark.
   ///
@@ -154,6 +166,12 @@ abstract class L10n {
   /// **'Mines count'**
   String get minesCount;
 
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
   /// No description provided for @rowsSize.
   ///
   /// In en, this message translates to:
@@ -165,6 +183,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @submitScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit score'**
+  String get submitScore;
 
   /// No description provided for @system.
   ///

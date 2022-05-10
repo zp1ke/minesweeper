@@ -24,6 +24,8 @@ class BoardData {
 
   int get minMinesCount => (rowsSize * columnsSize * .1).toInt();
 
+  String get boardStr => '${rowsSize}x${columnsSize}_$minesCount';
+
   void fixMinesCount() {
     if (minesCount < minMinesCount) {
       minesCount = minMinesCount;

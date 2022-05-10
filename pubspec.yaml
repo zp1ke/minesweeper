@@ -19,6 +19,7 @@ dependencies:
   flutter_native_splash: any
   flutter_riverpod: any
   font_awesome_flutter: any
+  games_services: any
   google_fonts: any
   google_nav_bar: any
   intl: any

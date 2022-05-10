@@ -14,7 +14,13 @@ class L10nEs extends L10n {
   String get appTitle => 'Barre esa mina';
 
   @override
+  String get cancel => 'Cancelar';
+
+  @override
   String get columnsSize => 'Columnas';
+
+  @override
+  String get confirmToSubmitScore => '¿Quieres enviar tu puntuación?';
 
   @override
   String get dark => 'Oscuro';
@@ -38,10 +44,16 @@ class L10nEs extends L10n {
   String get minesCount => 'Cantidad de minas';
 
   @override
+  String get ok => 'Aceptar';
+
+  @override
   String get rowsSize => 'Filas';
 
   @override
   String get settings => 'Ajustes';
+
+  @override
+  String get submitScore => 'Enviar puntuación';
 
   @override
   String get system => 'Sistema';

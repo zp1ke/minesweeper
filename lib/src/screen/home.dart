@@ -5,6 +5,7 @@ import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/model/nav_item.dart';
+import 'package:minesweeper/src/service/gaming.dart';
 import 'package:minesweeper/src/widget/board.dart';
 import 'package:minesweeper/src/widget/navbar.dart';
 import 'package:minesweeper/src/widget/settings.dart';
@@ -27,13 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, _createItems);
+    GamingService().init();
+    Future.delayed(Duration.zero, _createNavItems);
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       FlutterNativeSplash.remove();
     });
   }
 
-  void _createItems() {
+  void _createNavItems() {
     final l10n = L10n.of(context);
     _navItems.addAll([
       NavItem(
