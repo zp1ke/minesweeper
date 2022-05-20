@@ -21,24 +21,24 @@ class ListTileIntPicker extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
         leading: InkWell(
-          child: const FaIcon(FontAwesomeIcons.minus),
           onTap: value > minValue
               ? () {
                   onValue(value - 1);
                 }
               : null,
+          child: const FaIcon(FontAwesomeIcons.minus),
         ),
         title: Text(
           '$title: $value',
           textAlign: TextAlign.center,
         ),
         trailing: InkWell(
-          child: const FaIcon(FontAwesomeIcons.plus),
           onTap: value < maxValue
               ? () {
                   onValue(value + 1);
                 }
               : null,
+          child: const FaIcon(FontAwesomeIcons.plus),
         ),
       );
 }

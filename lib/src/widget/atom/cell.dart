@@ -23,6 +23,8 @@ class CellWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         width: size,
         height: size,
@@ -37,8 +39,6 @@ class CellWidget extends StatelessWidget {
           child: _content(theme),
         ),
       ),
-      onTap: onTap,
-      onLongPress: onLongPress,
     );
   }
 

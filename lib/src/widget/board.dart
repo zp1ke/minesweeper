@@ -26,14 +26,14 @@ class BoardWidget extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   @override
-  _BoardWidgetState createState() => _BoardWidgetState();
+  BoardWidgetState createState() => BoardWidgetState();
 }
 
 const _margin = 0.4;
 const _padding = 4.0;
 const _iconSize = 14.0;
 
-class _BoardWidgetState extends ConsumerState<BoardWidget>
+class BoardWidgetState extends ConsumerState<BoardWidget>
     implements EventListener {
   late Board _board;
   Timer? _timer;

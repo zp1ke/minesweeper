@@ -12,10 +12,10 @@ class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);
 
   @override
-  _SettingsWidgetState createState() => _SettingsWidgetState();
+  SettingsWidgetState createState() => SettingsWidgetState();
 }
 
-class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
+class SettingsWidgetState extends ConsumerState<SettingsWidget> {
   PackageInfo? _packageInfo;
 
   @override
