@@ -282,31 +282,33 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
   }
 
   void _showScoreDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        final l10n = L10n.of(context);
-        return AlertDialog(
-          title: Text(l10n.submitScore),
-          content: Text(l10n.confirmToSubmitScore),
-          actions: [
-            TextButton(
-              onPressed: () {
-                _submitScore();
-                Navigator.of(context).pop();
-              },
-              child: Text(l10n.ok),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(l10n.cancel),
-            )
-          ],
-        );
-      },
-    );
+    if (GamingService().canSubmitScore(_config.boardData)) {
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          final l10n = L10n.of(context);
+          return AlertDialog(
+            title: Text(l10n.submitScore),
+            content: Text(l10n.confirmToSubmitScore),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  _submitScore();
+                  Navigator.of(context).pop();
+                },
+                child: Text(l10n.ok),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(l10n.cancel),
+              )
+            ],
+          );
+        },
+      );
+    }
   }
 
   void _submitScore() async {

@@ -5,7 +5,7 @@ import 'package:minesweeper/src/model/config.dart';
 
 extension AppColorScheme on ColorScheme {
   Color get success => brightness == Brightness.light
-      ? const Color(0x2F13ec45)
+      ? const Color(0xFF28a745)
       : const Color(0xFF28a745);
 
   Color get onSuccess =>

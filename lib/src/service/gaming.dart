@@ -3,7 +3,9 @@ import 'package:minesweeper/src/model/board_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _gamingIDKey = 'gamingID';
-const _leaderboardTime_9x9_10ID = 'CgkIg52nveAVEAIQAQ';
+const _leaderboardIDs = {
+  '9x9_10': 'CgkIg52nveAVEAIQAQ',
+};
 
 class GamingService {
   static GamingService? _instance;
@@ -25,8 +27,11 @@ class GamingService {
     }
   }
 
+  bool canSubmitScore(BoardData boardData) =>
+      _leaderboardIDs.containsKey(boardData.boardStr);
+
   Future<void> saveScore(int score, BoardData boardData) async {
-    final leaderboardID = _leaderboardID(boardData);
+    final leaderboardID = _leaderboardIDs[boardData.boardStr];
     if (leaderboardID != null) {
       await GamesServices.submitScore(
         score: Score(
@@ -35,12 +40,5 @@ class GamingService {
         ),
       );
     }
-  }
-
-  _leaderboardID(BoardData boardData) {
-    switch (boardData.boardStr) {
-      case '9x9_10': return _leaderboardTime_9x9_10ID;
-    }
-    return null;
   }
 }
