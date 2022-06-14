@@ -23,7 +23,10 @@ class GamingService {
     if (_gamingID == null) {
       final preferences = await SharedPreferences.getInstance();
       _gamingID = preferences.getString(_gamingIDKey);
-      _gamingID ??= await GamesServices.signIn();
+    }
+    final isSignedIn = await GamesServices.isSignedIn;
+    if (!isSignedIn) {
+      _gamingID = await GamesServices.signIn();
     }
   }
 
@@ -31,6 +34,7 @@ class GamingService {
       _leaderboardIDs.containsKey(boardData.boardStr);
 
   Future<void> saveScore(int score, BoardData boardData) async {
+    await init();
     final leaderboardID = _leaderboardIDs[boardData.boardStr];
     if (leaderboardID != null) {
       await GamesServices.submitScore(

@@ -28,11 +28,15 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    GamingService().init();
-    Future.delayed(Duration.zero, _createNavItems);
+    Future.delayed(Duration.zero, _init);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FlutterNativeSplash.remove();
     });
+  }
+
+  void _init() async {
+    _createNavItems();
+    await GamingService().init();
   }
 
   void _createNavItems() {
