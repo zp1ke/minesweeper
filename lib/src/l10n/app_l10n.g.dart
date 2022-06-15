@@ -154,6 +154,12 @@ abstract class L10n {
   /// **'Tapping a cell will explore it and long pressing a cell will mark it as clear.'**
   String get exploreOnTapDescription;
 
+  /// No description provided for @googleSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get googleSignIn;
+
   /// No description provided for @light.
   ///
   /// In en, this message translates to:
@@ -184,6 +190,12 @@ abstract class L10n {
   /// **'Settings'**
   String get settings;
 
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
   /// No description provided for @submitScore.
   ///
   /// In en, this message translates to:
@@ -207,6 +219,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Tapping a cell will mark it as clear and long pressing a cell will explore it.'**
   String get toggleOnTapDescription;
+
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
 
   /// No description provided for @version.
   ///

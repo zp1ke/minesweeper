@@ -10,15 +10,18 @@
   "eventMineStepped": "You stepped on a mine :(",
   "exploreOnTap": "Explore on tap",
   "exploreOnTapDescription": "Tapping a cell will explore it and long pressing a cell will mark it as clear.",
+  "googleSignIn": "Sign in with Google",
   "light": "Light",
   "minesCount": "Mines count",
   "ok": "OK",
   "rowsSize": "Rows size",
   "settings": "Settings",
+  "signOut": "Sign out",
   "submitScore": "Submit score",
   "system": "System",
   "themeMode": "Theme mode",
   "toggleOnTapDescription": "Tapping a cell will mark it as clear and long pressing a cell will explore it.",
+  "user": "User",
   "version": "Version",
   "youWin": "You win!"
 }

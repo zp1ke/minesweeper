@@ -95,7 +95,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
             height: double.infinity,
             color: theme.canvasColor.withOpacity(.8),
             child: const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator.adaptive(),
             ),
           ),
         ],

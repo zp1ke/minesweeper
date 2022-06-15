@@ -10,15 +10,18 @@
   "eventMineStepped": "Haz pisado una mina :(",
   "exploreOnTap": "Explorar con tap",
   "exploreOnTapDescription": "Haciendo Tap en una celda la explorará y presionando unos segundos la marcará como despejada.",
+  "googleSignIn": "Ingresar con Google",
   "light": "Claro",
   "minesCount": "Cantidad de minas",
   "ok": "Aceptar",
   "rowsSize": "Filas",
   "settings": "Ajustes",
+  "signOut": "Salir",
   "submitScore": "Enviar puntuación",
   "system": "Sistema",
   "themeMode": "Modo de tema",
   "toggleOnTapDescription": "Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.",
+  "user": "Usuario",
   "version": "Versión",
   "youWin": "¡Haz ganado!"
 }

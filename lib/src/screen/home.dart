@@ -8,6 +8,7 @@ import 'package:minesweeper/src/model/nav_item.dart';
 import 'package:minesweeper/src/widget/board.dart';
 import 'package:minesweeper/src/widget/navbar.dart';
 import 'package:minesweeper/src/widget/settings.dart';
+import 'package:minesweeper/src/widget/user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -55,6 +56,11 @@ class HomeScreenState extends State<HomeScreen> {
         title: l10n.settings,
         body: const SettingsWidget(),
         icon: FontAwesomeIcons.sliders,
+      ),
+      NavItem(
+        title: l10n.user,
+        body: const UserWidget(),
+        icon: FontAwesomeIcons.user,
       ),
     ]);
     _onNav(0);

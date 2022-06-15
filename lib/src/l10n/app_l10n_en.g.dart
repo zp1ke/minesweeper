@@ -38,6 +38,9 @@ class L10nEn extends L10n {
   String get exploreOnTapDescription => 'Tapping a cell will explore it and long pressing a cell will mark it as clear.';
 
   @override
+  String get googleSignIn => 'Sign in with Google';
+
+  @override
   String get light => 'Light';
 
   @override
@@ -53,6 +56,9 @@ class L10nEn extends L10n {
   String get settings => 'Settings';
 
   @override
+  String get signOut => 'Sign out';
+
+  @override
   String get submitScore => 'Submit score';
 
   @override
@@ -63,6 +69,9 @@ class L10nEn extends L10n {
 
   @override
   String get toggleOnTapDescription => 'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
+
+  @override
+  String get user => 'User';
 
   @override
   String get version => 'Version';

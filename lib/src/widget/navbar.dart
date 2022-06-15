@@ -33,7 +33,7 @@ class NavBar extends StatelessWidget {
             activeColor: theme.colorScheme.onSecondaryContainer,
             iconSize: 20,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            duration: const Duration(milliseconds: 400),
+            duration: const Duration(milliseconds: 200),
             tabBackgroundColor: theme.colorScheme.primaryContainer,
             color: theme.colorScheme.onPrimaryContainer,
             tabs: navItems
