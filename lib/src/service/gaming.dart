@@ -17,7 +17,7 @@ class GamingService {
     var user = userState.user;
     user ??= await userState.googleSignIn();
     if (user != null) {
-      print("ALMOST THERE");// fixme
+      print("ALMOST THERE"); // fixme
       return true;
     }
     return false;

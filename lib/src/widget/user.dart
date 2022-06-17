@@ -52,7 +52,7 @@ class UserWidgetState extends ConsumerState<UserWidget> {
       );
 
   Widget _signOutButton(
-      bool enabled, ThemeData theme, L10n l10n, WidgetRef ref) =>
+          bool enabled, ThemeData theme, L10n l10n, WidgetRef ref) =>
       Center(
         child: LoadingButton(
           loading: !enabled,
