@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/exception/game_over.dart';
 import 'package:minesweeper/src/extension/game_event.dart';
-import 'package:minesweeper/src/extension/number.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/board.dart';
 import 'package:minesweeper/src/model/cell.dart';
@@ -15,6 +13,7 @@ import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/service/gaming.dart';
 import 'package:minesweeper/src/widget/atom/cell.dart';
+import 'package:minesweeper/src/widget/molecule/board_header.dart';
 import 'package:minesweeper/theme.dart';
 
 class BoardWidget extends ConsumerStatefulWidget {
@@ -31,7 +30,6 @@ class BoardWidget extends ConsumerStatefulWidget {
 
 const _margin = 0.4;
 const _padding = 4.0;
-const _iconSize = 14.0;
 
 class BoardWidgetState extends ConsumerState<BoardWidget>
     implements EventListener {
@@ -81,7 +79,10 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          _header(theme),
+          BoardHeader(
+            secondsElapsed: _secondsElapsed,
+            minesLeft: _board.minesLeft,
+          ),
           _messageLabel(),
           ..._rows(context, width: constraints.maxWidth - _margin),
           if (_timer == null) _toolbar(theme),
@@ -104,54 +105,6 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
       );
     }
     return content;
-  }
-
-  Widget _header(ThemeData theme) {
-    var timeColor = theme.colorScheme.success;
-    var timeIcon = FontAwesomeIcons.hourglassStart;
-    if (_secondsElapsed > 60) {
-      timeColor = theme.colorScheme.warning;
-      timeIcon = FontAwesomeIcons.hourglass;
-      if (_secondsElapsed > 120) {
-        timeColor = theme.colorScheme.error;
-        timeIcon = FontAwesomeIcons.hourglassEnd;
-      }
-    }
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          const Spacer(),
-          FaIcon(
-            timeIcon,
-            color: timeColor,
-            size: _iconSize,
-          ),
-          Text(
-            ' ${_secondsElapsed.secondsFormatted()}',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: timeColor,
-            ),
-          ),
-          const Spacer(),
-          FaIcon(
-            FontAwesomeIcons.bomb,
-            color: theme.errorColor,
-            size: _iconSize,
-          ),
-          Text(
-            ' ${_board.minesLeft}',
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const Spacer(),
-        ],
-      ),
-    );
   }
 
   Widget _messageLabel() {

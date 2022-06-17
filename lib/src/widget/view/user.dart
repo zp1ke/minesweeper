@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/widget/atom/loading_button.dart';
-import 'package:minesweeper/src/widget/top_ten.dart';
+import 'package:minesweeper/src/widget/molecule/top_ten.dart';
 
 class UserWidget extends ConsumerStatefulWidget {
   const UserWidget({Key? key}) : super(key: key);

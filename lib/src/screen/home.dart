@@ -5,10 +5,10 @@ import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/model/nav_item.dart';
-import 'package:minesweeper/src/widget/board.dart';
 import 'package:minesweeper/src/widget/navbar.dart';
-import 'package:minesweeper/src/widget/settings.dart';
-import 'package:minesweeper/src/widget/user.dart';
+import 'package:minesweeper/src/widget/view/board.dart';
+import 'package:minesweeper/src/widget/view/settings.dart';
+import 'package:minesweeper/src/widget/view/user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
