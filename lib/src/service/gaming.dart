@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/model/board_data.dart';
+import 'package:minesweeper/src/model/user_score.dart';
+import 'package:minesweeper/src/service/firestore.dart';
 
 class GamingService {
   static GamingService? _instance;
@@ -17,7 +19,9 @@ class GamingService {
     var user = userState.user;
     user ??= await userState.googleSignIn();
     if (user != null) {
-      print("ALMOST THERE"); // fixme
+      final userScore =
+          UserScore(uid: user.uid, name: user.displayName ?? '-', score: score);
+      await FirestoreService().saveTopTen(userScore, boardData.boardStr);
       return true;
     }
     return false;
