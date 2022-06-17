@@ -22,6 +22,7 @@
   "system": "Sistema",
   "themeMode": "Modo de tema",
   "toggleOnTapDescription": "Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.",
+  "topTenScores": "10 Mejores tiempos",
   "user": "Usuario",
   "version": "Versión",
   "youWin": "¡Haz ganado!"

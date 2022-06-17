@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:minesweeper/src/model/user_score.dart';
 
+const _scoresKey = 'scores';
+const _topTenKey = 'top-ten';
+
 class FirestoreService {
   static FirestoreService? _instance;
 
@@ -11,10 +14,18 @@ class FirestoreService {
     return _instance!;
   }
 
+  Future<List<UserScore>> fetchTopTen(String scoreID) async {
+    final db = FirebaseFirestore.instance;
+    final boardTopTen =
+        db.collection(_scoresKey).doc(scoreID).collection(_topTenKey);
+    final data = await boardTopTen.get();
+    return data.docs.map((e) => UserScore.parse(e)).toList();
+  }
+
   Future<void> saveTopTen(UserScore userScore, String scoreID) async {
     final db = FirebaseFirestore.instance;
     final boardTopTen =
-        db.collection('scores').doc(scoreID).collection('top-ten');
+        db.collection(_scoresKey).doc(scoreID).collection(_topTenKey);
     final data = await boardTopTen.get();
     final list = data.docs.map((e) => UserScore.parse(e)).toList();
     list.add(userScore);

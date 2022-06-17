@@ -22,6 +22,7 @@
   "system": "System",
   "themeMode": "Theme mode",
   "toggleOnTapDescription": "Tapping a cell will mark it as clear and long pressing a cell will explore it.",
+  "topTenScores": "Top Ten scores",
   "user": "User",
   "version": "Version",
   "youWin": "You win!"

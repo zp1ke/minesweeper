@@ -74,6 +74,9 @@ class L10nEn extends L10n {
   String get toggleOnTapDescription => 'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
 
   @override
+  String get topTenScores => 'Top Ten scores';
+
+  @override
   String get user => 'User';
 
   @override

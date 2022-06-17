@@ -226,6 +226,12 @@ abstract class L10n {
   /// **'Tapping a cell will mark it as clear and long pressing a cell will explore it.'**
   String get toggleOnTapDescription;
 
+  /// No description provided for @topTenScores.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Ten scores'**
+  String get topTenScores;
+
   /// No description provided for @user.
   ///
   /// In en, this message translates to:

@@ -74,6 +74,9 @@ class L10nEs extends L10n {
   String get toggleOnTapDescription => 'Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.';
 
   @override
+  String get topTenScores => '10 Mejores tiempos';
+
+  @override
   String get user => 'Usuario';
 
   @override

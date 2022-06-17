@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/widget/atom/loading_button.dart';
+import 'package:minesweeper/src/widget/top_ten.dart';
 
 class UserWidget extends ConsumerStatefulWidget {
   const UserWidget({Key? key}) : super(key: key);
@@ -22,6 +23,12 @@ class UserWidgetState extends ConsumerState<UserWidget> {
     final items = [];
     if (userState.user != null) {
       items.add(_nameItem(userState.user!));
+    }
+    items.add(const Padding(
+      padding: EdgeInsets.all(5.0),
+      child: TopTenWidget(),
+    ));
+    if (userState.user != null) {
       items.add(_signOutButton(!userState.processing, theme, l10n, ref));
     } else {
       items.add(_googleSignInButton(!userState.processing, theme, l10n, ref));

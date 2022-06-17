@@ -1,20 +1,9 @@
-extension AppInt on int {
-  String secondsFormatted() {
-    final seconds = this % 60;
-    final minutes = (this / 60) % 60;
-    final hours = this / 60 / 60;
-    final time =
-        '${_twoDigits(minutes.toInt())}:${_twoDigits(seconds.toInt())}';
-    if (hours > 0.99) {
-      return '${_twoDigits(hours.toInt())}:$time';
-    }
-    return time;
-  }
-}
+import 'package:minesweeper/src/extension/number.dart';
+import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 
-String _twoDigits(int value) {
-  if (value < 10) {
-    return '0$value';
+extension AppDateTime on DateTime {
+  String formatted(L10n l10n) {
+    // todo
+    return '${day.twoDigits()}-${month.twoDigits()}';
   }
-  return '$value';
 }
