@@ -41,6 +41,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
   var _secondsStartedMs = 0;
   var _secondsElapsed = 0;
   var _loading = false;
+  var _scoreSubmitted = false;
 
   bool? _winner;
   String? _message;
@@ -83,6 +84,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
           _header(theme),
           _messageLabel(),
           ..._rows(context, width: constraints.maxWidth - _margin),
+          if (_timer == null) _toolbar(theme),
         ],
       ),
     );
@@ -221,6 +223,38 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
             : null,
       );
 
+  Widget _toolbar(ThemeData theme) {
+    final l10n = L10n.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          _reloadButton(l10n),
+          _submitScoreButton(l10n, theme),
+        ],
+      ),
+    );
+  }
+
+  Widget _reloadButton(L10n l10n) => ElevatedButton(
+        onPressed: () {
+          onEvent(GameEvent.boardReload);
+        },
+        child: Text(l10n.restart),
+      );
+
+  Widget _submitScoreButton(L10n l10n, ThemeData theme) => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: theme.colorScheme.onSuccess,
+          onPrimary: theme.colorScheme.success,
+        ),
+        // onPressed: (_winner ?? false) && !_scoreSubmitted // fixme
+        onPressed: !_scoreSubmitted ? _submitScore : null,
+        child: Text(l10n.submitScore),
+      );
+
   void _onCellTap(Cell cell, bool toggle) {
     if (toggle) {
       _toggleClear(cell);
@@ -252,13 +286,13 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     _timer = null;
     _winner = event.winner;
     final l10n = L10n.of(context);
+    _message = event.winner ? l10n.youWin : gameEventLabel(event.event, l10n);
+    setState(() {});
     if (event.winner) {
-      _message = l10n.youWin;
       _showScoreDialog();
     } else {
-      _message = gameEventLabel(event.event, l10n);
+      _showScoreDialog(); // fixme: remove
     }
-    setState(() {});
   }
 
   @override
@@ -282,40 +316,39 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
   }
 
   void _showScoreDialog() {
-    if (GamingService().canSubmitScore(_config.boardData)) {
-      showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          final l10n = L10n.of(context);
-          return AlertDialog(
-            title: Text(l10n.submitScore),
-            content: Text(l10n.confirmToSubmitScore),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  _submitScore();
-                  Navigator.of(context).pop();
-                },
-                child: Text(l10n.ok),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(l10n.cancel),
-              )
-            ],
-          );
-        },
-      );
-    }
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        final l10n = L10n.of(context);
+        return AlertDialog(
+          title: Text(l10n.submitScore),
+          content: Text(l10n.confirmToSubmitScore),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _submitScore();
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.ok),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.cancel),
+            )
+          ],
+        );
+      },
+    );
   }
 
   void _submitScore() async {
     setState(() {
       _loading = true;
     });
-    await GamingService().saveScore(_secondsElapsed, _config.boardData);
+    _scoreSubmitted = await GamingService()
+        .saveScore(ref, _secondsElapsed, _config.boardData);
     setState(() {
       _loading = false;
     });

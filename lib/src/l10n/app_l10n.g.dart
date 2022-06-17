@@ -178,6 +178,12 @@ abstract class L10n {
   /// **'OK'**
   String get ok;
 
+  /// No description provided for @restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restart;
+
   /// No description provided for @rowsSize.
   ///
   /// In en, this message translates to:

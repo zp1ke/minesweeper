@@ -50,6 +50,9 @@ class L10nEs extends L10n {
   String get ok => 'Aceptar';
 
   @override
+  String get restart => 'Reiniciar';
+
+  @override
   String get rowsSize => 'Filas';
 
   @override

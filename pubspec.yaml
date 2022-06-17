@@ -22,7 +22,6 @@ dependencies:
   flutter_native_splash: ^2.2.3
   flutter_riverpod: ^1.0.4
   font_awesome_flutter: ^10.1.0
-  games_services: ^2.0.8
   google_fonts: ^3.0.1
   google_nav_bar: ^5.0.6
   google_sign_in: ^5.3.3

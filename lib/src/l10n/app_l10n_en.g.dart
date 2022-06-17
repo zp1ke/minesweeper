@@ -50,6 +50,9 @@ class L10nEn extends L10n {
   String get ok => 'OK';
 
   @override
+  String get restart => 'Restart';
+
+  @override
   String get rowsSize => 'Rows size';
 
   @override

@@ -10,7 +10,7 @@ class UserState extends ChangeNotifier {
     user = AuthService().user;
   }
 
-  Future<void> googleSignIn() async {
+  Future<User?> googleSignIn() async {
     if (!processing) {
       processing = true;
       notifyListeners();
@@ -18,6 +18,7 @@ class UserState extends ChangeNotifier {
       processing = false;
       notifyListeners();
     }
+    return user;
   }
 
   Future<void> signOut() async {
