@@ -11,6 +11,8 @@ import 'package:minesweeper/src/widget/view/scores.dart';
 import 'package:minesweeper/src/widget/view/settings.dart';
 import 'package:minesweeper/src/widget/view/user.dart';
 
+const _scoresKey = ValueKey<String>('scores');
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class HomeScreen extends StatefulWidget {
   HomeScreenState createState() => HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> implements EventListener {
   final _navItems = <NavItem>[];
   final _eventHandler = EventHandler();
   final _pageController = PageController();
@@ -33,6 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FlutterNativeSplash.remove();
     });
+    _eventHandler.addListener(this);
   }
 
   void _createNavItems() {
@@ -54,6 +57,7 @@ class HomeScreenState extends State<HomeScreen> {
         ],
       ),
       NavItem(
+        key: _scoresKey,
         title: l10n.scores,
         body: ScoresWidget(
           eventHandler: _eventHandler,
@@ -122,9 +126,20 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void _onNav(int index) {
-    setState(() {
-      _selectedIndex = index;
-      _navItem = _navItems[index];
-    });
+    if (index >= 0 && index < _navItems.length) {
+      setState(() {
+        _selectedIndex = index;
+        _navItem = _navItems[index];
+      });
+    }
+  }
+
+  @override
+  void onEvent(GameEvent event) {
+    if (event == GameEvent.checkScores) {
+      final scoresIndex =
+          _navItems.indexWhere((item) => item.key == _scoresKey);
+      _onNav(scoresIndex);
+    }
   }
 }

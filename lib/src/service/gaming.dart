@@ -21,7 +21,7 @@ class GamingService {
     if (user != null) {
       final userScore =
           UserScore(uid: user.uid, name: user.displayName ?? '-', score: score);
-      await FirestoreService().saveTopTen(userScore, boardData.boardStr);
+      await FirestoreService().saveScore(userScore, boardData.boardStr);
       return true;
     }
     return false;

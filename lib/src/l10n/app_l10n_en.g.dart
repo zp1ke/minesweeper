@@ -17,6 +17,9 @@ class L10nEn extends L10n {
   String get cancel => 'Cancel';
 
   @override
+  String get check => 'Check';
+
+  @override
   String get columnsSize => 'Columns size';
 
   @override
@@ -38,13 +41,22 @@ class L10nEn extends L10n {
   String get exploreOnTapDescription => 'Tapping a cell will explore it and long pressing a cell will mark it as clear.';
 
   @override
+  String get gameSettings => 'Game settings';
+
+  @override
   String get googleSignIn => 'Sign in with Google';
 
   @override
   String get light => 'Light';
 
   @override
+  String get mines => 'Mines';
+
+  @override
   String get minesCount => 'Mines count';
+
+  @override
+  String get nothingToShow => 'Nothing to show :(';
 
   @override
   String get ok => 'OK';
@@ -57,6 +69,9 @@ class L10nEn extends L10n {
 
   @override
   String get scores => 'Scores';
+
+  @override
+  String get scoreSubmitted => 'Score submitted';
 
   @override
   String get settings => 'Settings';
@@ -75,9 +90,6 @@ class L10nEn extends L10n {
 
   @override
   String get toggleOnTapDescription => 'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
-
-  @override
-  String get topTenScores => 'Top Ten scores';
 
   @override
   String get user => 'User';

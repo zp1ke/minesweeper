@@ -112,6 +112,12 @@ abstract class L10n {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @check.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get check;
+
   /// No description provided for @columnsSize.
   ///
   /// In en, this message translates to:
@@ -154,6 +160,12 @@ abstract class L10n {
   /// **'Tapping a cell will explore it and long pressing a cell will mark it as clear.'**
   String get exploreOnTapDescription;
 
+  /// No description provided for @gameSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Game settings'**
+  String get gameSettings;
+
   /// No description provided for @googleSignIn.
   ///
   /// In en, this message translates to:
@@ -166,11 +178,23 @@ abstract class L10n {
   /// **'Light'**
   String get light;
 
+  /// No description provided for @mines.
+  ///
+  /// In en, this message translates to:
+  /// **'Mines'**
+  String get mines;
+
   /// No description provided for @minesCount.
   ///
   /// In en, this message translates to:
   /// **'Mines count'**
   String get minesCount;
+
+  /// No description provided for @nothingToShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to show :('**
+  String get nothingToShow;
 
   /// No description provided for @ok.
   ///
@@ -195,6 +219,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Scores'**
   String get scores;
+
+  /// No description provided for @scoreSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Score submitted'**
+  String get scoreSubmitted;
 
   /// No description provided for @settings.
   ///
@@ -231,12 +261,6 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Tapping a cell will mark it as clear and long pressing a cell will explore it.'**
   String get toggleOnTapDescription;
-
-  /// No description provided for @topTenScores.
-  ///
-  /// In en, this message translates to:
-  /// **'Top Ten scores'**
-  String get topTenScores;
 
   /// No description provided for @user.
   ///

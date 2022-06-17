@@ -203,8 +203,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
           primary: theme.colorScheme.success,
           onPrimary: theme.colorScheme.onSuccess,
         ),
-        // onPressed: (_winner ?? false) && !_scoreSubmitted // fixme
-        onPressed: !_scoreSubmitted ? _submitScore : null,
+        onPressed: (_winner ?? false) && !_scoreSubmitted ? _submitScore : null,
         child: Text(l10n.submitScore),
       );
 
@@ -243,8 +242,6 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     setState(() {});
     if (event.winner) {
       _showScoreDialog();
-    } else {
-      _showScoreDialog(); // fixme: remove
     }
   }
 
@@ -256,6 +253,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
           ..setMines(_config.boardData.minesCount);
         _winner = null;
         _message = null;
+        _scoreSubmitted = false;
         _clearTimer();
       });
     }
@@ -302,8 +300,30 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     });
     _scoreSubmitted = await GamingService()
         .saveScore(ref, _secondsElapsed, _config.boardData);
-    setState(() {
-      _loading = false;
-    });
+    _loading = false;
+    if (mounted) {
+      setState(() {});
+      if (_scoreSubmitted) {
+        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        final l10n = L10n.of(context);
+        final theme = Theme.of(context);
+        scaffoldMessenger.clearSnackBars();
+        scaffoldMessenger.showSnackBar(SnackBar(
+          content: Text(
+            l10n.scoreSubmitted,
+            style: TextStyle(
+              color: theme.colorScheme.success,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          action: SnackBarAction(
+            label: l10n.check,
+            onPressed: () {
+              widget.eventHandler.trigger(GameEvent.checkScores);
+            },
+          ),
+        ));
+      }
+    }
   }
 }

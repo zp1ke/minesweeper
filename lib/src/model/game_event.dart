@@ -3,4 +3,5 @@ enum GameEvent {
   minesCleared,
   mineStepped,
   reloadScores,
+  checkScores,
 }

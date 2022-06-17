@@ -17,6 +17,9 @@ class L10nEs extends L10n {
   String get cancel => 'Cancelar';
 
   @override
+  String get check => 'Revisar';
+
+  @override
   String get columnsSize => 'Columnas';
 
   @override
@@ -38,13 +41,22 @@ class L10nEs extends L10n {
   String get exploreOnTapDescription => 'Haciendo Tap en una celda la explorará y presionando unos segundos la marcará como despejada.';
 
   @override
+  String get gameSettings => 'Ajustes de juego';
+
+  @override
   String get googleSignIn => 'Ingresar con Google';
 
   @override
   String get light => 'Claro';
 
   @override
+  String get mines => 'Minas';
+
+  @override
   String get minesCount => 'Cantidad de minas';
+
+  @override
+  String get nothingToShow => 'Nada que mostrar :(';
 
   @override
   String get ok => 'Aceptar';
@@ -57,6 +69,9 @@ class L10nEs extends L10n {
 
   @override
   String get scores => 'Puntajes';
+
+  @override
+  String get scoreSubmitted => 'Puntaje enviado';
 
   @override
   String get settings => 'Ajustes';
@@ -75,9 +90,6 @@ class L10nEs extends L10n {
 
   @override
   String get toggleOnTapDescription => 'Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.';
-
-  @override
-  String get topTenScores => '10 Mejores tiempos';
 
   @override
   String get user => 'Usuario';

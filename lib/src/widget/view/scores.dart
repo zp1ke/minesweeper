@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:minesweeper/src/extension/datetime.dart';
 import 'package:minesweeper/src/extension/number.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
-import 'package:minesweeper/src/model/board_data.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/model/user_score.dart';
 import 'package:minesweeper/src/service/firestore.dart';
+import 'package:minesweeper/src/widget/atom/select.dart';
 import 'package:minesweeper/theme.dart';
 
 class ScoresWidget extends StatefulWidget {
@@ -22,23 +22,41 @@ class ScoresWidget extends StatefulWidget {
 }
 
 class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
-  var _scoreID = BoardData().boardStr;
+  List<String>? _scoresIDs;
+  String? _scoreID;
   var _list = <UserScore>[];
   var _loading = false;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, _loadList);
+    Future.delayed(Duration.zero, _loadScoresIDs);
     widget.eventHandler.addListener(this);
   }
 
-  void _loadList() async {
-    if (!_loading) {
+  void _loadScoresIDs() async {
+    if (_scoresIDs == null) {
       setState(() {
         _loading = true;
       });
-      _list = await FirestoreService().fetchTopTen(_scoreID);
+      _scoresIDs = await FirestoreService().fetchScoresIDs();
+      if (_scoresIDs!.isNotEmpty) {
+        _scoreID = _scoresIDs![0];
+      }
+      _loading = false;
+      if (mounted) {
+        setState(() {});
+      }
+      _loadList();
+    }
+  }
+
+  void _loadList() async {
+    if (!_loading && _scoreID != null) {
+      setState(() {
+        _loading = true;
+      });
+      _list = await FirestoreService().fetchScores(_scoreID!);
       _loading = false;
       if (mounted) {
         setState(() {});
@@ -48,6 +66,11 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
 
   @override
   Widget build(BuildContext context) {
+    if (_scoresIDs == null) {
+      return const Center(
+        child: CircularProgressIndicator.adaptive(),
+      );
+    }
     final theme = Theme.of(context);
     final l10n = L10n.of(context);
     return RefreshIndicator(
@@ -57,6 +80,16 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
       },
       child: ListView(
         children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _scoreIDSelector(l10n),
+              ],
+            ),
+          ),
           if (_loading)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -66,6 +99,15 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
                   height: loadingIndicatorSize,
                   child: CircularProgressIndicator.adaptive(),
                 ),
+              ),
+            ),
+          if (_list.isEmpty)
+            Text(
+              l10n.nothingToShow,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18.0,
               ),
             ),
           ..._list
@@ -80,6 +122,21 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
       ),
     );
   }
+
+  Widget _scoreIDSelector(L10n l10n) => SelectButton<String>(
+        enabled: !_loading,
+        label: l10n.gameSettings,
+        selected: _scoreID,
+        items: _scoresIDs!,
+        onChanged: (scoreID) {
+          _scoreID = scoreID;
+          _loadList();
+        },
+        itemBuilder: (scoreID) {
+          final parts = scoreID.split('_');
+          return Text('${parts[0]} (${parts[1]} ${l10n.mines})');
+        },
+      );
 
   Widget _itemWidget(
     UserScore userScore,
