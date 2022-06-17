@@ -3,8 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/src/extension/number.dart';
 import 'package:minesweeper/theme.dart';
 
-const _iconSize = 14.0;
-
 class BoardHeader extends StatelessWidget {
   final int secondsElapsed;
   final int minesLeft;
@@ -38,7 +36,7 @@ class BoardHeader extends StatelessWidget {
           FaIcon(
             timeIcon,
             color: timeColor,
-            size: _iconSize,
+            size: headerIconSize,
           ),
           Text(
             ' ${secondsElapsed.secondsFormatted()}',
@@ -51,7 +49,7 @@ class BoardHeader extends StatelessWidget {
           FaIcon(
             FontAwesomeIcons.bomb,
             color: theme.errorColor,
-            size: _iconSize,
+            size: headerIconSize,
           ),
           Text(
             ' $minesLeft',

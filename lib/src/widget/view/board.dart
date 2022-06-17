@@ -200,8 +200,8 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
 
   Widget _submitScoreButton(L10n l10n, ThemeData theme) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: theme.colorScheme.onSuccess,
-          onPrimary: theme.colorScheme.success,
+          primary: theme.colorScheme.success,
+          onPrimary: theme.colorScheme.onSuccess,
         ),
         // onPressed: (_winner ?? false) && !_scoreSubmitted // fixme
         onPressed: !_scoreSubmitted ? _submitScore : null,

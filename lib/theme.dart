@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minesweeper/src/model/config.dart';
 
+const headerIconSize = 14.0;
+const loadingIndicatorSize = 14.0;
+
 extension AppColorScheme on ColorScheme {
   Color get success => brightness == Brightness.light
       ? const Color(0xFF28a745)

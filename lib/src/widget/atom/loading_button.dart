@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minesweeper/theme.dart';
 
 class LoadingButton extends StatelessWidget {
   final bool loading;
@@ -21,8 +22,8 @@ class LoadingButton extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
                 child: SizedBox(
-                  width: 14,
-                  height: 14,
+                  width: loadingIndicatorSize,
+                  height: loadingIndicatorSize,
                   child: CircularProgressIndicator.adaptive(
                       valueColor: AlwaysStoppedAnimation<Color>(
                           Theme.of(context).primaryColor)),

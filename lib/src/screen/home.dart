@@ -7,6 +7,7 @@ import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/model/nav_item.dart';
 import 'package:minesweeper/src/widget/navbar.dart';
 import 'package:minesweeper/src/widget/view/board.dart';
+import 'package:minesweeper/src/widget/view/scores.dart';
 import 'package:minesweeper/src/widget/view/settings.dart';
 import 'package:minesweeper/src/widget/view/user.dart';
 
@@ -49,6 +50,21 @@ class HomeScreenState extends State<HomeScreen> {
               _eventHandler.trigger(GameEvent.boardReload);
             },
             icon: const FaIcon(FontAwesomeIcons.rotateLeft),
+          ),
+        ],
+      ),
+      NavItem(
+        title: l10n.scores,
+        body: ScoresWidget(
+          eventHandler: _eventHandler,
+        ),
+        icon: FontAwesomeIcons.fireFlameSimple,
+        actions: [
+          IconButton(
+            onPressed: () {
+              _eventHandler.trigger(GameEvent.reloadScores);
+            },
+            icon: const FaIcon(FontAwesomeIcons.rotateRight),
           ),
         ],
       ),
