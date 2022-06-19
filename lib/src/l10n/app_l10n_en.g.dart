@@ -1,6 +1,3 @@
-
-
-
 import 'app_l10n.g.dart';
 
 /// The translations for English (`en`).
@@ -38,7 +35,8 @@ class L10nEn extends L10n {
   String get exploreOnTap => 'Explore on tap';
 
   @override
-  String get exploreOnTapDescription => 'Tapping a cell will explore it and long pressing a cell will mark it as clear.';
+  String get exploreOnTapDescription =>
+      'Tapping a cell will explore it and long pressing a cell will mark it as clear.';
 
   @override
   String get gameSettings => 'Game settings';
@@ -94,7 +92,8 @@ class L10nEn extends L10n {
   }
 
   @override
-  String get toggleOnTapDescription => 'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
+  String get toggleOnTapDescription =>
+      'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
 
   @override
   String get user => 'User';

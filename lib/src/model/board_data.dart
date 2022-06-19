@@ -20,6 +20,24 @@ class BoardData {
     }
   }
 
+  BoardData copyWith({
+    int? rowsSize,
+    int? columnsSize,
+    int? minesCount,
+  }) {
+    final boardData = BoardData();
+    if (rowsSize != null) {
+      boardData.rowsSize = rowsSize;
+    }
+    if (columnsSize != null) {
+      boardData.columnsSize = columnsSize;
+    }
+    if (minesCount != null) {
+      boardData.minesCount = minesCount;
+    }
+    return boardData;
+  }
+
   int get maxMinesCount => (rowsSize * columnsSize * .6).toInt();
 
   int get minMinesCount => (rowsSize * columnsSize * .1).toInt();

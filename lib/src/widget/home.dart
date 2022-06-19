@@ -9,7 +9,6 @@ import 'package:minesweeper/src/widget/navbar.dart';
 import 'package:minesweeper/src/widget/view/board.dart';
 import 'package:minesweeper/src/widget/view/scores.dart';
 import 'package:minesweeper/src/widget/view/settings.dart';
-import 'package:minesweeper/src/widget/view/user.dart';
 
 const _scoresKey = ValueKey<String>('scores');
 
@@ -76,11 +75,6 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
         title: l10n.settings,
         body: const SettingsWidget(),
         icon: FontAwesomeIcons.sliders,
-      ),
-      NavItem(
-        title: l10n.user,
-        body: const UserWidget(),
-        icon: FontAwesomeIcons.user,
       ),
     ]);
     _onNav(0);

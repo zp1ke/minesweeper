@@ -18,27 +18,38 @@ class ListTileIntPicker extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-        leading: InkWell(
-          onTap: value > minValue
-              ? () {
-                  onValue(value - 1);
-                }
-              : null,
-          child: const FaIcon(FontAwesomeIcons.minus),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final minusEnabled = value > minValue;
+    final plusEnabled = value < maxValue;
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+      leading: InkWell(
+        onTap: minusEnabled
+            ? () {
+                onValue(value - 1);
+              }
+            : null,
+        child: FaIcon(
+          FontAwesomeIcons.minus,
+          color: minusEnabled ? theme.primaryColor : theme.disabledColor,
         ),
-        title: Text(
-          '$title: $value',
-          textAlign: TextAlign.center,
+      ),
+      title: Text(
+        '$title: $value',
+        textAlign: TextAlign.center,
+      ),
+      trailing: InkWell(
+        onTap: plusEnabled
+            ? () {
+                onValue(value + 1);
+              }
+            : null,
+        child: FaIcon(
+          FontAwesomeIcons.plus,
+          color: plusEnabled ? theme.primaryColor : theme.disabledColor,
         ),
-        trailing: InkWell(
-          onTap: value < maxValue
-              ? () {
-                  onValue(value + 1);
-                }
-              : null,
-          child: const FaIcon(FontAwesomeIcons.plus),
-        ),
-      );
+      ),
+    );
+  }
 }
