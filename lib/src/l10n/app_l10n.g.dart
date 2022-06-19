@@ -256,6 +256,12 @@ abstract class L10n {
   /// **'Theme mode'**
   String get themeMode;
 
+  /// No description provided for @todayAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Today at {datetime}'**
+  String todayAt(int hour, String datetime);
+
   /// No description provided for @toggleOnTapDescription.
   ///
   /// In en, this message translates to:
@@ -273,6 +279,12 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Version'**
   String get version;
+
+  /// No description provided for @yesterdayAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday at {datetime}'**
+  String yesterdayAt(int hour, String datetime);
 
   /// No description provided for @youWin.
   ///

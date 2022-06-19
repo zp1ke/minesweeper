@@ -81,12 +81,13 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
       child: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 5.0),
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _scoreIDSelector(l10n),
+                if (_scoresIDs != null && _scoresIDs!.isNotEmpty)
+                  _scoreIDSelector(l10n),
               ],
             ),
           ),

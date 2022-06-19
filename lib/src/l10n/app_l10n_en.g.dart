@@ -89,6 +89,11 @@ class L10nEn extends L10n {
   String get themeMode => 'Theme mode';
 
   @override
+  String todayAt(int hour, String datetime) {
+    return 'Today at $datetime';
+  }
+
+  @override
   String get toggleOnTapDescription => 'Tapping a cell will mark it as clear and long pressing a cell will explore it.';
 
   @override
@@ -96,6 +101,11 @@ class L10nEn extends L10n {
 
   @override
   String get version => 'Version';
+
+  @override
+  String yesterdayAt(int hour, String datetime) {
+    return 'Yesterday at $datetime';
+  }
 
   @override
   String get youWin => 'You win!';

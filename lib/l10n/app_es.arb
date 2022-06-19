@@ -27,8 +27,30 @@
   "submitScore": "Enviar puntuación",
   "system": "Sistema",
   "themeMode": "Modo de tema",
+  "todayAt": "{count,plural, =1{Hoy a la {datetime}} other{Hoy a las {datetime}}}",
+  "@todayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "int"
+      },
+      "datetime": {
+        "type": "String"
+      }
+    }
+  },
   "toggleOnTapDescription": "Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.",
   "user": "Usuario",
   "version": "Versión",
+  "yesterdayAt": "{count,plural, =1{Ayer a la {datetime}} other{Ayer a las {datetime}}}",
+  "@yesterdayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "int"
+      },
+      "datetime": {
+        "type": "String"
+      }
+    }
+  },
   "youWin": "¡Haz ganado!"
 }

@@ -27,8 +27,30 @@
   "submitScore": "Submit score",
   "system": "System",
   "themeMode": "Theme mode",
+  "todayAt": "Today at {datetime}",
+  "@todayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "int"
+      },
+      "datetime": {
+        "type": "String"
+      }
+    }
+  },
   "toggleOnTapDescription": "Tapping a cell will mark it as clear and long pressing a cell will explore it.",
   "user": "User",
   "version": "Version",
+  "yesterdayAt": "Yesterday at {datetime}",
+  "@yesterdayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "int"
+      },
+      "datetime": {
+        "type": "String"
+      }
+    }
+  },
   "youWin": "You win!"
 }
