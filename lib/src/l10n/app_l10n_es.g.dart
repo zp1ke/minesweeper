@@ -107,5 +107,8 @@ class L10nEs extends L10n {
   }
 
   @override
+  String get you => 'Tú';
+
+  @override
   String get youWin => '¡Haz ganado!';
 }

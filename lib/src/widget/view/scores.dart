@@ -1,15 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:minesweeper/provider.dart';
 import 'package:minesweeper/src/extension/datetime.dart';
 import 'package:minesweeper/src/extension/number.dart';
 import 'package:minesweeper/src/l10n/app_l10n.g.dart';
 import 'package:minesweeper/src/model/event.dart';
 import 'package:minesweeper/src/model/game_event.dart';
 import 'package:minesweeper/src/model/user_score.dart';
+import 'package:minesweeper/src/service/auth.dart';
 import 'package:minesweeper/src/service/firestore.dart';
 import 'package:minesweeper/src/widget/atom/select.dart';
 import 'package:minesweeper/theme.dart';
 
-class ScoresWidget extends StatefulWidget {
+class ScoresWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;
 
   const ScoresWidget({
@@ -21,42 +25,59 @@ class ScoresWidget extends StatefulWidget {
   ScoresWidgetState createState() => ScoresWidgetState();
 }
 
-class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
+class ScoresWidgetState extends ConsumerState<ScoresWidget>
+    implements EventListener {
   List<String>? _scoresIDs;
   String? _scoreID;
   var _list = <UserScore>[];
+  UserScore? _userScore;
   var _loading = false;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, _loadScoresIDs);
+    Future.delayed(Duration.zero, _loadList);
     widget.eventHandler.addListener(this);
   }
 
-  void _loadScoresIDs() async {
+  Future<void> _loadScoresIDs() async {
     if (_scoresIDs == null) {
       setState(() {
         _loading = true;
       });
       _scoresIDs = await FirestoreService().fetchScoresIDs();
-      if (_scoresIDs!.isNotEmpty) {
-        _scoreID = _scoresIDs![0];
+      if (_scoresIDs!.isNotEmpty && _scoreID == null) {
+        final config = ref.read(AppProvider().configProvider).config;
+        _scoreID = _scoresIDs!.firstWhere(
+            (element) => element == config.boardData.boardStr,
+            orElse: () => _scoresIDs!.first);
       }
       _loading = false;
       if (mounted) {
         setState(() {});
       }
-      _loadList();
     }
   }
 
   void _loadList() async {
-    if (!_loading && _scoreID != null) {
+    await _loadScoresIDs();
+    if (!_loading &&
+        _scoresIDs != null &&
+        _scoresIDs!.isNotEmpty &&
+        _scoreID != null) {
       setState(() {
         _loading = true;
       });
       _list = await FirestoreService().fetchScores(_scoreID!);
+      final user = AuthService().user;
+      if (user != null) {
+        _userScore = await FirestoreService().fetchUserScore(
+          userID: user.uid,
+          scoreID: _scoreID!,
+        );
+      } else {
+        _userScore = null;
+      }
       _loading = false;
       if (mounted) {
         setState(() {});
@@ -73,6 +94,7 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
     }
     final theme = Theme.of(context);
     final l10n = L10n.of(context);
+    final user = AuthService().user;
     return RefreshIndicator(
       onRefresh: () {
         _loadList();
@@ -114,11 +136,21 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
           ..._list
               .map((userScore) => _itemWidget(
                     userScore,
-                    _list.indexOf(userScore) + 1,
+                    (_list.indexOf(userScore) + 1).toString(),
                     l10n,
                     theme,
+                    user,
                   ))
               .toList(),
+          if (_userScore != null &&
+              (_list.isEmpty || _userScore!.score > _list.last.score))
+            _itemWidget(
+              _userScore!,
+              '-',
+              l10n,
+              theme,
+              user,
+            )
         ],
       ),
     );
@@ -141,23 +173,35 @@ class ScoresWidgetState extends State<ScoresWidget> implements EventListener {
 
   Widget _itemWidget(
     UserScore userScore,
-    int index,
+    String index,
     L10n l10n,
     ThemeData theme,
-  ) =>
-      ListTile(
-        isThreeLine: true,
-        leading: Text(
-          index.toString(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 18.0,
-          ),
+    User? user,
+  ) {
+    final isUser = user?.uid == userScore.uid;
+    final youStr = isUser ? ' (${l10n.you})' : '';
+    return ListTile(
+      selected: isUser,
+      dense: true,
+      leading: Text(
+        index,
+        style: const TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 18.0,
         ),
-        title: Text(userScore.name),
-        subtitle: Text(userScore.datetime.formatted(l10n)),
-        trailing: _timeWidget(userScore.score, theme),
-      );
+      ),
+      title: Text(
+        '${userScore.name}$youStr',
+        style: TextStyle(
+          fontWeight: isUser ? FontWeight.w600 : FontWeight.w400,
+        ),
+      ),
+      subtitle: Text(userScore.datetime.formatted(l10n)),
+      trailing: _timeWidget(userScore.score, theme),
+      tileColor: theme.colorScheme.success,
+      selectedTileColor: theme.colorScheme.success.withAlpha(20),
+    );
+  }
 
   Widget _timeWidget(int secondsElapsed, ThemeData theme) {
     final theme = Theme.of(context);

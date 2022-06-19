@@ -287,6 +287,12 @@ abstract class L10n {
   /// **'Yesterday at {datetime}'**
   String yesterdayAt(int hour, String datetime);
 
+  /// No description provided for @you.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get you;
+
   /// No description provided for @youWin.
   ///
   /// In en, this message translates to:

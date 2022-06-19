@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minesweeper/src/model/cell.dart';
-import 'package:minesweeper/theme.dart';
 
 const _margin = 0.4;
 
@@ -66,15 +65,14 @@ class CellWidget extends StatelessWidget {
         var textColor = theme.colorScheme.onPrimary;
         if (cell.minesAround == 2) {
           textColor = theme.colorScheme.primary;
-        } else if (cell.minesAround == 3) {
-          textColor = theme.colorScheme.warning;
-        } else if (cell.minesAround >= 4) {
+        } else if (cell.minesAround >= 3) {
           textColor = theme.colorScheme.error;
         }
         return Text(
           '${cell.minesAround}',
           style: TextStyle(
             fontWeight: FontWeight.w700,
+            fontSize: 18.0,
             color: textColor,
           ),
         );
