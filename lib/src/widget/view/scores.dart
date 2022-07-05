@@ -198,8 +198,8 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
       ),
       subtitle: Text(userScore.datetime.formatted(l10n)),
       trailing: _timeWidget(userScore.score, theme),
-      tileColor: theme.colorScheme.success,
-      selectedTileColor: theme.colorScheme.success.withAlpha(20),
+      tileColor: theme.colorScheme.secondary.withAlpha(10),
+      selectedTileColor: theme.colorScheme.success.withAlpha(15),
     );
   }
 
