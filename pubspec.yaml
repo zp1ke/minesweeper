@@ -1,9 +1,9 @@
-name: minesweeper
+name: minezweeper
 description: MineSweeper Game.
 
 publish_to: 'none'
 
-version: 0.2.0+4
+version: 0.2.1+5
 
 environment:
   sdk: ">=2.17.1 <3.0.0"
