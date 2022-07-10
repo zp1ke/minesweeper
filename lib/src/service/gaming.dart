@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minesweeper/provider.dart';
-import 'package:minesweeper/src/model/board_data.dart';
-import 'package:minesweeper/src/model/user_score.dart';
-import 'package:minesweeper/src/service/firestore.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/model/board_data.dart';
+import 'package:minezweeper/src/model/user_score.dart';
+import 'package:minezweeper/src/service/firestore.dart';
 
 class GamingService {
   static GamingService? _instance;

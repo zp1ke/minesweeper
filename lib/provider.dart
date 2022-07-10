@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minesweeper/src/model/config.dart';
-import 'package:minesweeper/src/state/config.dart';
-import 'package:minesweeper/src/state/user.dart';
+import 'package:minezweeper/src/model/config.dart';
+import 'package:minezweeper/src/state/config.dart';
+import 'package:minezweeper/src/state/user.dart';
 
 class AppProvider {
   final ChangeNotifierProvider<AppConfigState> configProvider;

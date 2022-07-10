@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minesweeper/firebase_options.dart';
-import 'package:minesweeper/provider.dart';
-import 'package:minesweeper/src/l10n/app_l10n.g.dart';
-import 'package:minesweeper/src/widget/home.dart';
-import 'package:minesweeper/theme.dart';
+import 'package:minezweeper/firebase_options.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/widget/home.dart';
+import 'package:minezweeper/theme.dart';
 
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

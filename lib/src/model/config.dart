@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:minesweeper/src/model/board_data.dart';
+import 'package:minezweeper/src/model/board_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _exploreOnTapKey = 'exploreOnTap';

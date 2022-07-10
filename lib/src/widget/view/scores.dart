@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minesweeper/provider.dart';
-import 'package:minesweeper/src/extension/datetime.dart';
-import 'package:minesweeper/src/extension/number.dart';
-import 'package:minesweeper/src/l10n/app_l10n.g.dart';
-import 'package:minesweeper/src/model/event.dart';
-import 'package:minesweeper/src/model/game_event.dart';
-import 'package:minesweeper/src/model/user_score.dart';
-import 'package:minesweeper/src/service/auth.dart';
-import 'package:minesweeper/src/service/firestore.dart';
-import 'package:minesweeper/src/widget/atom/select.dart';
-import 'package:minesweeper/theme.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/extension/datetime.dart';
+import 'package:minezweeper/src/extension/number.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/event.dart';
+import 'package:minezweeper/src/model/game_event.dart';
+import 'package:minezweeper/src/model/user_score.dart';
+import 'package:minezweeper/src/service/auth.dart';
+import 'package:minezweeper/src/service/firestore.dart';
+import 'package:minezweeper/src/widget/atom/select.dart';
+import 'package:minezweeper/theme.dart';
 
 class ScoresWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;

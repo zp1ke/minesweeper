@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:minesweeper/src/model/cell.dart';
+import 'package:minezweeper/src/model/cell.dart';
 
 const _margin = 0.4;
 

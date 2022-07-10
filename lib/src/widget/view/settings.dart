@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:minesweeper/provider.dart';
-import 'package:minesweeper/src/l10n/app_l10n.g.dart';
-import 'package:minesweeper/src/model/board_data.dart';
-import 'package:minesweeper/src/model/config.dart';
-import 'package:minesweeper/src/widget/atom/loading_button.dart';
-import 'package:minesweeper/src/widget/atom/number_picker.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/board_data.dart';
+import 'package:minezweeper/src/model/config.dart';
+import 'package:minezweeper/src/widget/atom/loading_button.dart';
+import 'package:minezweeper/src/widget/atom/number_picker.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsWidget extends ConsumerStatefulWidget {

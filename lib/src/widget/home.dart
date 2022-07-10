@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:minesweeper/src/l10n/app_l10n.g.dart';
-import 'package:minesweeper/src/model/event.dart';
-import 'package:minesweeper/src/model/game_event.dart';
-import 'package:minesweeper/src/model/nav_item.dart';
-import 'package:minesweeper/src/widget/navbar.dart';
-import 'package:minesweeper/src/widget/view/board.dart';
-import 'package:minesweeper/src/widget/view/scores.dart';
-import 'package:minesweeper/src/widget/view/settings.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/event.dart';
+import 'package:minezweeper/src/model/game_event.dart';
+import 'package:minezweeper/src/model/nav_item.dart';
+import 'package:minezweeper/src/widget/navbar.dart';
+import 'package:minezweeper/src/widget/view/board.dart';
+import 'package:minezweeper/src/widget/view/scores.dart';
+import 'package:minezweeper/src/widget/view/settings.dart';
 
 const _scoresKey = ValueKey<String>('scores');
 

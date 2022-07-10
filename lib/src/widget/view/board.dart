@@ -2,19 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minesweeper/provider.dart';
-import 'package:minesweeper/src/exception/game_over.dart';
-import 'package:minesweeper/src/extension/game_event.dart';
-import 'package:minesweeper/src/l10n/app_l10n.g.dart';
-import 'package:minesweeper/src/model/board.dart';
-import 'package:minesweeper/src/model/cell.dart';
-import 'package:minesweeper/src/model/config.dart';
-import 'package:minesweeper/src/model/event.dart';
-import 'package:minesweeper/src/model/game_event.dart';
-import 'package:minesweeper/src/service/gaming.dart';
-import 'package:minesweeper/src/widget/atom/cell.dart';
-import 'package:minesweeper/src/widget/molecule/board_header.dart';
-import 'package:minesweeper/theme.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/exception/game_over.dart';
+import 'package:minezweeper/src/extension/game_event.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/board.dart';
+import 'package:minezweeper/src/model/cell.dart';
+import 'package:minezweeper/src/model/config.dart';
+import 'package:minezweeper/src/model/event.dart';
+import 'package:minezweeper/src/model/game_event.dart';
+import 'package:minezweeper/src/service/gaming.dart';
+import 'package:minezweeper/src/widget/atom/cell.dart';
+import 'package:minezweeper/src/widget/molecule/board_header.dart';
+import 'package:minezweeper/theme.dart';
 
 class BoardWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;

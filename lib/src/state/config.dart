@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper/src/model/board_data.dart';
-import 'package:minesweeper/src/model/config.dart';
+import 'package:minezweeper/src/model/board_data.dart';
+import 'package:minezweeper/src/model/config.dart';
 
 class AppConfigState extends ChangeNotifier {
   final AppConfig config;

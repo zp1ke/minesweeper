@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:minesweeper/src/model/nav_item.dart';
+import 'package:minezweeper/src/model/nav_item.dart';
 
 class NavBar extends StatelessWidget {
   final int selectedIndex;

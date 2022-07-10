@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:minesweeper/src/model/user_score.dart';
+import 'package:minezweeper/src/model/user_score.dart';
 
 const _scoresKey = 'scores';
 const _usersScoresKey = 'users-scores';
