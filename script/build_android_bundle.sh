@@ -1,5 +1,6 @@
 #!/bin/bash
-scriptFolder="$(dirname "$1")"
+scriptFolder="$(dirname "$0")"
+scriptFolder="$(dirname "$scriptFolder")"
 appFolder="$(realpath "$scriptFolder")"
 cd "$appFolder" || exit
 dart script/app_version.dart
