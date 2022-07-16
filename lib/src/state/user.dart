@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:minezweeper/src/service/auth.dart';
 
@@ -14,9 +15,19 @@ class UserState extends ChangeNotifier {
     if (!processing) {
       processing = true;
       notifyListeners();
-      user = await AuthService().googleSignIn();
-      processing = false;
-      notifyListeners();
+      try {
+        user = await AuthService().googleSignIn();
+      } catch (error, stack) {
+        FirebaseCrashlytics.instance.recordError(
+          error,
+          stack,
+          reason: 'googleSignIn',
+          printDetails: true,
+        );
+      } finally {
+        processing = false;
+        notifyListeners();
+      }
     }
     return user;
   }

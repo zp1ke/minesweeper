@@ -1,3 +1,6 @@
+
+
+
 import 'app_l10n.g.dart';
 
 /// The translations for Spanish Castilian (`es`).
@@ -35,8 +38,7 @@ class L10nEs extends L10n {
   String get exploreOnTap => 'Explorar con tap';
 
   @override
-  String get exploreOnTapDescription =>
-      'Haciendo Tap en una celda la explorará y presionando unos segundos la marcará como despejada.';
+  String get exploreOnTapDescription => 'Haciendo Tap en una celda la explorará y presionando unos segundos la marcará como despejada.';
 
   @override
   String get gameSettings => 'Ajustes de juego';
@@ -92,8 +94,7 @@ class L10nEs extends L10n {
   }
 
   @override
-  String get toggleOnTapDescription =>
-      'Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.';
+  String get toggleOnTapDescription => 'Haciendo Tap en una celda la marcará como despejada y presionando unos segundos la explorará.';
 
   @override
   String get user => 'Usuario';
