@@ -9,14 +9,14 @@ class SelectButton<T> extends StatelessWidget {
   final bool enabled;
 
   const SelectButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.selected,
     required this.items,
     required this.itemBuilder,
     required this.onChanged,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) => DropdownButton<T>(

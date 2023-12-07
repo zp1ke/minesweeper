@@ -1,11 +1,10 @@
-
-
+import 'package:intl/intl.dart' as intl;
 
 import 'app_l10n.g.dart';
 
 /// The translations for Spanish Castilian (`es`).
 class L10nEs extends L10n {
-  L10nEs([String locale = 'es']) : super(locale);
+  L10nEs([super.locale = 'es']);
 
   @override
   String get about => 'Acerca de';
@@ -89,8 +88,14 @@ class L10nEs extends L10n {
   String get themeMode => 'Modo de tema';
 
   @override
-  String todayAt(int hour, String datetime) {
-    return '{count,plural, =1{Hoy a la $datetime} other{Hoy a las $datetime}}';
+  String todayAt(int hour, String datetime, num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Hoy a las $datetime',
+      one: 'Hoy a la $datetime',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -103,8 +108,14 @@ class L10nEs extends L10n {
   String get version => 'Versión';
 
   @override
-  String yesterdayAt(int hour, String datetime) {
-    return '{count,plural, =1{Ayer a la $datetime} other{Ayer a las $datetime}}';
+  String yesterdayAt(int hour, String datetime, num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ayer a las $datetime',
+      one: 'Ayer a la $datetime',
+    );
+    return '$_temp0';
   }
 
   @override

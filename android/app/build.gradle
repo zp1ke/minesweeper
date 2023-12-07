@@ -49,8 +49,8 @@ android {
 
     defaultConfig {
         applicationId "com.h4j4x.minesweeper"
-        minSdkVersion Math.max(flutter.minSdkVersion, 21)
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion Math.max(flutter.minSdkVersion, 23)
+        targetSdkVersion Math.max(flutter.targetSdkVersion, 33)
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

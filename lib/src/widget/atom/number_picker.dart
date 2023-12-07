@@ -9,13 +9,13 @@ class ListTileIntPicker extends StatelessWidget {
   final int value;
 
   const ListTileIntPicker({
-    Key? key,
+    super.key,
     required this.title,
     required this.onValue,
     required this.maxValue,
     required this.minValue,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

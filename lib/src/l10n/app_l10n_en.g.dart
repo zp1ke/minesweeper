@@ -1,11 +1,8 @@
-
-
-
 import 'app_l10n.g.dart';
 
 /// The translations for English (`en`).
 class L10nEn extends L10n {
-  L10nEn([String locale = 'en']) : super(locale);
+  L10nEn([super.locale = 'en']);
 
   @override
   String get about => 'About';
@@ -89,7 +86,7 @@ class L10nEn extends L10n {
   String get themeMode => 'Theme mode';
 
   @override
-  String todayAt(int hour, String datetime) {
+  String todayAt(int hour, String datetime, num count) {
     return 'Today at $datetime';
   }
 
@@ -103,7 +100,7 @@ class L10nEn extends L10n {
   String get version => 'Version';
 
   @override
-  String yesterdayAt(int hour, String datetime) {
+  String yesterdayAt(int hour, String datetime, num count) {
     return 'Yesterday at $datetime';
   }
 

@@ -5,10 +5,10 @@ extension AppDateTime on DateTime {
   String formatted(L10n l10n) {
     final now = DateTime.now();
     if (isSameDay(now)) {
-      return l10n.todayAt(hour, DateFormat('HH:mm').format(this));
+      return l10n.todayAt(hour, DateFormat('HH:mm').format(this), hour);
     }
     if (isSameDay(now.add(const Duration(days: 1)))) {
-      return l10n.yesterdayAt(hour, DateFormat('HH:mm').format(this));
+      return l10n.yesterdayAt(hour, DateFormat('HH:mm').format(this), hour);
     }
     return DateFormat('yyyy-MM-dd – HH:mm').format(this);
   }

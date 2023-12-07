@@ -11,12 +11,12 @@ class CellWidget extends StatelessWidget {
   final VoidCallback? onLongPress;
 
   const CellWidget({
-    Key? key,
+    super.key,
     required this.cell,
     required this.size,
     required this.onTap,
     required this.onLongPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
