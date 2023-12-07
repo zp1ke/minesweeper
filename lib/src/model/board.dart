@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:minezweeper/src/exception/game_over.dart';
-import 'package:minezweeper/src/model/board_data.dart';
-import 'package:minezweeper/src/model/cell.dart';
-import 'package:minezweeper/src/model/game_event.dart';
+import '../exception/game_over.dart';
+import 'board_data.dart';
+import 'cell.dart';
+import 'game_event.dart';
 
 class Board {
   final int rowsSize;

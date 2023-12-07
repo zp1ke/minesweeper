@@ -4,7 +4,7 @@ import 'app_l10n.g.dart';
 
 /// The translations for Spanish Castilian (`es`).
 class L10nEs extends L10n {
-  L10nEs([super.locale = 'es']);
+  L10nEs([String locale = 'es']) : super(locale);
 
   @override
   String get about => 'Acerca de';

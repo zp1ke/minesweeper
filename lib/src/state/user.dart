@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:minezweeper/src/service/auth.dart';
+import '../service/auth.dart';
 
 class UserState extends ChangeNotifier {
   User? user;

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:minezweeper/src/extension/number.dart';
-import 'package:minezweeper/theme.dart';
+import '../../extension/number.dart';
+import '../../../theme.dart';
 
 class BoardHeader extends StatelessWidget {
   final int secondsElapsed;
   final int minesLeft;
 
   const BoardHeader({
-    Key? key,
+    super.key,
     required this.secondsElapsed,
     required this.minesLeft,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class BoardHeader extends StatelessWidget {
           const Spacer(),
           FaIcon(
             FontAwesomeIcons.bomb,
-            color: theme.errorColor,
+            color: theme.colorScheme.error,
             size: headerIconSize,
           ),
           Text(

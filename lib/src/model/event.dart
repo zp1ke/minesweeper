@@ -1,4 +1,4 @@
-import 'package:minezweeper/src/model/game_event.dart';
+import 'game_event.dart';
 
 abstract class EventListener {
   void onEvent(GameEvent event);

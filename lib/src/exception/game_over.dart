@@ -1,4 +1,4 @@
-import 'package:minezweeper/src/model/game_event.dart';
+import '../model/game_event.dart';
 
 final _winnerEvents = <GameEvent>[GameEvent.minesCleared];
 

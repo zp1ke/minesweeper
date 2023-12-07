@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minezweeper/theme.dart';
+import '../../../theme.dart';
 
 class LoadingButton extends StatelessWidget {
   final bool loading;

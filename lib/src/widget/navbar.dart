@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:minezweeper/src/model/nav_item.dart';
+import '../model/nav_item.dart';
 
 class NavBar extends StatelessWidget {
   final int selectedIndex;
@@ -8,11 +8,11 @@ class NavBar extends StatelessWidget {
   final Function(int) onChangeIndex;
 
   const NavBar({
-    Key? key,
+    super.key,
     required this.selectedIndex,
     required this.navItems,
     required this.onChangeIndex,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

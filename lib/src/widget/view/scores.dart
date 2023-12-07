@@ -1,25 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minezweeper/provider.dart';
-import 'package:minezweeper/src/extension/datetime.dart';
-import 'package:minezweeper/src/extension/number.dart';
-import 'package:minezweeper/src/l10n/app_l10n.g.dart';
-import 'package:minezweeper/src/model/event.dart';
-import 'package:minezweeper/src/model/game_event.dart';
-import 'package:minezweeper/src/model/user_score.dart';
-import 'package:minezweeper/src/service/auth.dart';
-import 'package:minezweeper/src/service/firestore.dart';
-import 'package:minezweeper/src/widget/atom/select.dart';
-import 'package:minezweeper/theme.dart';
+import '../../../provider.dart';
+import '../../extension/datetime.dart';
+import '../../extension/number.dart';
+import '../../l10n/app_l10n.g.dart';
+import '../../model/event.dart';
+import '../../model/game_event.dart';
+import '../../model/user_score.dart';
+import '../../service/auth.dart';
+import '../../service/firestore.dart';
+import '../atom/select.dart';
+import '../../../theme.dart';
 
 class ScoresWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;
 
   const ScoresWidget({
-    Key? key,
+    super.key,
     required this.eventHandler,
-  }) : super(key: key);
+  });
 
   @override
   ScoresWidgetState createState() => ScoresWidgetState();
@@ -141,7 +141,7 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
                     theme,
                     user,
                   ))
-              .toList(),
+              ,
           if (_userScore != null &&
               (_list.isEmpty || _userScore!.score > _list.last.score))
             _itemWidget(

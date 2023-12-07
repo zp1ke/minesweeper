@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:minezweeper/src/l10n/app_l10n.g.dart';
-import 'package:minezweeper/src/model/event.dart';
-import 'package:minezweeper/src/model/game_event.dart';
-import 'package:minezweeper/src/model/nav_item.dart';
-import 'package:minezweeper/src/widget/navbar.dart';
-import 'package:minezweeper/src/widget/view/board.dart';
-import 'package:minezweeper/src/widget/view/scores.dart';
-import 'package:minezweeper/src/widget/view/settings.dart';
+
+import '../l10n/app_l10n.g.dart';
+import '../model/event.dart';
+import '../model/game_event.dart';
+import '../model/nav_item.dart';
+import 'navbar.dart';
+import 'view/board.dart';
+import 'view/scores.dart';
+import 'view/settings.dart';
 
 const _scoresKey = ValueKey<String>('scores');
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -81,7 +82,13 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
   }
 
   @override
-  Widget build(BuildContext context) => WillPopScope(
+  Widget build(BuildContext context) => PopScope(
+        canPop: _selectedIndex == 0,
+        onPopInvoked: (didPop) {
+          if (!didPop) {
+            _onNav(0);
+          }
+        },
         child: Scaffold(
           appBar: AppBar(
             title: Text(_navItem?.title ?? L10n.of(context).appTitle),
@@ -96,13 +103,6 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
                 )
               : null,
         ),
-        onWillPop: () {
-          if (_selectedIndex > 0) {
-            _onNav(0);
-            return Future.value(false);
-          }
-          return Future.value(true);
-        },
       );
 
   Widget _body() {

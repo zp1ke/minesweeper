@@ -2,27 +2,27 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:minezweeper/provider.dart';
-import 'package:minezweeper/src/exception/game_over.dart';
-import 'package:minezweeper/src/extension/game_event.dart';
-import 'package:minezweeper/src/l10n/app_l10n.g.dart';
-import 'package:minezweeper/src/model/board.dart';
-import 'package:minezweeper/src/model/cell.dart';
-import 'package:minezweeper/src/model/config.dart';
-import 'package:minezweeper/src/model/event.dart';
-import 'package:minezweeper/src/model/game_event.dart';
-import 'package:minezweeper/src/service/gaming.dart';
-import 'package:minezweeper/src/widget/atom/cell.dart';
-import 'package:minezweeper/src/widget/molecule/board_header.dart';
-import 'package:minezweeper/theme.dart';
+import '../../../provider.dart';
+import '../../exception/game_over.dart';
+import '../../extension/game_event.dart';
+import '../../l10n/app_l10n.g.dart';
+import '../../model/board.dart';
+import '../../model/cell.dart';
+import '../../model/config.dart';
+import '../../model/event.dart';
+import '../../model/game_event.dart';
+import '../../service/gaming.dart';
+import '../atom/cell.dart';
+import '../molecule/board_header.dart';
+import '../../../theme.dart';
 
 class BoardWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;
 
   const BoardWidget({
-    Key? key,
+    super.key,
     required this.eventHandler,
-  }) : super(key: key);
+  });
 
   @override
   BoardWidgetState createState() => BoardWidgetState();
@@ -200,8 +200,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
 
   Widget _submitScoreButton(L10n l10n, ThemeData theme) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: theme.colorScheme.success,
-          onPrimary: theme.colorScheme.onSuccess,
+          foregroundColor: theme.colorScheme.onSuccess, backgroundColor: theme.colorScheme.success,
         ),
         onPressed: (_winner ?? false) && !_scoreSubmitted ? _submitScore : null,
         child: Text(l10n.submitScore),

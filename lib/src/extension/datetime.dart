@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import '../l10n/app_l10n.g.dart';
 
 extension AppDateTime on DateTime {
   String formatted(L10n l10n) {

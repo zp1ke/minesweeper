@@ -1,7 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minezweeper/src/model/config.dart';
+import 'src/model/config.dart';
 
 const headerIconSize = 14.0;
 const loadingIndicatorSize = 14.0;

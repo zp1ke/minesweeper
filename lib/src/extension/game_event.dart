@@ -1,5 +1,5 @@
-import 'package:minezweeper/src/l10n/app_l10n.g.dart';
-import 'package:minezweeper/src/model/game_event.dart';
+import '../l10n/app_l10n.g.dart';
+import '../model/game_event.dart';
 
 String gameEventLabel(GameEvent event, L10n l10n) {
   switch (event) {
