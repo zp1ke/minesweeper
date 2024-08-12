@@ -2,4 +2,9 @@
 
 MineSweeper Game
 
-<img src="asset/android/google-play-badge.png" alt="This app is available on Google Play" title="This app is available on Google Play" width="200"/>
+<img src="asset/android/google-play-badge.png" alt="Google Play" title="Google Play" width="100"/>
+
+## Technologies Used
+
+- [Flutter](https://flutter.dev/)
+- [Firebase](https://firebase.google.com/)
