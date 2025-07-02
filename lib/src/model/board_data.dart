@@ -12,7 +12,7 @@ class BoardData {
 
   BoardData();
 
-  BoardData.fromRaw(raw) {
+  BoardData.fromRaw(dynamic raw) {
     if (raw is Map) {
       rowsSize = raw[_rowsSizeKey] ?? _defaultRowsSize;
       columnsSize = raw[_columnsSizeKey] ?? _defaultColumnsSize;

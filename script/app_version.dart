@@ -26,7 +26,7 @@ class VersionFile {
   });
 }
 
-main(List<String> arguments) {
+void main(List<String> arguments) {
   final pubFile = File('pubspec.yaml');
   try {
     final pubLines = pubFile.readAsLinesSync(encoding: encoding!);
@@ -54,11 +54,12 @@ main(List<String> arguments) {
   }
 }
 
-void _updateVersion(
-    {String? version,
-      String? build,
-      required File file,
-      required List<String> content,}) {
+void _updateVersion({
+  String? version,
+  String? build,
+  required File file,
+  required List<String> content,
+}) {
   final buffer = StringBuffer();
   for (String line in content) {
     if (line.startsWith(versionPrefix)) {

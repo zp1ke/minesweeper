@@ -96,7 +96,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: theme.canvasColor.withOpacity(.8),
+            color: theme.canvasColor.withValues(alpha: .8),
             child: const Center(
               child: CircularProgressIndicator.adaptive(),
             ),
@@ -200,7 +200,8 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
 
   Widget _submitScoreButton(L10n l10n, ThemeData theme) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: theme.colorScheme.onSuccess, backgroundColor: theme.colorScheme.success,
+          foregroundColor: theme.colorScheme.onSuccess,
+          backgroundColor: theme.colorScheme.success,
         ),
         onPressed: (_winner ?? false) && !_scoreSubmitted ? _submitScore : null,
         child: Text(l10n.submitScore),

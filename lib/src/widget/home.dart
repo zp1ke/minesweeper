@@ -84,7 +84,7 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
   @override
   Widget build(BuildContext context) => PopScope(
         canPop: _selectedIndex == 0,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, _) {
           if (!didPop) {
             _onNav(0);
           }

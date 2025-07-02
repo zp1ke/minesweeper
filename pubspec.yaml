@@ -13,26 +13,26 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  cloud_firestore: ^5.1.0
+  cloud_firestore: ^5.6.10
   cupertino_icons: ^1.0.8
-  firebase_auth: ^5.1.2
-  firebase_core: ^3.2.0
-  firebase_crashlytics: ^4.0.3
-  flex_color_scheme: ^7.3.1
-  flutter_native_splash: ^2.4.1
-  flutter_riverpod: ^2.5.1
-  font_awesome_flutter: ^10.7.0
+  firebase_auth: ^5.6.1
+  firebase_core: ^3.15.0
+  firebase_crashlytics: ^4.3.8
+  flex_color_scheme: ^8.2.0
+  flutter_native_splash: ^2.4.6
+  flutter_riverpod: ^2.6.1
+  font_awesome_flutter: ^10.8.0
   google_fonts: ^6.2.1
-  google_nav_bar: ^5.0.6
-  google_sign_in: ^6.2.1
+  google_nav_bar: ^5.0.7
+  google_sign_in: ^6.3.0
   intl: any
-  package_info_plus: ^8.0.0
-  shared_preferences: ^2.2.3
+  package_info_plus: ^8.3.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: any
 
 flutter:
   assets:
