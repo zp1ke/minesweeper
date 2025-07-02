@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "1051732942969-otpuehve4f3f4j9dnj267b72or1qv2f0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.h4j4x.minesweeper",
+            "certificate_hash": "8411e72c489451a3a778e923f6067a0350fbcaba"
+          }
+        },
+        {
           "client_id": "1051732942969-v4266lftu3edtc2svij469ginmnl0d9h.apps.googleusercontent.com",
           "client_type": 3
         }

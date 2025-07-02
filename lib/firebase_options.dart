@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'minezweeper',
     storageBucket: 'minezweeper.appspot.com',
   );
+
 }
