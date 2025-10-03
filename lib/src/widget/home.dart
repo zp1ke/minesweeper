@@ -43,9 +43,7 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
     _navItems.addAll([
       NavItem(
         title: l10n.appTitle,
-        body: BoardWidget(
-          eventHandler: _eventHandler,
-        ),
+        body: BoardWidget(eventHandler: _eventHandler),
         icon: FontAwesomeIcons.chessBoard,
         actions: [
           IconButton(
@@ -59,9 +57,7 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
       NavItem(
         key: _scoresKey,
         title: l10n.scores,
-        body: ScoresWidget(
-          eventHandler: _eventHandler,
-        ),
+        body: ScoresWidget(eventHandler: _eventHandler),
         icon: FontAwesomeIcons.fireFlameSimple,
         actions: [
           IconButton(
@@ -83,38 +79,36 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
 
   @override
   Widget build(BuildContext context) => PopScope(
-        canPop: _selectedIndex == 0,
-        onPopInvokedWithResult: (didPop, _) {
-          if (!didPop) {
-            _onNav(0);
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(_navItem?.title ?? L10n.of(context).appTitle),
-            actions: _navItem?.actions,
-          ),
-          body: _body(),
-          bottomNavigationBar: _navItem != null
-              ? NavBar(
-                  selectedIndex: _selectedIndex,
-                  navItems: _navItems,
-                  onChangeIndex: _onNav,
-                )
-              : null,
-        ),
-      );
+    canPop: _selectedIndex == 0,
+    onPopInvokedWithResult: (didPop, _) {
+      if (!didPop) {
+        _onNav(0);
+      }
+    },
+    child: Scaffold(
+      appBar: AppBar(
+        title: Text(_navItem?.title ?? L10n.of(context).appTitle),
+        actions: _navItem?.actions,
+      ),
+      body: _body(),
+      bottomNavigationBar: _navItem != null
+          ? NavBar(
+              selectedIndex: _selectedIndex,
+              navItems: _navItems,
+              onChangeIndex: _onNav,
+            )
+          : null,
+    ),
+  );
 
   Widget _body() {
     if (_navItem == null) {
-      return const Center(
-        child: CircularProgressIndicator.adaptive(),
-      );
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
     return PageView.builder(
       onPageChanged: _onNav,
       controller: _pageController,
-      itemBuilder: (_, __) => _navItem!.body,
+      itemBuilder: (_, _) => _navItem!.body,
       itemCount: _navItems.length,
     );
   }
@@ -131,8 +125,9 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
   @override
   void onEvent(GameEvent event) {
     if (event == GameEvent.checkScores) {
-      final scoresIndex =
-          _navItems.indexWhere((item) => item.key == _scoresKey);
+      final scoresIndex = _navItems.indexWhere(
+        (item) => item.key == _scoresKey,
+      );
       _onNav(scoresIndex);
     }
   }

@@ -19,10 +19,7 @@ import '../../../theme.dart';
 class BoardWidget extends ConsumerStatefulWidget {
   final EventHandler eventHandler;
 
-  const BoardWidget({
-    super.key,
-    required this.eventHandler,
-  });
+  const BoardWidget({super.key, required this.eventHandler});
 
   @override
   BoardWidgetState createState() => BoardWidgetState();
@@ -97,9 +94,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
             width: double.infinity,
             height: double.infinity,
             color: theme.canvasColor.withValues(alpha: .8),
-            child: const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
+            child: const Center(child: CircularProgressIndicator.adaptive()),
           ),
         ],
       );
@@ -112,10 +107,12 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     var backgroundColor = Colors.transparent;
     var textColor = Colors.transparent;
     if (_winner != null) {
-      backgroundColor =
-          _winner! ? theme.colorScheme.success : theme.colorScheme.error;
-      textColor =
-          _winner! ? theme.colorScheme.onSuccess : theme.colorScheme.onError;
+      backgroundColor = _winner!
+          ? theme.colorScheme.success
+          : theme.colorScheme.error;
+      textColor = _winner!
+          ? theme.colorScheme.onSuccess
+          : theme.colorScheme.onError;
     }
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -127,10 +124,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
       child: Center(
         child: Text(
           _message ?? ' ',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: textColor,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700, color: textColor),
         ),
       ),
     );
@@ -166,15 +160,15 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
   }
 
   Widget _cell(BuildContext context, Cell cell, double size) => CellWidget(
-        cell: cell,
-        size: size,
-        onTap: _board.isActive
-            ? () => _onCellTap(cell, !_config.exploreOnTap)
-            : null,
-        onLongPress: _board.isActive
-            ? () => _onCellTap(cell, _config.exploreOnTap)
-            : null,
-      );
+    cell: cell,
+    size: size,
+    onTap: _board.isActive
+        ? () => _onCellTap(cell, !_config.exploreOnTap)
+        : null,
+    onLongPress: _board.isActive
+        ? () => _onCellTap(cell, _config.exploreOnTap)
+        : null,
+  );
 
   Widget _toolbar(ThemeData theme) {
     final l10n = L10n.of(context);
@@ -183,29 +177,26 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
-        children: [
-          _reloadButton(l10n),
-          _submitScoreButton(l10n, theme),
-        ],
+        children: [_reloadButton(l10n), _submitScoreButton(l10n, theme)],
       ),
     );
   }
 
   Widget _reloadButton(L10n l10n) => ElevatedButton(
-        onPressed: () {
-          onEvent(GameEvent.boardReload);
-        },
-        child: Text(l10n.restart),
-      );
+    onPressed: () {
+      onEvent(GameEvent.boardReload);
+    },
+    child: Text(l10n.restart),
+  );
 
   Widget _submitScoreButton(L10n l10n, ThemeData theme) => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: theme.colorScheme.onSuccess,
-          backgroundColor: theme.colorScheme.success,
-        ),
-        onPressed: (_winner ?? false) && !_scoreSubmitted ? _submitScore : null,
-        child: Text(l10n.submitScore),
-      );
+    style: ElevatedButton.styleFrom(
+      foregroundColor: theme.colorScheme.onSuccess,
+      backgroundColor: theme.colorScheme.success,
+    ),
+    onPressed: (_winner ?? false) && !_scoreSubmitted ? _submitScore : null,
+    child: Text(l10n.submitScore),
+  );
 
   void _onCellTap(Cell cell, bool toggle) {
     if (toggle) {
@@ -287,7 +278,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
                 Navigator.of(context).pop();
               },
               child: Text(l10n.cancel),
-            )
+            ),
           ],
         );
       },
@@ -298,8 +289,11 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     setState(() {
       _loading = true;
     });
-    _scoreSubmitted = await GamingService()
-        .saveScore(ref, _secondsElapsed, _config.boardData);
+    _scoreSubmitted = await GamingService().saveScore(
+      ref,
+      _secondsElapsed,
+      _config.boardData,
+    );
     _loading = false;
     if (mounted) {
       setState(() {});
@@ -308,21 +302,23 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
         final l10n = L10n.of(context);
         final theme = Theme.of(context);
         scaffoldMessenger.clearSnackBars();
-        scaffoldMessenger.showSnackBar(SnackBar(
-          content: Text(
-            l10n.scoreSubmitted,
-            style: TextStyle(
-              color: theme.colorScheme.success,
-              fontWeight: FontWeight.w700,
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text(
+              l10n.scoreSubmitted,
+              style: TextStyle(
+                color: theme.colorScheme.success,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            action: SnackBarAction(
+              label: l10n.check,
+              onPressed: () {
+                widget.eventHandler.trigger(GameEvent.checkScores);
+              },
             ),
           ),
-          action: SnackBarAction(
-            label: l10n.check,
-            onPressed: () {
-              widget.eventHandler.trigger(GameEvent.checkScores);
-            },
-          ),
-        ));
+        );
       }
     }
   }

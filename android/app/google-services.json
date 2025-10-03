@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1051732942969-2eta1d4qkm539ov8cvmr7tksd27q25vn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.h4j4x.minesweeper",
+            "certificate_hash": "b223c5025d8bf56ae1465451041ebbf805a302d8"
+          }
+        },
+        {
           "client_id": "1051732942969-fi38og11glpkomio02077tqmqlgm0o8e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

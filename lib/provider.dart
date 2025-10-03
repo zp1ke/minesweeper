@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'src/model/config.dart';
 import 'src/state/config.dart';
 import 'src/state/user.dart';
@@ -17,8 +17,9 @@ class AppProvider {
     if (_instance == null) {
       final config = AppConfig();
       await config.load();
-      final configProvider =
-          ChangeNotifierProvider((_) => AppConfigState(config));
+      final configProvider = ChangeNotifierProvider(
+        (_) => AppConfigState(config),
+      );
       final userProvider = ChangeNotifierProvider((_) => UserState());
       _instance = AppProvider._(configProvider, userProvider);
     }

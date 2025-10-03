@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -6,10 +8,9 @@ class AuthService {
 
   final GoogleSignIn _googleSignIn;
 
-  AuthService._()
-      : _googleSignIn = GoogleSignIn(
-          scopes: ['email'],
-        );
+  AuthService._() : _googleSignIn = GoogleSignIn.instance {
+    unawaited(_googleSignIn.initialize());
+  }
 
   factory AuthService() {
     _instance ??= AuthService._();
@@ -19,22 +20,25 @@ class AuthService {
   User? get user => FirebaseAuth.instance.currentUser;
 
   Future<User?> googleSignIn() async {
+    if (!_googleSignIn.supportsAuthenticate()) {
+      return null;
+    }
+
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       return user;
     }
-    final googleUser = await _googleSignIn.signIn();
-    final googleAuth = await googleUser?.authentication;
-    if (googleAuth != null) {
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      final userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      return userCredential.user;
-    }
-    return null;
+
+    final googleUser = await _googleSignIn.authenticate();
+    final googleAuth = googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      // accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(
+      credential,
+    );
+    return userCredential.user;
   }
 
   Future<void> signOut() async {
