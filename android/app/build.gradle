@@ -79,6 +79,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.8.9"
     implementation 'androidx.health.connect:connect-client:1.1.0-rc03'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.4'
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.window:window:1.5.0'
     implementation 'androidx.window:window-java:1.5.0'
 }
