@@ -2,7 +2,7 @@ name: minezweeper
 description: MineSweeper Game.
 publish_to: 'none'
 
-version: 1.1.0+9
+version: 1.1.0+10
 
 environment:
   sdk: ^3.9.0
