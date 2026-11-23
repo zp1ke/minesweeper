@@ -1,35 +1,42 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../provider.dart';
-import '../../l10n/app_l10n.g.dart';
-import '../../model/board_data.dart';
-import '../../model/config.dart';
-import '../atom/loading_button.dart';
-import '../atom/number_picker.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/board_data.dart';
+import 'package:minezweeper/src/model/config.dart';
+import 'package:minezweeper/src/widget/atom/loading_button.dart';
+import 'package:minezweeper/src/widget/atom/number_picker.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+/// Sign-in, board size, tap behavior, and theme.
 class SettingsWidget extends ConsumerStatefulWidget {
+  /// Creates the settings page.
   const SettingsWidget({super.key});
 
   @override
   SettingsWidgetState createState() => SettingsWidgetState();
 }
 
+/// State for [SettingsWidget].
 class SettingsWidgetState extends ConsumerState<SettingsWidget> {
   PackageInfo? _packageInfo;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Future.delayed(Duration.zero, () {
+    unawaited(
       PackageInfo.fromPlatform().then((value) {
-        setState(() {
-          _packageInfo = value;
-        });
-      });
-    });
+        if (mounted) {
+          setState(() {
+            _packageInfo = value;
+          });
+        }
+      }),
+    );
   }
 
   @override
@@ -61,40 +68,42 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
   }
 
   Widget _googleSignInButton(
-          bool enabled, ThemeData theme, L10n l10n, WidgetRef ref) =>
-      Center(
-        child: LoadingButton(
-          loading: !enabled,
-          onPressed: () {
-            ref.read(AppProvider().userProvider.notifier).googleSignIn();
-          },
-          label: l10n.googleSignIn,
-        ),
-      );
-
-  Widget _nameItem(User user) => ListTile(
-        leading: const Icon(FontAwesomeIcons.user),
-        title: Text(user.displayName ?? '-'),
-        subtitle: Text(user.email ?? '-'),
-      );
-
-  Widget _signOutButton(
-          bool enabled, ThemeData theme, L10n l10n, WidgetRef ref) =>
-      Center(
-        child: LoadingButton(
-          loading: !enabled,
-          onPressed: () {
-            ref.read(AppProvider().userProvider.notifier).signOut();
-          },
-          label: l10n.signOut,
-        ),
-      );
-
-  Widget _minesCountField(
-    AppConfig config,
+    bool enabled,
+    ThemeData theme,
     L10n l10n,
     WidgetRef ref,
-  ) =>
+  ) => Center(
+    child: LoadingButton(
+      loading: !enabled,
+      onPressed: () {
+        unawaited(ref.read(AppProvider().userProvider.notifier).googleSignIn());
+      },
+      label: l10n.googleSignIn,
+    ),
+  );
+
+  Widget _nameItem(User user) => ListTile(
+    leading: const FaIcon(FontAwesomeIcons.user),
+    title: Text(user.displayName ?? '-'),
+    subtitle: Text(user.email ?? '-'),
+  );
+
+  Widget _signOutButton(
+    bool enabled,
+    ThemeData theme,
+    L10n l10n,
+    WidgetRef ref,
+  ) => Center(
+    child: LoadingButton(
+      loading: !enabled,
+      onPressed: () {
+        unawaited(ref.read(AppProvider().userProvider.notifier).signOut());
+      },
+      label: l10n.signOut,
+    ),
+  );
+
+  Widget _minesCountField(AppConfig config, L10n l10n, WidgetRef ref) =>
       ListTileIntPicker(
         title: l10n.minesCount,
         value: config.boardData.minesCount,
@@ -106,11 +115,7 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
         },
       );
 
-  Widget _rowsField(
-    AppConfig config,
-    L10n l10n,
-    WidgetRef ref,
-  ) =>
+  Widget _rowsField(AppConfig config, L10n l10n, WidgetRef ref) =>
       ListTileIntPicker(
         title: l10n.rowsSize,
         value: config.boardData.rowsSize,
@@ -122,11 +127,7 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
         },
       );
 
-  Widget _columnsField(
-    AppConfig config,
-    L10n l10n,
-    WidgetRef ref,
-  ) =>
+  Widget _columnsField(AppConfig config, L10n l10n, WidgetRef ref) =>
       ListTileIntPicker(
         title: l10n.columnsSize,
         value: config.boardData.columnsSize,
@@ -138,20 +139,17 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
         },
       );
 
-  Widget _exploreOnTapField(
-    AppConfig config,
-    L10n l10n,
-    WidgetRef ref,
-  ) =>
+  Widget _exploreOnTapField(AppConfig config, L10n l10n, WidgetRef ref) =>
       CheckboxListTile(
         isThreeLine: true,
         value: config.exploreOnTap,
         title: Text(l10n.exploreOnTap),
         subtitle: Text(
-            config.exploreOnTap
-                ? l10n.exploreOnTapDescription
-                : l10n.toggleOnTapDescription,
-            textAlign: TextAlign.justify),
+          config.exploreOnTap
+              ? l10n.exploreOnTapDescription
+              : l10n.toggleOnTapDescription,
+          textAlign: TextAlign.justify,
+        ),
         onChanged: (value) {
           ref
               .read(AppProvider().configProvider.notifier)
@@ -168,26 +166,29 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
     ThemeData theme,
     L10n l10n,
     WidgetRef ref,
-  ) =>
-      CheckboxListTile(
-        value: config.themeMode == ThemeMode.system,
-        title: Text('${l10n.themeMode}: ${l10n.system}'),
-        onChanged: (value) {
-          final theValue = value ?? false;
-          ThemeMode mode;
-          if (theValue) {
-            mode = ThemeMode.system;
-          } else {
-            mode = theme.brightness == Brightness.dark
-                ? ThemeMode.dark
-                : ThemeMode.light;
-          }
-          _onThemeMode(mode, ref);
-        },
-      );
+  ) => CheckboxListTile(
+    value: config.themeMode == ThemeMode.system,
+    title: Text('${l10n.themeMode}: ${l10n.system}'),
+    onChanged: (value) {
+      final theValue = value ?? false;
+      ThemeMode mode;
+      if (theValue) {
+        mode = ThemeMode.system;
+      } else {
+        mode = theme.brightness == Brightness.dark
+            ? ThemeMode.dark
+            : ThemeMode.light;
+      }
+      _onThemeMode(mode, ref);
+    },
+  );
 
   Widget _themeModeField(
-      AppConfig config, ThemeData theme, L10n l10n, WidgetRef ref) {
+    AppConfig config,
+    ThemeData theme,
+    L10n l10n,
+    WidgetRef ref,
+  ) {
     var icon = FontAwesomeIcons.sun;
     var title = l10n.light;
     if (config.themeMode == ThemeMode.dark) {
@@ -195,10 +196,7 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
       title = l10n.dark;
     }
     return ListTile(
-      leading: FaIcon(
-        icon,
-        color: theme.primaryColor,
-      ),
+      leading: FaIcon(icon, color: theme.primaryColor),
       title: Text('${l10n.themeMode}: $title'),
       trailing: Switch(
         value: config.themeMode == ThemeMode.light,
@@ -218,13 +216,12 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
 
   Widget _aboutItem(BuildContext context, ThemeData theme, L10n l10n) =>
       ListTile(
-        leading: FaIcon(
-          FontAwesomeIcons.circleInfo,
-          color: theme.primaryColor,
+        leading: FaIcon(FontAwesomeIcons.circleInfo, color: theme.primaryColor),
+        title: Text(
+          _packageInfo?.version != null
+              ? '${l10n.version}: ${_packageInfo!.version}'
+              : l10n.about,
         ),
-        title: Text(_packageInfo?.version != null
-            ? '${l10n.version}: ${_packageInfo!.version}'
-            : l10n.about),
         trailing: FaIcon(
           FontAwesomeIcons.arrowRight,
           color: theme.primaryColor,

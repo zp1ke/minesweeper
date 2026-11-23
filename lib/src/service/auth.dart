@@ -3,22 +3,25 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+/// Google sign-in backed by Firebase Auth.
 class AuthService {
-  static AuthService? _instance;
-
-  final GoogleSignIn _googleSignIn;
-
-  AuthService._() : _googleSignIn = GoogleSignIn.instance {
-    unawaited(_googleSignIn.initialize());
-  }
-
+  /// Returns the process-wide auth service.
   factory AuthService() {
     _instance ??= AuthService._();
     return _instance!;
   }
+  AuthService._() : _googleSignIn = GoogleSignIn.instance {
+    unawaited(_googleSignIn.initialize());
+  }
 
+  static AuthService? _instance;
+
+  final GoogleSignIn _googleSignIn;
+
+  /// The current Firebase user, if any.
   User? get user => FirebaseAuth.instance.currentUser;
 
+  /// Signs in with Google, or returns the current user.
   Future<User?> googleSignIn() async {
     if (!_googleSignIn.supportsAuthenticate()) {
       return null;
@@ -41,6 +44,7 @@ class AuthService {
     return userCredential.user;
   }
 
+  /// Signs out of Google and Firebase.
   Future<void> signOut() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {

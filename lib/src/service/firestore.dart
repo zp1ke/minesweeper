@@ -1,20 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../model/user_score.dart';
+import 'package:minezweeper/src/model/user_score.dart';
 
 const _scoresKey = 'scores';
 const _usersScoresKey = 'users-scores';
 const _topTenKey = 'top-ten';
 
+/// Reads and writes score documents.
 class FirestoreService {
-  static FirestoreService? _instance;
-
-  FirestoreService._();
-
+  /// Returns the process-wide Firestore service.
   factory FirestoreService() {
     _instance ??= FirestoreService._();
     return _instance!;
   }
+  FirestoreService._();
 
+  static FirestoreService? _instance;
+
+  /// Board keys that already have a score list.
   Future<List<String>> fetchScoresIDs() async {
     final db = FirebaseFirestore.instance;
     final scoresIDs = db.collection(_scoresKey);
@@ -22,6 +24,7 @@ class FirestoreService {
     return data.docs.map((e) => e.id).toList();
   }
 
+  /// Top scores for [scoreID], fastest first.
   Future<List<UserScore>> fetchScores(String scoreID) async {
     final db = FirebaseFirestore.instance;
     final data = await db
@@ -30,7 +33,7 @@ class FirestoreService {
         .collection(_topTenKey)
         .get();
     final list = <UserScore>[];
-    for (var snapshot in data.docs) {
+    for (final snapshot in data.docs) {
       final userScore = UserScore.parse(snapshot.id, snapshot.data());
       if (userScore != null) {
         list.add(userScore);
@@ -40,6 +43,7 @@ class FirestoreService {
     return list;
   }
 
+  /// This user's saved time for [scoreID], if any.
   Future<UserScore?> fetchUserScore({
     required String userID,
     required String scoreID,
@@ -57,21 +61,26 @@ class FirestoreService {
     return null;
   }
 
-  Future<void> saveScore(UserScore userScore, String scoreID,
-      {int limit = 10}) async {
+  /// Saves a personal best and updates the top-ten list.
+  Future<void> saveScore(
+    UserScore userScore,
+    String scoreID, {
+    int limit = 10,
+  }) async {
     await _saveUserScore(userScore, scoreID);
     await _saveBestScore(userScore, scoreID, limit);
   }
 
   Future<void> _saveUserScore(UserScore userScore, String scoreID) async {
-    final prevScore =
-        await fetchUserScore(userID: userScore.uid, scoreID: scoreID);
+    final prevScore = await fetchUserScore(
+      userID: userScore.uid,
+      scoreID: scoreID,
+    );
     if (prevScore == null || prevScore.score > userScore.score) {
       final db = FirebaseFirestore.instance;
-      await db
-          .collection(_usersScoresKey)
-          .doc(userScore.uid)
-          .set({UserScore.nameKey: userScore.name});
+      await db.collection(_usersScoresKey).doc(userScore.uid).set({
+        UserScore.nameKey: userScore.name,
+      });
       await db
           .collection(_usersScoresKey)
           .doc(userScore.uid)
@@ -82,32 +91,38 @@ class FirestoreService {
   }
 
   Future<void> _saveBestScore(
-      UserScore userScore, String scoreID, int limit) async {
+    UserScore userScore,
+    String scoreID,
+    int limit,
+  ) async {
     final db = FirebaseFirestore.instance;
-    await db
+    await db.collection(_scoresKey).doc(scoreID).set({
+      UserScore.scoreIDKey: scoreID,
+    });
+    final boardTopTen = db
         .collection(_scoresKey)
         .doc(scoreID)
-        .set({UserScore.scoreIDKey: scoreID});
-    final boardTopTen =
-        db.collection(_scoresKey).doc(scoreID).collection(_topTenKey);
+        .collection(_topTenKey);
     final data = await boardTopTen.get();
     final list = <UserScore>[];
-    for (var snapshot in data.docs) {
+    for (final snapshot in data.docs) {
       final userScore = UserScore.parse(snapshot.id, snapshot.data());
       if (userScore != null) {
         list.add(userScore);
       }
     }
-    list.add(userScore);
-    list.sort((a, b) => a.score.compareTo(b.score));
-    var toSave = list.length > limit ? list.sublist(0, limit) : list;
-    toSave = toSave.where((element) => element.id == null).toList();
-    for (var userScore in toSave) {
+    list
+      ..add(userScore)
+      ..sort((a, b) => a.score.compareTo(b.score));
+    final toSave = (list.length > limit ? list.sublist(0, limit) : list).where(
+      (element) => element.id == null,
+    );
+    for (final userScore in toSave) {
       await boardTopTen.add(userScore.map);
     }
-    var toDelete = list.length > limit ? list.sublist(limit) : [];
-    toDelete = toDelete.where((element) => element.id != null).toList();
-    for (var userScore in toDelete) {
+    final toDelete = (list.length > limit ? list.sublist(limit) : <UserScore>[])
+        .where((element) => element.id != null);
+    for (final userScore in toDelete) {
       await boardTopTen.doc(userScore.id).delete();
     }
   }

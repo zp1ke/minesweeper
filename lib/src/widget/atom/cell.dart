@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../model/cell.dart';
+import 'package:material_ui/material_ui.dart';
+
+import 'package:minezweeper/src/model/cell.dart';
 
 const _margin = 0.4;
 
+/// One painted board cell.
 class CellWidget extends StatelessWidget {
-  final Cell cell;
-  final double size;
-  final VoidCallback? onTap;
-  final VoidCallback? onLongPress;
-
+  /// Creates a cell of [size] that reports tap and long-press.
   const CellWidget({
     super.key,
     required this.cell,
@@ -17,6 +15,18 @@ class CellWidget extends StatelessWidget {
     required this.onTap,
     required this.onLongPress,
   });
+
+  /// Cell state to paint.
+  final Cell cell;
+
+  /// Width and height, in logical pixels.
+  final double size;
+
+  /// Called on tap while the game is active.
+  final VoidCallback? onTap;
+
+  /// Called on long-press while the game is active.
+  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +40,9 @@ class CellWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: _margin),
         decoration: BoxDecoration(
           color: _backgroundColor(theme),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(_margin * 4),
-          ),
+          borderRadius: const BorderRadius.all(Radius.circular(_margin * 4)),
         ),
-        child: Center(
-          child: _content(theme),
-        ),
+        child: Center(child: _content(theme)),
       ),
     );
   }
@@ -72,7 +78,7 @@ class CellWidget extends StatelessWidget {
           '${cell.minesAround}',
           style: TextStyle(
             fontWeight: FontWeight.w700,
-            fontSize: 18.0,
+            fontSize: 18,
             color: textColor,
           ),
         );
@@ -84,10 +90,6 @@ class CellWidget extends StatelessWidget {
     return null;
   }
 
-  Widget _image(IconData icon, Color color) => Center(
-        child: FaIcon(
-          icon,
-          color: color,
-        ),
-      );
+  Widget _image(FaIconData icon, Color color) =>
+      Center(child: FaIcon(icon, color: color));
 }

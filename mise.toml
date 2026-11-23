@@ -1,0 +1,16 @@
+[tools]
+# JDK used to run Gradle. Pinned so builds don't pick up a machine-global JDK
+# (e.g. 25) that AGP/Gradle don't support yet. Bytecode target is 17 (see
+# android/app/build.gradle.kts); this JDK 21 only runs the build.
+java = "21"
+
+[tasks.test]
+description = "Analyze and run tests"
+run = '''
+flutter analyze
+flutter test
+'''
+
+[tasks.build]
+description = "Build debug APK"
+run = "flutter build apk --debug"

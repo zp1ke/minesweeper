@@ -1,18 +1,23 @@
 import 'package:flutter_riverpod/legacy.dart';
-import 'src/model/config.dart';
-import 'src/state/config.dart';
-import 'src/state/user.dart';
+import 'package:minezweeper/src/model/config.dart';
+import 'package:minezweeper/src/state/config.dart';
+import 'package:minezweeper/src/state/user.dart';
 
+/// Process-wide Riverpod providers, created once at startup.
 class AppProvider {
-  final ChangeNotifierProvider<AppConfigState> configProvider;
-  final ChangeNotifierProvider<UserState> userProvider;
-
+  /// Returns the provider created by [AppProvider.create].
+  factory AppProvider() => _instance!;
   AppProvider._(this.configProvider, this.userProvider);
 
-  factory AppProvider() => _instance!;
+  /// Settings and theme state.
+  final ChangeNotifierProvider<AppConfigState> configProvider;
+
+  /// Signed-in user state.
+  final ChangeNotifierProvider<UserState> userProvider;
 
   static AppProvider? _instance;
 
+  /// Loads saved settings and creates the providers.
   static Future<void> create() async {
     if (_instance == null) {
       final config = AppConfig();

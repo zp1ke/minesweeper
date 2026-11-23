@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
+/// Dropdown used to pick a score board.
 class SelectButton<T> extends StatelessWidget {
-  final String label;
-  final T? selected;
-  final List<T> items;
-  final Widget Function(T) itemBuilder;
-  final Function(T) onChanged;
-  final bool enabled;
-
+  /// Creates a dropdown of [items].
   const SelectButton({
     super.key,
     required this.label,
@@ -18,24 +13,39 @@ class SelectButton<T> extends StatelessWidget {
     this.enabled = true,
   });
 
+  /// Hint shown when nothing is selected.
+  final String label;
+
+  /// Currently selected value.
+  final T? selected;
+
+  /// Values the player can pick.
+  final List<T> items;
+
+  /// Builds the label for one value.
+  final Widget Function(T) itemBuilder;
+
+  /// Called with the newly selected value.
+  final ValueChanged<T> onChanged;
+
+  /// Whether the dropdown accepts input.
+  final bool enabled;
+
   @override
   Widget build(BuildContext context) => DropdownButton<T>(
-        hint: Text(label),
-        value: selected,
-        items: items
-            .map(
-              (item) => DropdownMenuItem<T>(
-                value: item,
-                child: itemBuilder(item),
-              ),
-            )
-            .toList(),
-        onChanged: enabled
-            ? (item) {
-                if (item != null) {
-                  onChanged(item);
-                }
-              }
-            : null,
-      );
+    hint: Text(label),
+    value: selected,
+    items: items
+        .map(
+          (item) => DropdownMenuItem<T>(value: item, child: itemBuilder(item)),
+        )
+        .toList(),
+    onChanged: enabled
+        ? (item) {
+            if (item != null) {
+              onChanged(item);
+            }
+          }
+        : null,
+  );
 }

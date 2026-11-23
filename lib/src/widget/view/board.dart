@@ -1,25 +1,28 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../provider.dart';
-import '../../exception/game_over.dart';
-import '../../extension/game_event.dart';
-import '../../l10n/app_l10n.g.dart';
-import '../../model/board.dart';
-import '../../model/cell.dart';
-import '../../model/config.dart';
-import '../../model/event.dart';
-import '../../model/game_event.dart';
-import '../../service/gaming.dart';
-import '../atom/cell.dart';
-import '../molecule/board_header.dart';
-import '../../../theme.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/exception/game_over.dart';
+import 'package:minezweeper/src/extension/game_event.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/board.dart';
+import 'package:minezweeper/src/model/cell.dart';
+import 'package:minezweeper/src/model/config.dart';
+import 'package:minezweeper/src/model/event.dart';
+import 'package:minezweeper/src/model/game_event.dart';
+import 'package:minezweeper/src/service/gaming.dart';
+import 'package:minezweeper/src/widget/atom/cell.dart';
+import 'package:minezweeper/src/widget/molecule/board_header.dart';
+import 'package:minezweeper/theme.dart';
 
+/// The playable grid.
 class BoardWidget extends ConsumerStatefulWidget {
-  final EventHandler eventHandler;
-
+  /// Creates a board that listens to [eventHandler].
   const BoardWidget({super.key, required this.eventHandler});
+
+  /// Bus used to reload the board and open scores.
+  final EventHandler eventHandler;
 
   @override
   BoardWidgetState createState() => BoardWidgetState();
@@ -28,6 +31,7 @@ class BoardWidget extends ConsumerStatefulWidget {
 const _margin = 0.4;
 const _padding = 4.0;
 
+/// State for [BoardWidget].
 class BoardWidgetState extends ConsumerState<BoardWidget>
     implements EventListener {
   late Board _board;
@@ -73,8 +77,6 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     final theme = Theme.of(context);
     final content = LayoutBuilder(
       builder: (context, constraints) => Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
         children: [
           BoardHeader(
             secondsElapsed: _secondsElapsed,
@@ -147,13 +149,9 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
       cells.add(cell != null ? _cell(context, cell, cellSize) : Container());
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: _margin * 4,
-        horizontal: .0,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: _margin * 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
         children: cells,
       ),
     );
@@ -173,10 +171,9 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
   Widget _toolbar(ThemeData theme) {
     final l10n = L10n.of(context);
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
         children: [_reloadButton(l10n), _submitScoreButton(l10n, theme)],
       ),
     );
@@ -258,9 +255,9 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
   }
 
   void _showScoreDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
-      builder: (BuildContext ctx) {
+      builder: (ctx) {
         final l10n = L10n.of(context);
         return AlertDialog(
           title: Text(l10n.submitScore),
@@ -268,7 +265,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
           actions: [
             TextButton(
               onPressed: () {
-                _submitScore();
+                unawaited(_submitScore());
                 Navigator.of(context).pop();
               },
               child: Text(l10n.ok),
@@ -285,7 +282,7 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     );
   }
 
-  void _submitScore() async {
+  Future<void> _submitScore() async {
     setState(() {
       _loading = true;
     });
@@ -301,24 +298,25 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
         final scaffoldMessenger = ScaffoldMessenger.of(context);
         final l10n = L10n.of(context);
         final theme = Theme.of(context);
-        scaffoldMessenger.clearSnackBars();
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(
-              l10n.scoreSubmitted,
-              style: TextStyle(
-                color: theme.colorScheme.success,
-                fontWeight: FontWeight.w700,
+        scaffoldMessenger
+          ..clearSnackBars()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(
+                l10n.scoreSubmitted,
+                style: TextStyle(
+                  color: theme.colorScheme.success,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              action: SnackBarAction(
+                label: l10n.check,
+                onPressed: () {
+                  widget.eventHandler.trigger(GameEvent.checkScores);
+                },
               ),
             ),
-            action: SnackBarAction(
-              label: l10n.check,
-              onPressed: () {
-                widget.eventHandler.trigger(GameEvent.checkScores);
-              },
-            ),
-          ),
-        );
+          );
       }
     }
   }

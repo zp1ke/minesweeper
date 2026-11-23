@@ -1,25 +1,28 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_ui/material_ui.dart';
 
-import '../l10n/app_l10n.g.dart';
-import '../model/event.dart';
-import '../model/game_event.dart';
-import '../model/nav_item.dart';
-import 'navbar.dart';
-import 'view/board.dart';
-import 'view/scores.dart';
-import 'view/settings.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/model/event.dart';
+import 'package:minezweeper/src/model/game_event.dart';
+import 'package:minezweeper/src/model/nav_item.dart';
+import 'package:minezweeper/src/widget/navbar.dart';
+import 'package:minezweeper/src/widget/view/board.dart';
+import 'package:minezweeper/src/widget/view/scores.dart';
+import 'package:minezweeper/src/widget/view/settings.dart';
 
 const _scoresKey = ValueKey<String>('scores');
 
+/// App shell: game, scores, and settings.
 class HomeScreen extends StatefulWidget {
+  /// Creates the home screen.
   const HomeScreen({super.key});
 
   @override
   HomeScreenState createState() => HomeScreenState();
 }
 
+/// State for [HomeScreen].
 class HomeScreenState extends State<HomeScreen> implements EventListener {
   final _navItems = <NavItem>[];
   final _eventHandler = EventHandler();
@@ -108,17 +111,21 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
     return PageView.builder(
       onPageChanged: _onNav,
       controller: _pageController,
-      itemBuilder: (_, _) => _navItem!.body,
+      itemBuilder: (_, index) => _navItems[index].body,
       itemCount: _navItems.length,
     );
   }
 
   void _onNav(int index) {
-    if (index >= 0 && index < _navItems.length) {
-      setState(() {
-        _selectedIndex = index;
-        _navItem = _navItems[index];
-      });
+    if (index < 0 || index >= _navItems.length) {
+      return;
+    }
+    setState(() {
+      _selectedIndex = index;
+      _navItem = _navItems[index];
+    });
+    if (_pageController.hasClients && _pageController.page?.round() != index) {
+      _pageController.jumpToPage(index);
     }
   }
 

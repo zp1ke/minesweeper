@@ -1,16 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'firebase_options.dart';
-import 'provider.dart';
-import 'src/l10n/app_l10n.g.dart';
-import 'src/widget/home.dart';
-import 'theme.dart';
+import 'package:material_ui/material_ui.dart';
+
+import 'package:minezweeper/firebase_options.dart';
+import 'package:minezweeper/provider.dart';
+import 'package:minezweeper/src/l10n/app_l10n.g.dart';
+import 'package:minezweeper/src/widget/home.dart';
+import 'package:minezweeper/theme.dart';
 
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -28,26 +29,27 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  runApp(const ProviderScope(
-    child: App(),
-  ));
+  runApp(const ProviderScope(child: App()));
 }
 
+/// Root widget. Applies theme, locale, and the home screen.
 class App extends ConsumerWidget {
+  /// Creates the root widget.
   const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final configState = ref.watch(AppProvider().configProvider);
     return MaterialApp(
-      localizationsDelegates: L10n.localizationsDelegates,
+      localizationsDelegates: const [
+        L10n.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
       supportedLocales: L10n.supportedLocales,
-      onGenerateTitle: (BuildContext context) => L10n.of(context).appTitle,
+      onGenerateTitle: (context) => L10n.of(context).appTitle,
       theme: lightTheme(configState.config),
       darkTheme: darkTheme(configState.config),
       themeMode: configState.config.themeMode,

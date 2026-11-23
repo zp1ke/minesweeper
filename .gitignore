@@ -44,3 +44,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Test coverage
+coverage/
+
+# Android signing secrets — never commit (also listed in android/.gitignore)
+android/key.properties
+**/*.jks
+**/*.keystore

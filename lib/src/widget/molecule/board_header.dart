@@ -1,17 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../extension/number.dart';
-import '../../../theme.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:minezweeper/src/extension/number.dart';
+import 'package:minezweeper/theme.dart';
 
+/// Elapsed time and mines left, shown above the grid.
 class BoardHeader extends StatelessWidget {
-  final int secondsElapsed;
-  final int minesLeft;
-
+  /// Creates a header for the current game.
   const BoardHeader({
     super.key,
     required this.secondsElapsed,
     required this.minesLeft,
   });
+
+  /// Seconds since the current game started.
+  final int secondsElapsed;
+
+  /// Mines that have not been flagged.
+  final int minesLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +32,15 @@ class BoardHeader extends StatelessWidget {
       }
     }
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
         children: [
           const Spacer(),
-          FaIcon(
-            timeIcon,
-            color: timeColor,
-            size: headerIconSize,
-          ),
+          FaIcon(timeIcon, color: timeColor, size: headerIconSize),
           Text(
             ' ${secondsElapsed.secondsFormatted()}',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: timeColor,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w700, color: timeColor),
           ),
           const Spacer(),
           FaIcon(
@@ -53,9 +50,7 @@ class BoardHeader extends StatelessWidget {
           ),
           Text(
             ' $minesLeft',
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           const Spacer(),
         ],

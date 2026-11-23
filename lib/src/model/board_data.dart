@@ -5,45 +5,51 @@ const _defaultColumnsSize = 9;
 const _minesCountKey = 'minesCount';
 const _defaultMinesCount = 10;
 
+/// Saved board size and mine count.
 class BoardData {
-  var rowsSize = _defaultRowsSize;
-  var columnsSize = _defaultColumnsSize;
-  var minesCount = _defaultMinesCount;
-
+  /// A 9×9 board with 10 mines.
   BoardData();
 
-  BoardData.fromRaw(dynamic raw) {
-    if (raw is Map) {
-      rowsSize = raw[_rowsSizeKey] ?? _defaultRowsSize;
-      columnsSize = raw[_columnsSizeKey] ?? _defaultColumnsSize;
-      minesCount = raw[_minesCountKey] ?? _defaultMinesCount;
+  /// Reads a board from persisted JSON, or defaults.
+  BoardData.fromRaw(Object? raw) {
+    if (raw is! Map) {
+      return;
     }
+    rowsSize = _asInt(raw[_rowsSizeKey], _defaultRowsSize);
+    columnsSize = _asInt(raw[_columnsSizeKey], _defaultColumnsSize);
+    minesCount = _asInt(raw[_minesCountKey], _defaultMinesCount);
   }
 
-  BoardData copyWith({
-    int? rowsSize,
-    int? columnsSize,
-    int? minesCount,
-  }) {
-    final boardData = BoardData();
-    if (rowsSize != null) {
-      boardData.rowsSize = rowsSize;
-    }
-    if (columnsSize != null) {
-      boardData.columnsSize = columnsSize;
-    }
-    if (minesCount != null) {
-      boardData.minesCount = minesCount;
-    }
-    return boardData;
+  static int _asInt(Object? value, int fallback) =>
+      value is int ? value : fallback;
+
+  /// Number of rows.
+  int rowsSize = _defaultRowsSize;
+
+  /// Number of columns.
+  int columnsSize = _defaultColumnsSize;
+
+  /// Mines planted when a game starts.
+  int minesCount = _defaultMinesCount;
+
+  /// Returns a copy, keeping every field that is not overridden.
+  BoardData copyWith({int? rowsSize, int? columnsSize, int? minesCount}) {
+    return BoardData()
+      ..rowsSize = rowsSize ?? this.rowsSize
+      ..columnsSize = columnsSize ?? this.columnsSize
+      ..minesCount = minesCount ?? this.minesCount;
   }
 
+  /// Upper bound used by settings, 60% of the cells.
   int get maxMinesCount => (rowsSize * columnsSize * .6).toInt();
 
+  /// Lower bound used by settings, 10% of the cells.
   int get minMinesCount => (rowsSize * columnsSize * .1).toInt();
 
+  /// Firestore key, `rowsxcolumns_mines`.
   String get boardStr => '${rowsSize}x${columnsSize}_$minesCount';
 
+  /// Clamps [minesCount] into the settings range.
   void fixMinesCount() {
     if (minesCount < minMinesCount) {
       minesCount = minMinesCount;
@@ -53,22 +59,16 @@ class BoardData {
     }
   }
 
+  /// JSON map stored in shared preferences.
   Map<String, Object> toMap() => {
-        _rowsSizeKey: rowsSize,
-        _columnsSizeKey: columnsSize,
-        _minesCountKey: minesCount,
-      };
+    _rowsSizeKey: rowsSize,
+    _columnsSizeKey: columnsSize,
+    _minesCountKey: minesCount,
+  };
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BoardData &&
-          runtimeType == other.runtimeType &&
-          rowsSize == other.rowsSize &&
-          columnsSize == other.columnsSize &&
-          minesCount == other.minesCount;
-
-  @override
-  int get hashCode =>
-      rowsSize.hashCode ^ columnsSize.hashCode ^ minesCount.hashCode;
+  /// Value equality used when deciding whether settings changed.
+  bool sameAs(BoardData other) =>
+      rowsSize == other.rowsSize &&
+      columnsSize == other.columnsSize &&
+      minesCount == other.minesCount;
 }

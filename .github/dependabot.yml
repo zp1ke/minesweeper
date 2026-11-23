@@ -1,0 +1,38 @@
+version: 2
+updates:
+  - package-ecosystem: pub
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      # SDK-coupled Flutter/Dart tooling: bumping these piecemeal tends to
+      # produce conflicting constraints, so group them.
+      flutter-tooling:
+        patterns:
+          - flutter_native_splash
+          - dart_style
+          - very_good_analysis
+      ui-platform:
+        patterns:
+          - material_ui
+          - flex_color_scheme
+          - google_fonts
+          - font_awesome_flutter
+      firebase:
+        patterns:
+          - cloud_firestore
+          - firebase_auth
+          - firebase_core
+          - firebase_crashlytics
+          - google_sign_in
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+      - github-actions

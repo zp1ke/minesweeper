@@ -5,33 +5,36 @@ publish_to: 'none'
 version: 1.1.0+10
 
 environment:
-  sdk: ^3.9.0
-  flutter: 3.35.5
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: 3.50.1
 
 dependencies:
+  cloud_firestore: ^7.2.0
+  firebase_auth: ^7.1.0
+  firebase_core: ^5.2.0
+  firebase_crashlytics: ^6.1.0
+  flex_color_scheme: ^9.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  cloud_firestore: ^6.0.2
-  firebase_auth: ^6.1.0
-  firebase_core: ^4.1.1
-  firebase_crashlytics: ^5.0.2
-  flex_color_scheme: ^8.3.0
-  flutter_native_splash: ^2.4.6
-  flutter_riverpod: ^3.0.1
-  font_awesome_flutter: ^10.10.0
-  google_fonts: ^6.3.2
-  google_nav_bar: ^5.0.7
+  flutter_native_splash: ^2.4.8
+  flutter_riverpod: ^3.5.0
+  font_awesome_flutter: ^11.0.0
+  google_fonts: ^9.0.0
   google_sign_in: ^7.2.0
-  intl: any
-  package_info_plus: ^9.0.0
-  shared_preferences: ^2.5.3
+  intl: ^0.20.3
+  material_ui: ^1.11.1
+  package_info_plus: ^10.2.2
+  shared_preferences: ^2.5.6
 
 dev_dependencies:
+  # Pins the formatter `dart format` uses (it honors the project-resolved
+  # dart_style). Without it, transitive deps decide the formatting style.
+  dart_style: ^3.1.14
   flutter_test:
     sdk: flutter
-  flutter_lints: any
+  very_good_analysis: ^11.0.0
 
 flutter:
   assets:
