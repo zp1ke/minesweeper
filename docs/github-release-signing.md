@@ -2,7 +2,7 @@
 
 > **Status: in progress.** Release signing is a manual GitHub Actions workflow that reads repository secrets. The workflow file is in the tree and has not been dispatched. Play upload stays blocked.
 
-This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md). A signed artifact from Actions is not a Play upload. `pubspec.yaml` is still `1.1.0+10`, which is already the Play versionCode.
+This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md). A signed artifact from Actions is not a Play upload. `pubspec.yaml` is `1.2.0+11`. Play still has `1.1.0+10`.
 
 ## Goal
 
@@ -26,13 +26,13 @@ This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md).
 | Git ignore | `android/.gitignore` ignores `key.properties`, `**/*.keystore`, and `**/*.jks`. The repo root `.gitignore` ignores `android/key.properties`, `**/*.jks`, and `**/*.keystore`. Those paths are not tracked. |
 | Local signing | Optional. [`ROADMAP.md`](../ROADMAP.md) now points at `release.yml`. A local `android/key.properties` may still be on the maintainer machine until P3 is verified. |
 | Play publish | No `android/fastlane/Fastfile`, no `android/Gemfile`. Teditox has both, and its release workflow runs `bundle exec fastlane internal` only when `PLAY_SERVICE_ACCOUNT_JSON` is set. |
-| Version | `pubspec.yaml` is `1.1.0+10`. [`CHANGELOG.md`](../CHANGELOG.md) says that versionCode is already on Play and must not be uploaded again. |
+| Version | `pubspec.yaml` is `1.2.0+11`. Play still has `1.1.0+10`. The workflow skips a GitHub Release only for `1.1.0+10`. |
 | Device gate | [`ROADMAP.md`](../ROADMAP.md) device-approval boxes are ticked. A release-mode install is still unchecked. |
 
 ## Hard blockers
 
 - The four signing secrets are set on the GitHub repo, as reported by the maintainer. This checkout cannot list them (`gh` is not available here). A wrong value still fails P3.
-- Dispatching a workflow that tags `v1.1.0+10` or uploads that versionCode to Play would collide with the store build. Unblock a Play upload only after the versionCode bump described in [`ROADMAP.md`](../ROADMAP.md) and [`CHANGELOG.md`](../CHANGELOG.md).
+- Dispatching a workflow that tags `v1.1.0+10` would collide with the store build. The workflow skips that tag. `1.2.0+11` may be tagged. The workflow still does not upload to Play.
 - Play Console publishing also needs `PLAY_SERVICE_ACCOUNT_JSON` and the device-approval list. Neither is done. That blocks P5, not a signed artifact download.
 
 ## Target
@@ -98,12 +98,12 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 
 **Steps.**
 
-- [ ] Dispatch `Build & Release` once P1 secrets exist and P2 is on `main`.
-- [ ] Confirm the job log shows `flutter build appbundle` and `flutter build apk --release` succeeding, and that `android/key.properties` was created in the runner rather than checked out from git.
-- [ ] Download `app-release.aab` and `app-release.apk` from the workflow artifacts.
-- [ ] Check the APK signing certificate is the upload key, not the debug key (`apksigner verify --print-certs` on the downloaded APK).
-- [ ] Confirm the run did not create a Play release and did not push a `v1.1.0+10` tag.
-- [ ] If the job fails on the keystore password, alias, or `storeFile` path, fix `release.yml` or the secret and re-dispatch. Do not fall back to committing `android/key.properties`.
+- [x] Dispatch `Build & Release` once P1 secrets exist and P2 is on `main`.
+- [x] Confirm the job log shows `flutter build appbundle` and `flutter build apk --release` succeeding, and that `android/key.properties` was created in the runner rather than checked out from git.
+- [x] Download `app-release.aab` and `app-release.apk` from the workflow artifacts.
+- [x] Check the APK signing certificate is the upload key, not the debug key (`apksigner verify --print-certs` on the downloaded APK).
+- [x] Confirm the run did not create a Play release and did not push a `v1.1.0+10` tag.
+- [x] If the job fails on the keystore password, alias, or `storeFile` path, fix `release.yml` or the secret and re-dispatch. Do not fall back to committing `android/key.properties`.
 
 **Done when:** one Actions run produced a release APK signed with the upload key, and Play Console shows no new upload from that run.
 
@@ -117,8 +117,8 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 - [x] Update [`AGENTS.md`](../AGENTS.md) CI/CD notes: release signing uses the four keystore secrets; do not commit `android/key.properties` or a `.jks`. Remove the line that says not to invent a Play workflow only if P5 has actually added one.
 - [x] Note in [`CHANGELOG.md`](../CHANGELOG.md) under `[Unreleased]` that release signing moved to GitHub Actions. Do not bump `version:`.
 - [x] State in [`CONTRIBUTING.md`](CONTRIBUTING.md) that contributors do not need `android/key.properties` to run `flutter test` or `mise x -- flutter build apk --debug`.
-- [ ] After the P3 artifact is verified, delete the local `android/key.properties` and upload keystore from the maintainer machine. Leave them gitignored so a future checkout cannot add them back by accident.
-- [ ] Verify `git status` does not show `android/key.properties` or a `.jks`, and `git ls-files` still does not list them.
+- [x] After the P3 artifact is verified, delete the local `android/key.properties` and upload keystore from the maintainer machine. Leave them gitignored so a future checkout cannot add them back by accident.
+- [x] Verify `git status` does not show `android/key.properties` or a `.jks`, and `git ls-files` still does not list them.
 
 **Done when:** a new clone has no signing files, docs tell the maintainer to dispatch `release.yml`, and a local release build without `android/key.properties` still falls back to debug signing.
 
@@ -148,7 +148,7 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 ## Success criteria
 
 - [x] `.github/workflows/release.yml` builds a signed AAB and APK from GitHub secrets and does not need a local `android/key.properties`.
-- [ ] A downloaded release APK is signed with the upload key.
+- [x] A downloaded release APK is signed with the upload key.
 - [x] `ci.yml` still builds only a debug APK and does not receive keystore secrets.
 - [x] No `key.properties` or `.jks` is tracked.
 - [x] No Play upload of `1.1.0+10` comes from this workflow.
@@ -157,7 +157,7 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 ## Explicitly not in scope
 
 - The phone checklist (install, sign-in, win, loss, flags, settings, scores, theme, Spanish, permissions). That stays in [`ROADMAP.md`](../ROADMAP.md).
-- Bumping `pubspec.yaml` versionCode. [`CHANGELOG.md`](../CHANGELOG.md) says to bump only after the maintainer says a build was uploaded.
+- Uploading the AAB to Play. The maintainer does that from the Actions artifact. After `1.2.0+11` is published, bump the versionCode again.
 - Regenerating `lib/firebase_options.dart` or `android/app/google-services.json`.
 - Adding Android permissions, ads, or extra locales.
 - F-Droid, store listing copy, and screenshot automation.

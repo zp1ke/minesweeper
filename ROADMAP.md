@@ -1,15 +1,14 @@
 # MineSweeper roadmap
 
-Play currently has **1.1.0+10**. This working tree is the same versionCode plus
-the Flutter 3.50 / material_ui upgrade. Do not upload it until the versionCode
-is bumped. The upgrade notes are in
+Play currently has **1.1.0+10**. This tree is **1.2.0+11**, the next open-testing
+upload. Do not upload `1.1.0+10` again. The upgrade notes are in
 [`docs/archive/ROADMAP-upgrade-flutter-3.50.md`](docs/archive/ROADMAP-upgrade-flutter-3.50.md).
 
 Locales stay English and Spanish. No ads. Firebase scores and auth stay.
 `INTERNET` stays.
 
-Device approval on a phone is done. **Release is still blocked** until the
-hardening leftovers below are checked and the versionCode is bumped.
+Device approval and the pre-release hardening list are done. Release is the
+signed AAB from `.github/workflows/release.yml`.
 
 ---
 
@@ -69,14 +68,12 @@ Fixes for failures that a debug pass can miss. Done in this tree unless noted.
 
 ## Phase — release
 
-Blocked until the release-install box above is ticked.
-
-- [ ] Maintainer says which version was uploaded. Record it in `CHANGELOG.md`.
-- [ ] Bump `pubspec.yaml` to the next versionCode so `1.1.0+10` is never
-      uploaded twice.
+- [x] Bump `pubspec.yaml` to `1.2.0+11` so `1.1.0+10` is never uploaded twice.
 - [ ] Dispatch `.github/workflows/release.yml` and download the signed AAB.
       Do not commit `key.properties` or the keystore.
-- [ ] Upload to open testing only after the device list is done.
+- [ ] Upload `1.2.0+11` to open testing.
+- [ ] After that upload, record it in `CHANGELOG.md` and bump the versionCode
+      again so `11` is never uploaded twice.
 - [ ] If the upload drops the unused Play Games app id, update
       https://sp1ke.dev/minesweeper. Until then that page describes the build
       on Play, which still has that id.

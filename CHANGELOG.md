@@ -7,17 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version history
 
-- **Unreleased** — working tree is still `1.1.0+10`. That versionCode is already
-  on Google Play. Do not upload this tree until the versionCode is bumped.
+- **Unreleased** — nothing after `1.2.0+11`. Do not upload `1.2.0+11` twice.
+- **1.2.0+11** — next open-testing build. Not on Play until the AAB is published.
 - **1.1.0+10** — current Play build. Predates this toolchain upgrade.
 
 ---
 
 ## [Unreleased]
 
-Not uploaded. `pubspec.yaml` is still `1.1.0+10` on purpose. The next Play upload
-must use a new versionCode. Bump it only after the maintainer says a build was
-uploaded, and record that upload here.
+Nothing yet. After `1.2.0+11` is published, bump the versionCode before the next upload.
+
+---
+
+## [1.2.0+11]
+
+Prepared for open testing. Play still has `1.1.0+10`. Publish the AAB from
+`.github/workflows/release.yml`. Do not upload this versionCode again.
 
 ### Changed
 

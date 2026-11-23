@@ -100,7 +100,8 @@ Patterns:
 - Commit style when the maintainer commits: Conventional Commits.
 - Version: `pubspec.yaml` `version: x.y.z+build`. **Do not bump `+build` until the
   maintainer says a build was uploaded.** Play rejects a reused versionCode.
-  Current store version is `1.1.0+10`. This working tree is still that versionCode.
+  Current store version is `1.1.0+10`. This working tree is `1.2.0+11` for the
+  next open-testing upload. After that upload, bump `+build` again.
 - Docs to keep in sync: `README.md`, `ROADMAP.md`, `CHANGELOG.md`, this file.
 
 ## CI
@@ -111,7 +112,8 @@ Patterns:
   2. `android-build`: `flutter build apk --debug` on Temurin 21.
 - `.github/workflows/release.yml` — manual dispatch. Signs the release AAB
   and APK from `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and
-  `KEY_PASSWORD`. Does not tag `1.1.0+10`. No Play upload in that workflow yet.
+  `KEY_PASSWORD`. Does not tag `1.1.0+10`. A dispatch of `1.2.0+11` creates a
+  GitHub Release for that version. The workflow does not upload to Play.
   Do not commit `android/key.properties` or a `.jks`.
 - `.github/dependabot.yml` — weekly pub + github-actions. Flutter tooling,
   material_ui-family, and Firebase packages are grouped.
@@ -122,8 +124,8 @@ Patterns:
 
 ## Known state
 
-- Play **1.1.0+10** is the store build. This tree modernizes that version and must
-  not be uploaded until `versionCode` is bumped.
+- Play **1.1.0+10** is the store build. This tree is **1.2.0+11**. Publish that
+  AAB to open testing, then bump the versionCode again.
 - Toolchain: Flutter 3.50.1 / Dart 3.14, material_ui, Gradle 9.5.0 / AGP 9.3.1 /
   Kotlin 2.4.20 / Java 17 bytecode / JDK 21 to run Gradle. Debug APK builds with
   `mise x -- flutter build apk --debug`.
