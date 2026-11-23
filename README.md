@@ -2,17 +2,12 @@
 
 [![License](https://img.shields.io/github/license/zp1ke/minesweeper)](https://github.com/zp1ke/minesweeper/blob/main/LICENSE)
 
-A minesweeper game for Android. Package `com.h4j4x.minesweeper`. Play listing
-name: MineSweeper. You can play without an account. Google sign-in is optional
-and is used to submit times to Firebase.
+A minesweeper game for Android. You can play without an account.
+Google sign-in is optional and is used to submit times to Firebase.
 
 <a href="https://play.google.com/store/apps/details?id=com.h4j4x.minesweeper&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="200" />
 </a>
-
-The build on Play is **1.1.0+10**. This repo's working tree is that versionCode
-plus a toolchain upgrade that has not been uploaded. Do not upload it again
-under the same versionCode.
 
 ## What it does
 
