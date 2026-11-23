@@ -109,7 +109,10 @@ Patterns:
   1. `quality`: `dart format --set-exit-if-changed` → `flutter analyze` →
      `flutter test --coverage` → `python3 tool/check_coverage.py --min 80`.
   2. `android-build`: `flutter build apk --debug` on Temurin 21.
-- No Play publishing workflow. Do not invent keystore secrets.
+- `.github/workflows/release.yml` — manual dispatch. Signs the release AAB
+  and APK from `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and
+  `KEY_PASSWORD`. Does not tag `1.1.0+10`. No Play upload in that workflow yet.
+  Do not commit `android/key.properties` or a `.jks`.
 - `.github/dependabot.yml` — weekly pub + github-actions. Flutter tooling,
   material_ui-family, and Firebase packages are grouped.
 - Coverage: `tool/check_coverage.py` ignores generated l10n. `flutter test` only

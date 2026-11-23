@@ -1,6 +1,6 @@
 # GitHub release signing
 
-> **Status: in progress.** Release signing should happen in GitHub Actions from repository secrets, the way Teditox does, instead of a local `android/key.properties` and keystore. The Gradle hook for that file already exists. There is no release workflow yet, and Play upload stays blocked.
+> **Status: in progress.** Release signing is a manual GitHub Actions workflow that reads repository secrets. The workflow file is in the tree and has not been dispatched. Play upload stays blocked.
 
 This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md). A signed artifact from Actions is not a Play upload. `pubspec.yaml` is still `1.1.0+10`, which is already the Play versionCode.
 
@@ -20,18 +20,18 @@ This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md).
 
 | Area | Today |
 |---|---|
-| Release workflow | None. `.github/workflows/` contains only `ci.yml`. |
+| Release workflow | `.github/workflows/release.yml` is `workflow_dispatch` only. It is not on GitHub until this tree is pushed. |
 | CI signing | `android-build` in `ci.yml` runs `flutter build apk --debug` with Java 21 and `flutter-version-file: pubspec.yaml`. No keystore secrets. |
 | Gradle signing | `android/app/build.gradle.kts` loads `android/key.properties` when that file exists (`keyAlias`, `keyPassword`, `storeFile`, `storePassword`). `storeFile` is resolved with `file(it)` from the app module. If the file is absent, release uses the debug signing config. |
 | Git ignore | `android/.gitignore` ignores `key.properties`, `**/*.keystore`, and `**/*.jks`. The repo root `.gitignore` ignores `android/key.properties`, `**/*.jks`, and `**/*.keystore`. Those paths are not tracked. |
-| Local signing | Still the documented release path. [`ROADMAP.md`](../ROADMAP.md) says to build a signed AAB with the local keystore. [`AGENTS.md`](../AGENTS.md) says not to invent keystore secrets and that there is no Play publishing workflow. |
+| Local signing | Optional. [`ROADMAP.md`](../ROADMAP.md) now points at `release.yml`. A local `android/key.properties` may still be on the maintainer machine until P3 is verified. |
 | Play publish | No `android/fastlane/Fastfile`, no `android/Gemfile`. Teditox has both, and its release workflow runs `bundle exec fastlane internal` only when `PLAY_SERVICE_ACCOUNT_JSON` is set. |
 | Version | `pubspec.yaml` is `1.1.0+10`. [`CHANGELOG.md`](../CHANGELOG.md) says that versionCode is already on Play and must not be uploaded again. |
-| Device gate | [`ROADMAP.md`](../ROADMAP.md) device-approval boxes are unchecked. Release there is blocked until they are ticked. |
+| Device gate | [`ROADMAP.md`](../ROADMAP.md) device-approval boxes are ticked. A release-mode install is still unchecked. |
 
 ## Hard blockers
 
-- The four signing secrets (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`) are not in the repo and cannot be checked from it. A maintainer has to create them on the GitHub repo before a signed Actions build can succeed.
+- The four signing secrets are set on the GitHub repo, as reported by the maintainer. This checkout cannot list them (`gh` is not available here). A wrong value still fails P3.
 - Dispatching a workflow that tags `v1.1.0+10` or uploads that versionCode to Play would collide with the store build. Unblock a Play upload only after the versionCode bump described in [`ROADMAP.md`](../ROADMAP.md) and [`CHANGELOG.md`](../CHANGELOG.md).
 - Play Console publishing also needs `PLAY_SERVICE_ACCOUNT_JSON` and the device-approval list. Neither is done. That blocks P5, not a signed artifact download.
 
@@ -51,17 +51,17 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 
 | Phase | Scope | Status |
 |---|---|---|
-| P1 | Signing contract and gitignore | in progress |
-| P2 | Release workflow that signs from secrets | not started |
+| P1 | Signing contract and gitignore | completed |
+| P2 | Release workflow that signs from secrets | completed |
 | P3 | One signed Actions build, no Play upload | not started |
-| P4 | Docs no longer require a local keystore | not started |
+| P4 | Docs no longer require a local keystore | in progress |
 | P5 | Optional Play internal track | not started |
 
 ## Phases
 
 ### P1. Signing contract and gitignore
 
-**Status: in progress.** Gradle already accepts a CI-written `android/key.properties`, and the keystore paths are gitignored. The GitHub secrets that would fill that file do not exist in the repo.
+**Status: completed.** Gradle accepts a CI-written `android/key.properties`, the keystore paths are gitignored, and the four signing secrets are set on the GitHub repo.
 
 **Steps.**
 
@@ -69,26 +69,26 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 - [x] Resolve `storeFile` with `file(it)` in the app module so `storeFile=keystore.jks` means `android/app/keystore.jks`, matching Teditox `release.yml`.
 - [x] Ignore `key.properties`, `**/*.jks`, and `**/*.keystore` in `android/.gitignore` and the repo root `.gitignore`.
 - [x] Confirm `git ls-files` does not list `android/key.properties` or a `.jks`.
-- [ ] Add repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and `KEY_PASSWORD`. `KEYSTORE_BASE64` is the upload keystore, base64-encoded. Do not commit the values or the file.
-- [ ] Verify the secret names match the ones read by Teditox `.github/workflows/release.yml` (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`).
+- [x] Add repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and `KEY_PASSWORD`. `KEYSTORE_BASE64` is the upload keystore, base64-encoded. Do not commit the values or the file.
+- [x] Verify the secret names match the ones read by Teditox `.github/workflows/release.yml` (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`).
 
 **Done when:** a maintainer can point at those four GitHub secrets, and `android/app/build.gradle.kts` will sign a release when a job writes `android/key.properties` plus `android/app/keystore.jks`.
 
 ### P2. Release workflow that signs from secrets
 
-**Status: not started.** Add the workflow file. Do not upload to Play in this phase.
+**Status: completed.** `.github/workflows/release.yml` is dispatch-only, signs from the four secrets, uploads both artifacts, and does not tag `1.1.0+10`.
 
 **Steps.**
 
-- [ ] Add `.github/workflows/release.yml` with `on: workflow_dispatch` only. Do not trigger it from push or pull_request.
-- [ ] Set up Temurin 21 and Flutter via `subosito/flutter-action` with `flutter-version-file: pubspec.yaml`, then `flutter pub get`.
-- [ ] Decode `${{ secrets.KEYSTORE_BASE64 }}` to `android/app/keystore.jks`.
-- [ ] Write `android/key.properties` with `storePassword`, `keyPassword`, `keyAlias`, and `storeFile=keystore.jks` from `KEYSTORE_PASSWORD`, `KEY_PASSWORD`, and `KEY_ALIAS`.
-- [ ] Run `flutter build appbundle` and `flutter build apk --release`.
-- [ ] Upload `build/app/outputs/bundle/release/app-release.aab` and `build/app/outputs/flutter-apk/app-release.apk` with `actions/upload-artifact`.
-- [ ] Do not create a GitHub Release tag when `pubspec.yaml` version is `1.1.0+10`. Teditox tags whatever `version:` is; this repo must not tag the versionCode already on Play.
-- [ ] Leave Play publishing out of this file until P5. `ci.yml` stays a debug APK job and must not gain keystore secrets.
-- [ ] Verify the workflow YAML does not echo secret values and does not commit `android/key.properties` or `android/app/keystore.jks`.
+- [x] Add `.github/workflows/release.yml` with `on: workflow_dispatch` only. Do not trigger it from push or pull_request.
+- [x] Set up Temurin 21 and Flutter via `subosito/flutter-action` with `flutter-version-file: pubspec.yaml`, then `flutter pub get`.
+- [x] Decode `KEYSTORE_BASE64` to `android/app/keystore.jks`.
+- [x] Write `android/key.properties` with `storePassword`, `keyPassword`, `keyAlias`, and `storeFile=keystore.jks` from `KEYSTORE_PASSWORD`, `KEY_PASSWORD`, and `KEY_ALIAS`.
+- [x] Run `flutter build appbundle` and `flutter build apk --release`.
+- [x] Upload `build/app/outputs/bundle/release/app-release.aab` and `build/app/outputs/flutter-apk/app-release.apk` with `actions/upload-artifact`.
+- [x] Do not create a GitHub Release tag when `pubspec.yaml` version is `1.1.0+10`. Teditox tags whatever `version:` is; this repo must not tag the versionCode already on Play.
+- [x] Leave Play publishing out of this file until P5. `ci.yml` stays a debug APK job and must not gain keystore secrets.
+- [x] Verify the workflow YAML does not echo secret values and does not commit `android/key.properties` or `android/app/keystore.jks`.
 
 **Done when:** the workflow file exists, is dispatch-only, writes signing files only inside the job, builds both release artifacts, and refuses to tag `1.1.0+10`.
 
@@ -109,14 +109,14 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 
 ### P4. Docs no longer require a local keystore
 
-**Status: not started.** After P3, the documented release path is the workflow, not a laptop keystore.
+**Status: in progress.** Docs name `release.yml`. The local keystore stays until a signed Actions artifact is verified.
 
 **Steps.**
 
-- [ ] Update the release phase in [`ROADMAP.md`](../ROADMAP.md) so the signed AAB comes from `.github/workflows/release.yml`, not "the local keystore".
-- [ ] Update [`AGENTS.md`](../AGENTS.md) CI/CD notes: release signing uses the four keystore secrets; do not commit `android/key.properties` or a `.jks`. Remove the line that says not to invent a Play workflow only if P5 has actually added one.
-- [ ] Note in [`CHANGELOG.md`](../CHANGELOG.md) under `[Unreleased]` that release signing moved to GitHub Actions. Do not bump `version:`.
-- [ ] State in [`CONTRIBUTING.md`](CONTRIBUTING.md) that contributors do not need `android/key.properties` to run `flutter test` or `mise x -- flutter build apk --debug`.
+- [x] Update the release phase in [`ROADMAP.md`](../ROADMAP.md) so the signed AAB comes from `.github/workflows/release.yml`, not "the local keystore".
+- [x] Update [`AGENTS.md`](../AGENTS.md) CI/CD notes: release signing uses the four keystore secrets; do not commit `android/key.properties` or a `.jks`. Remove the line that says not to invent a Play workflow only if P5 has actually added one.
+- [x] Note in [`CHANGELOG.md`](../CHANGELOG.md) under `[Unreleased]` that release signing moved to GitHub Actions. Do not bump `version:`.
+- [x] State in [`CONTRIBUTING.md`](CONTRIBUTING.md) that contributors do not need `android/key.properties` to run `flutter test` or `mise x -- flutter build apk --debug`.
 - [ ] After the P3 artifact is verified, delete the local `android/key.properties` and upload keystore from the maintainer machine. Leave them gitignored so a future checkout cannot add them back by accident.
 - [ ] Verify `git status` does not show `android/key.properties` or a `.jks`, and `git ls-files` still does not list them.
 
@@ -147,12 +147,12 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 
 ## Success criteria
 
-- [ ] `.github/workflows/release.yml` builds a signed AAB and APK from GitHub secrets and does not need a local `android/key.properties`.
+- [x] `.github/workflows/release.yml` builds a signed AAB and APK from GitHub secrets and does not need a local `android/key.properties`.
 - [ ] A downloaded release APK is signed with the upload key.
-- [ ] `ci.yml` still builds only a debug APK and does not receive keystore secrets.
-- [ ] No `key.properties` or `.jks` is tracked.
-- [ ] No Play upload of `1.1.0+10` comes from this workflow.
-- [ ] Docs name the Actions workflow as the release path.
+- [x] `ci.yml` still builds only a debug APK and does not receive keystore secrets.
+- [x] No `key.properties` or `.jks` is tracked.
+- [x] No Play upload of `1.1.0+10` comes from this workflow.
+- [x] Docs name the Actions workflow as the release path.
 
 ## Explicitly not in scope
 

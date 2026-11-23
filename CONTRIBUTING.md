@@ -8,6 +8,7 @@ Thanks for helping. Setup details and agent notes live in [AGENTS.md](AGENTS.md)
 2. `flutter pub get`
 3. Android builds need JDK 21, not a newer global JDK. From this repo:
    `mise x -- flutter build apk --debug`
+4. You do not need `android/key.properties` or a keystore for tests or a debug APK.
 
 ## Workflow
 

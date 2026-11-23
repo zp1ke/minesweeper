@@ -74,8 +74,8 @@ Blocked until the release-install box above is ticked.
 - [ ] Maintainer says which version was uploaded. Record it in `CHANGELOG.md`.
 - [ ] Bump `pubspec.yaml` to the next versionCode so `1.1.0+10` is never
       uploaded twice.
-- [ ] Build a signed release AAB with the local keystore. Do not commit
-      `key.properties` or the keystore.
+- [ ] Dispatch `.github/workflows/release.yml` and download the signed AAB.
+      Do not commit `key.properties` or the keystore.
 - [ ] Upload to open testing only after the device list is done.
 - [ ] If the upload drops the unused Play Games app id, update
       https://sp1ke.dev/minesweeper. Until then that page describes the build

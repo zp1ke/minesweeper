@@ -31,6 +31,8 @@ uploaded, and record that upload here.
   with a Material 3 navigation bar.
 - CI runs format, analyze, tests with an 80% coverage floor on the game-rule
   libraries, and a debug APK build on Java 21.
+- Release signing is a manual GitHub Actions workflow
+  (`.github/workflows/release.yml`). It does not publish `1.1.0+10`.
 
 ### Fixed
 
