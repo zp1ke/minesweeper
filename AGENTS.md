@@ -127,8 +127,9 @@ Patterns:
 - Dead Android Compose, the stale Compose compiler extension, Health Connect, and
   multidex were removed. Nothing in the app used them. The Play Games app id is
   still in the manifest and strings; the app does not send scores to Play Games.
-  Leave it until a store upload, because `docs/privacy-policy.md` describes the
-  build currently on Play.
+  Leave it until a store upload. The privacy policy is not in this repo. It is
+  `website/src/pages/minesweeper.astro` in the CV project, published at
+  https://sp1ke.dev/minesweeper, and that page describes the build currently on Play.
 - Source `AndroidManifest.xml` declares only `INTERNET`. A debug APK merge also
   pulls normal permissions from Firebase and Google Sign-In:
   `ACCESS_NETWORK_STATE`, `USE_BIOMETRIC`, `USE_FINGERPRINT` (androidx.biometric

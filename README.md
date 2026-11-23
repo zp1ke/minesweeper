@@ -22,7 +22,7 @@ under the same versionCode.
 - Crash reports go to Firebase Crashlytics. No ads.
 - English and Spanish.
 
-Privacy policy: [docs/privacy-policy.md](docs/privacy-policy.md).
+Privacy policy: [sp1ke.dev/minesweeper](https://sp1ke.dev/minesweeper). It is maintained in the CV site, not in this repo.
 
 ## Technologies
 

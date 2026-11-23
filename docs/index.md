@@ -8,5 +8,5 @@ MineSweeper Game
 
 <hr/>
 <small>
-  <a href="https://h4j4x.github.io/minesweeper/privacy-policy">Privacy policy</a>
+  <a href="https://sp1ke.dev/minesweeper">Privacy policy</a>
 </small>

@@ -57,6 +57,7 @@ Blocked until every device-approval box is ticked.
 - [ ] Build a signed release AAB with the local keystore. Do not commit
       `key.properties` or the keystore.
 - [ ] Upload to open testing only after the device list is done.
-- [ ] If the upload drops the unused Play Games app id, update
-      `docs/privacy-policy.md` in the same release. Until then the policy
-      describes the build that is on Play, which still has that id.
+- [ ] If the upload drops the unused Play Games app id, update the policy
+      in the CV site (`website/src/pages/minesweeper.astro`, published at
+      https://sp1ke.dev/minesweeper). Do not add a copy in this repo. Until
+      then the page describes the build that is on Play, which still has that id.
