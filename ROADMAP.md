@@ -61,9 +61,9 @@ Fixes for failures that a debug pass can miss. Done in this tree unless noted.
       (`PlatformDispatcher.instance.onError` in `lib/main.dart`).
 - [x] The board timer and the home page controller do not call `setState`
       after dispose.
-- [ ] Install a **release** APK or AAB on a phone and repeat sign-in, a win,
+- [x] Install a **release** APK or AAB on a phone and repeat sign-in, a win,
       and a score submit. Debug approval does not exercise R8.
-- [ ] Accept that the top-ten write in `FirestoreService._saveBestScore` is
+- [x] Accept that the top-ten write in `FirestoreService._saveBestScore` is
       not a transaction. Two finishes at once can duplicate a row. Leave it
       unless a device shows a bad list.
 
