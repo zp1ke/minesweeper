@@ -165,6 +165,18 @@ void main() {
     expect(board.isActive, isTrue);
   });
 
+  test('flagging an opened cell does not change it', () {
+    final board = boardWith(mines: [(row: 0, column: 0)]);
+    final cell = board.cellAt(rowIndex: 2, columnIndex: 2)!;
+    expect(() => board.explore(cell), throwsA(isA<GameOverEvent>()));
+
+    board.toggleClear(cell);
+
+    expect(cell.explored, isTrue);
+    expect(cell.cleared, isFalse);
+    expect(board.isActive, isFalse);
+  });
+
   test('cell clear resets planted state', () {
     final cell = Cell(rowIndex: 1, columnIndex: 2)
       ..mined = true

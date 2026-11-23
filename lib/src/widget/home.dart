@@ -130,6 +130,13 @@ class HomeScreenState extends State<HomeScreen> implements EventListener {
   }
 
   @override
+  void dispose() {
+    _eventHandler.removeListener(this);
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   void onEvent(GameEvent event) {
     if (event == GameEvent.checkScores) {
       final scoresIndex = _navItems.indexWhere(

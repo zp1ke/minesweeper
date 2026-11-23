@@ -69,17 +69,22 @@ class AppConfig {
     final preferences = await _preferences;
     exploreOnTap = preferences.getBool(_exploreOnTapKey) ?? true;
     final boardDataJson = preferences.getString(_boardDataKey) ?? '{}';
-    boardData = BoardData.fromRaw(jsonDecode(boardDataJson));
+    final loaded = BoardData.fromRaw(jsonDecode(boardDataJson))
+      ..clampToPlayable();
+    boardData = loaded;
     final themeModeStr =
         preferences.getString(_themeModeKey) ?? ThemeMode.system.name;
     themeMode = ThemeMode.values.firstWhere(
       (element) => element.name == themeModeStr,
+      orElse: () => ThemeMode.system,
     );
     final flexSchemeStr =
         preferences.getString(_flexSchemeKey) ?? _defaultFlexScheme.name;
     flexScheme = FlexScheme.values.firstWhere(
       (element) => element.name == flexSchemeStr,
+      orElse: () => _defaultFlexScheme,
     );
+    _dirty = false;
   }
 
   /// Writes the current settings.

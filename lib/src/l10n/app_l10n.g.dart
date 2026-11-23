@@ -223,6 +223,12 @@ abstract class L10n {
   /// **'Scores'**
   String get scores;
 
+  /// No description provided for @scoresUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load scores.'**
+  String get scoresUnavailable;
+
   /// No description provided for @scoreSubmitted.
   ///
   /// In en, this message translates to:

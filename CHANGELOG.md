@@ -34,6 +34,13 @@ uploaded, and record that upload here.
 
 ### Fixed
 
+- Scores no longer stay on a spinner when Firestore fails. The screen says the
+  list could not be loaded, and pull-to-refresh tries again.
+- A saved theme name or board size this version does not understand no longer
+  stops startup.
+- Flagging an opened cell no longer counts as a wrong flag.
+- Google sign-in waits until Google Sign-In has finished initializing.
+- Errors that are not Flutter framework errors are reported to Crashlytics.
 - Changing rows or columns in settings no longer resets the other board fields.
 - "Yesterday" on the scores list used tomorrow's date.
 - Flood fill no longer opens a flagged cell. A direct tap still can.

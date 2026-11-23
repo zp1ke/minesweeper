@@ -8,8 +8,8 @@ is bumped. The upgrade notes are in
 Locales stay English and Spanish. No ads. Firebase scores and auth stay.
 `INTERNET` stays.
 
-**Release is blocked** until the device-approval list below is ticked on a
-Samsung-class phone running Android 14 or 15.
+Device approval on a phone is done. **Release is still blocked** until the
+hardening leftovers below are checked and the versionCode is bumped.
 
 ---
 
@@ -47,9 +47,29 @@ have `android/key.properties` locally.
       runtime prompt and that Play's permission list matches that set.
 - [x] No ads.
 
+## Phase — pre-release hardening
+
+Fixes for failures that a debug pass can miss. Done in this tree unless noted.
+
+- [x] A Firestore failure on scores shows "Could not load scores" and can be
+      pulled to retry, instead of leaving the spinner up.
+- [x] A saved theme or board size this version does not understand falls back
+      to the defaults instead of stopping startup. Sides stay in 6–20.
+- [x] Flagging an already opened cell does nothing, so it cannot block a win.
+- [x] Google sign-in waits for `GoogleSignIn.initialize` before `authenticate`.
+- [x] Async errors outside Flutter are sent to Crashlytics
+      (`PlatformDispatcher.instance.onError` in `lib/main.dart`).
+- [x] The board timer and the home page controller do not call `setState`
+      after dispose.
+- [ ] Install a **release** APK or AAB on a phone and repeat sign-in, a win,
+      and a score submit. Debug approval does not exercise R8.
+- [ ] Accept that the top-ten write in `FirestoreService._saveBestScore` is
+      not a transaction. Two finishes at once can duplicate a row. Leave it
+      unless a device shows a bad list.
+
 ## Phase — release
 
-Blocked until every device-approval box is ticked.
+Blocked until the release-install box above is ticked.
 
 - [ ] Maintainer says which version was uploaded. Record it in `CHANGELOG.md`.
 - [ ] Bump `pubspec.yaml` to the next versionCode so `1.1.0+10` is never

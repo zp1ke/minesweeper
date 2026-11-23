@@ -61,6 +61,9 @@ class BoardWidgetState extends ConsumerState<BoardWidget>
     _secondsStartedMs = DateTime.now().millisecondsSinceEpoch;
     _secondsElapsed = 0;
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) {
+        return;
+      }
       final elapsed =
           (DateTime.now().millisecondsSinceEpoch - _secondsStartedMs) / 1000;
       setState(() {

@@ -139,7 +139,12 @@ class Board {
   bool get _hasNotSafeCellsCleared => _safeCellsCleared == 0;
 
   /// Flags or unflags [cell]. Flagging every mine wins.
+  ///
+  /// An opened cell is left alone. Flagging it would block a later win.
   void toggleClear(Cell cell) {
+    if (cell.explored) {
+      return;
+    }
     final step = cell.cleared ? -1 : 1;
     cell.cleared = !cell.cleared;
     if (cell.mined) {

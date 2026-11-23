@@ -11,18 +11,20 @@ class AuthService {
     return _instance!;
   }
   AuthService._() : _googleSignIn = GoogleSignIn.instance {
-    unawaited(_googleSignIn.initialize());
+    _initialized = _googleSignIn.initialize();
   }
 
   static AuthService? _instance;
 
   final GoogleSignIn _googleSignIn;
+  late final Future<void> _initialized;
 
   /// The current Firebase user, if any.
   User? get user => FirebaseAuth.instance.currentUser;
 
   /// Signs in with Google, or returns the current user.
   Future<User?> googleSignIn() async {
+    await _initialized;
     if (!_googleSignIn.supportsAuthenticate()) {
       return null;
     }

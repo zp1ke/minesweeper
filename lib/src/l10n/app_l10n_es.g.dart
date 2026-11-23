@@ -73,6 +73,9 @@ class L10nEs extends L10n {
   String get scores => 'Puntajes';
 
   @override
+  String get scoresUnavailable => 'No se pudieron cargar los puntajes.';
+
+  @override
   String get scoreSubmitted => 'Puntaje enviado';
 
   @override

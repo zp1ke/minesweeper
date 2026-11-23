@@ -21,6 +21,7 @@
   "restart": "Restart",
   "rowsSize": "Rows size",
   "scores": "Scores",
+  "scoresUnavailable": "Could not load scores.",
   "scoreSubmitted": "Score submitted",
   "settings": "Settings",
   "signOut": "Sign out",

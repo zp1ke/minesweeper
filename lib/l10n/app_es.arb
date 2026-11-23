@@ -21,6 +21,7 @@
   "restart": "Reiniciar",
   "rowsSize": "Filas",
   "scores": "Puntajes",
+  "scoresUnavailable": "No se pudieron cargar los puntajes.",
   "scoreSubmitted": "Puntaje enviado",
   "settings": "Ajustes",
   "signOut": "Salir",

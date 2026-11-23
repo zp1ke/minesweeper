@@ -20,6 +20,12 @@ class BoardData {
     minesCount = _asInt(raw[_minesCountKey], _defaultMinesCount);
   }
 
+  /// Smallest side the settings screen allows.
+  static const int minSide = 6;
+
+  /// Largest side the settings screen allows.
+  static const int maxSide = 20;
+
   static int _asInt(Object? value, int fallback) =>
       value is int ? value : fallback;
 
@@ -48,6 +54,13 @@ class BoardData {
 
   /// Firestore key, `rowsxcolumns_mines`.
   String get boardStr => '${rowsSize}x${columnsSize}_$minesCount';
+
+  /// Clamps size to the settings range, then [fixMinesCount].
+  void clampToPlayable() {
+    rowsSize = rowsSize.clamp(minSide, maxSide);
+    columnsSize = columnsSize.clamp(minSide, maxSide);
+    fixMinesCount();
+  }
 
   /// Clamps [minesCount] into the settings range.
   void fixMinesCount() {

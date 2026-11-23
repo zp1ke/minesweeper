@@ -27,6 +27,21 @@ void main() {
     expect(BoardData.fromRaw('nope').boardStr, '9x9_10');
   });
 
+  test('clampToPlayable keeps a saved board inside the settings range', () {
+    final board = BoardData.fromRaw({
+      'rowsSize': 1,
+      'columnsSize': 99,
+      'minesCount': 0,
+    })..clampToPlayable();
+
+    expect(board.rowsSize, BoardData.minSide);
+    expect(board.columnsSize, BoardData.maxSide);
+    expect(
+      board.minesCount,
+      inInclusiveRange(board.minMinesCount, board.maxMinesCount),
+    );
+  });
+
   test('fixMinesCount clamps to the settings range', () {
     final board = BoardData()
       ..rowsSize = 10

@@ -119,8 +119,8 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
       ListTileIntPicker(
         title: l10n.rowsSize,
         value: config.boardData.rowsSize,
-        maxValue: 20,
-        minValue: 6,
+        maxValue: BoardData.maxSide,
+        minValue: BoardData.minSide,
         onValue: (value) {
           final boardData = config.boardData.copyWith(rowsSize: value);
           _onBoardData(boardData, ref);
@@ -131,8 +131,8 @@ class SettingsWidgetState extends ConsumerState<SettingsWidget> {
       ListTileIntPicker(
         title: l10n.columnsSize,
         value: config.boardData.columnsSize,
-        maxValue: 20,
-        minValue: 6,
+        maxValue: BoardData.maxSide,
+        minValue: BoardData.minSide,
         onValue: (value) {
           final boardData = config.boardData.copyWith(columnsSize: value);
           _onBoardData(boardData, ref);

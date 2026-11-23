@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:minezweeper/provider.dart';
@@ -35,6 +36,7 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
   var _list = <UserScore>[];
   UserScore? _userScore;
   var _loading = false;
+  var _failed = false;
 
   @override
   void initState() {
@@ -44,44 +46,53 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
   }
 
   Future<void> _loadScoresIDs() async {
-    if (_scoresIDs == null) {
-      setState(() {
-        _loading = true;
-      });
-      _scoresIDs = await FirestoreService().fetchScoresIDs();
-      if (_scoresIDs!.isNotEmpty && _scoreID == null) {
-        final config = ref.read(AppProvider().configProvider).config;
-        _scoreID = _scoresIDs!.firstWhere(
-          (element) => element == config.boardData.boardStr,
-          orElse: () => _scoresIDs!.first,
-        );
-      }
-      _loading = false;
-      if (mounted) {
-        setState(() {});
-      }
+    if (_scoresIDs != null) {
+      return;
+    }
+    _scoresIDs = await FirestoreService().fetchScoresIDs();
+    if (_scoresIDs!.isNotEmpty && _scoreID == null) {
+      final config = ref.read(AppProvider().configProvider).config;
+      _scoreID = _scoresIDs!.firstWhere(
+        (element) => element == config.boardData.boardStr,
+        orElse: () => _scoresIDs!.first,
+      );
     }
   }
 
   Future<void> _loadList() async {
-    await _loadScoresIDs();
-    if (!_loading &&
-        _scoresIDs != null &&
-        _scoresIDs!.isNotEmpty &&
-        _scoreID != null) {
-      setState(() {
-        _loading = true;
-      });
-      _list = await FirestoreService().fetchScores(_scoreID!);
-      final user = AuthService().user;
-      if (user != null) {
-        _userScore = await FirestoreService().fetchUserScore(
-          userID: user.uid,
-          scoreID: _scoreID!,
-        );
-      } else {
-        _userScore = null;
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _loading = true;
+      _failed = false;
+    });
+    try {
+      await _loadScoresIDs();
+      if (_scoresIDs != null && _scoresIDs!.isNotEmpty && _scoreID != null) {
+        _list = await FirestoreService().fetchScores(_scoreID!);
+        final user = AuthService().user;
+        if (user != null) {
+          _userScore = await FirestoreService().fetchUserScore(
+            userID: user.uid,
+            scoreID: _scoreID!,
+          );
+        } else {
+          _userScore = null;
+        }
       }
+    } on FirebaseException {
+      _failed = true;
+      _scoresIDs = null;
+    } on Object catch (error, stack) {
+      _failed = true;
+      _scoresIDs = null;
+      await FirebaseCrashlytics.instance.recordError(
+        error,
+        stack,
+        reason: 'loadScores',
+      );
+    } finally {
       _loading = false;
       if (mounted) {
         setState(() {});
@@ -91,7 +102,7 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (_scoresIDs == null) {
+    if (_scoresIDs == null && !_failed) {
       return const Center(child: CircularProgressIndicator.adaptive());
     }
     final theme = Theme.of(context);
@@ -125,7 +136,13 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
                 ),
               ),
             ),
-          if (_list.isEmpty)
+          if (_failed)
+            Text(
+              l10n.scoresUnavailable,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            )
+          else if (_list.isEmpty)
             Text(
               l10n.nothingToShow,
               textAlign: TextAlign.center,
@@ -159,6 +176,9 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
     },
     itemBuilder: (scoreID) {
       final parts = scoreID.split('_');
+      if (parts.length < 2) {
+        return Text(scoreID);
+      }
       return Text('${parts[0]} (${parts[1]} ${l10n.mines})');
     },
   );
@@ -186,13 +206,13 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
         ),
       ),
       subtitle: Text(userScore.datetime.formatted(l10n)),
-      trailing: _timeWidget(userScore.score, theme),
+      trailing: _timeWidget(userScore.score),
       tileColor: theme.colorScheme.secondary.withAlpha(10),
       selectedTileColor: theme.colorScheme.success.withAlpha(15),
     );
   }
 
-  Widget _timeWidget(int secondsElapsed, ThemeData theme) {
+  Widget _timeWidget(int secondsElapsed) {
     final theme = Theme.of(context);
     var timeColor = theme.colorScheme.success;
     if (secondsElapsed > 60) {
@@ -205,6 +225,12 @@ class ScoresWidgetState extends ConsumerState<ScoresWidget>
       ' ${secondsElapsed.secondsFormatted()}',
       style: TextStyle(fontWeight: FontWeight.w700, color: timeColor),
     );
+  }
+
+  @override
+  void dispose() {
+    widget.eventHandler.removeListener(this);
+    super.dispose();
   }
 
   @override
