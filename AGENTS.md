@@ -137,6 +137,6 @@ Patterns:
   extras are dangerous runtime prompts. Confirm that on a device before release.
 - Google sign-in and Crashlytics are not verified on a device in this upgrade.
   See the device-approval list in `ROADMAP.md`.
-- Plugins `google_sign_in_android` and `shared_preferences_android` still apply
-  Kotlin Gradle Plugin. The template keeps `android.builtInKotlin=false`, so the
-  build warns and succeeds. A future Flutter release may require plugin updates.
+- `google_sign_in_android` 7.2.19 and `shared_preferences_android` 2.5.5 no longer
+  apply the Kotlin Gradle plugin, so the built-in Kotlin warning is gone.
+  `android.builtInKotlin` stays `false`, matching the Flutter template.

@@ -21,6 +21,7 @@ uploaded, and record that upload here.
 
 ### Changed
 
+- `google_sign_in_android` 7.2.19 and `shared_preferences_android` 2.5.5. They no longer apply the Kotlin Gradle plugin, so the AGP 9 built-in Kotlin warning is gone.
 - Flutter 3.50.1 / Dart 3.14, `material_ui` instead of `package:flutter/material.dart`.
 - Android toolchain: Gradle 9.5.0, AGP 9.3.1, Kotlin 2.4.20, Java 17 bytecode,
   JDK 21 to run Gradle. minSdk stays 28.

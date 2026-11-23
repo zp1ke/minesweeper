@@ -143,7 +143,7 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 - A wrong `storeFile` path signs with the debug key while the job still exits 0. P3 checks the certificate, not just the green check.
 - `KEYSTORE_BASE64` logged by a verbose `echo` would leak the upload key. The decode step must not print the secret.
 - Fastlane `release_status: "completed"` on the internal track still publishes a binary. P5 stays off until [`ROADMAP.md`](../ROADMAP.md) device approval is done.
-- `google_sign_in_android` and `shared_preferences_android` still apply the Kotlin Gradle plugin. Release builds can warn the same way debug builds do. That is not a signing failure.
+- A future plugin that applies the Kotlin Gradle plugin again will warn under AGP 9 and may fail a later Flutter release. Current `google_sign_in_android` 7.2.19 and `shared_preferences_android` 2.5.5 do not apply it.
 
 ## Success criteria
 
