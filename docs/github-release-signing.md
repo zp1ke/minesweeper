@@ -2,7 +2,7 @@
 
 > **Status: in progress.** Release signing is a manual GitHub Actions workflow that reads repository secrets. The workflow file is in the tree and has not been dispatched. Play upload stays blocked.
 
-This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md). A signed artifact from Actions is not a Play upload. `pubspec.yaml` is `1.2.0+11`. Play still has `1.1.0+10`.
+This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md). A signed artifact from Actions is not a Play upload. `pubspec.yaml` is `1.2.0+12`. Play open testing has `1.2.0+11`.
 
 ## Goal
 
@@ -26,7 +26,7 @@ This does not replace the device-approval list in [`ROADMAP.md`](../ROADMAP.md).
 | Git ignore | `android/.gitignore` ignores `key.properties`, `**/*.keystore`, and `**/*.jks`. The repo root `.gitignore` ignores `android/key.properties`, `**/*.jks`, and `**/*.keystore`. Those paths are not tracked. |
 | Local signing | Optional. [`ROADMAP.md`](../ROADMAP.md) now points at `release.yml`. A local `android/key.properties` may still be on the maintainer machine until P3 is verified. |
 | Play publish | No `android/fastlane/Fastfile`, no `android/Gemfile`. Teditox has both, and its release workflow runs `bundle exec fastlane internal` only when `PLAY_SERVICE_ACCOUNT_JSON` is set. |
-| Version | `pubspec.yaml` is `1.2.0+11`. Play still has `1.1.0+10`. The workflow skips a GitHub Release only for `1.1.0+10`. |
+| Version | `pubspec.yaml` is `1.2.0+12`. Play open testing has `1.2.0+11`. The workflow skips a GitHub Release only for `1.1.0+10`. |
 | Device gate | [`ROADMAP.md`](../ROADMAP.md) device-approval boxes are ticked. A release-mode install is still unchecked. |
 
 ## Hard blockers
@@ -157,7 +157,7 @@ Track progress with task lists: `[ ]` not started, `[x]` done. Update this table
 ## Explicitly not in scope
 
 - The phone checklist (install, sign-in, win, loss, flags, settings, scores, theme, Spanish, permissions). That stays in [`ROADMAP.md`](../ROADMAP.md).
-- Uploading the AAB to Play. The maintainer does that from the Actions artifact. After `1.2.0+11` is published, bump the versionCode again.
+- Uploading the AAB to Play. The maintainer does that from the Actions artifact. `1.2.0+11` is already in open testing; the next upload must be newer than versionCode `11`.
 - Regenerating `lib/firebase_options.dart` or `android/app/google-services.json`.
 - Adding Android permissions, ads, or extra locales.
 - F-Droid, store listing copy, and screenshot automation.

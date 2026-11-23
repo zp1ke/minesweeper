@@ -7,22 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version history
 
-- **Unreleased** — nothing after `1.2.0+11`. Do not upload `1.2.0+11` twice.
-- **1.2.0+11** — next open-testing build. Not on Play until the AAB is published.
-- **1.1.0+10** — current Play build. Predates this toolchain upgrade.
+- **Unreleased** — `1.2.1+12`, nothing shipped yet.
+- **1.2.0+11** — Play open testing, 2026-11-23.
+- **1.1.0+10** — previous Play build.
 
 ---
 
 ## [Unreleased]
 
-Nothing yet. After `1.2.0+11` is published, bump the versionCode before the next upload.
+Nothing yet. Next Play upload must be newer than `1.2.0+11`.
 
 ---
 
-## [1.2.0+11]
+## [1.2.0+11] - 2026-11-23
 
-Prepared for open testing. Play still has `1.1.0+10`. Publish the AAB from
-`.github/workflows/release.yml`. Do not upload this versionCode again.
+Open testing on Google Play. Built by `.github/workflows/release.yml`. Do not upload this versionCode again.
 
 ### Changed
 

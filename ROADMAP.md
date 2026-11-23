@@ -1,7 +1,7 @@
 # MineSweeper roadmap
 
-Play currently has **1.1.0+10**. This tree is **1.2.0+11**, the next open-testing
-upload. Do not upload `1.1.0+10` again. The upgrade notes are in
+Play open testing has **1.2.0+11** (uploaded 2026-11-23). This tree is
+**1.2.0+12** so that versionCode is not reused. The upgrade notes are in
 [`docs/archive/ROADMAP-upgrade-flutter-3.50.md`](docs/archive/ROADMAP-upgrade-flutter-3.50.md).
 
 Locales stay English and Spanish. No ads. Firebase scores and auth stay.
@@ -69,11 +69,11 @@ Fixes for failures that a debug pass can miss. Done in this tree unless noted.
 ## Phase — release
 
 - [x] Bump `pubspec.yaml` to `1.2.0+11` so `1.1.0+10` is never uploaded twice.
-- [ ] Dispatch `.github/workflows/release.yml` and download the signed AAB.
+- [x] Dispatch `.github/workflows/release.yml` and download the signed AAB.
       Do not commit `key.properties` or the keystore.
-- [ ] Upload `1.2.0+11` to open testing.
-- [ ] After that upload, record it in `CHANGELOG.md` and bump the versionCode
-      again so `11` is never uploaded twice.
-- [ ] If the upload drops the unused Play Games app id, update
+- [x] Upload `1.2.0+11` to open testing.
+- [x] After that upload, record it in `CHANGELOG.md` and bump the versionCode
+      to `1.2.0+12` so `11` is never uploaded twice.
+- [x] If the upload drops the unused Play Games app id, update
       https://sp1ke.dev/minesweeper. Until then that page describes the build
       on Play, which still has that id.
